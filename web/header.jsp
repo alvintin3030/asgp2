@@ -1,18 +1,18 @@
 <div class="header-area">
-    <div class="container">
-        <div class="row">
+    <div class="row">
             <div class="note">
                 This web site exists to fulfill the coursework requirement of CS4280. Do not use your real personal data as input.     
             </div>
-        </div>
-
+    </div>
+    
+    <div class="container">
         <div class="row">
             <div class="col-md-8">
                 <div class="user-menu">
                     <ul>
                         <li><a href="#"><i class="fa fa-user"></i> My Account</a></li>
-                        <li><a href="cart.html"><i class="fa fa-user"></i> My Cart</a></li>
-                        <li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li>
+                        <li><a href="cart.jsp"><i class="fa fa-user"></i> My Cart</a></li>
+                        <li><a href="checkout.jsp"><i class="fa fa-user"></i> Checkout</a></li>
                         <li><a href="#"><i class="fa fa-user"></i> Login</a></li>
                     </ul>
                 </div>
