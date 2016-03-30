@@ -53,7 +53,7 @@
                         <li><a href="shop.jsp">Shop page</a></li>
                         <li><a href="cart.jsp">Cart</a></li>
                         <li><a href="checkout.jsp">Checkout</a></li>
-                        <li><a href="#">Comment</a></li>
+                        <li><a href="recycle.jsp">Recycle</a></li>
                     </ul>
                 </div>  
             </div>

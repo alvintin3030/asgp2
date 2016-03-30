@@ -60,6 +60,16 @@
         </div>
     </div> <!-- End mainmenu area -->
     
+    <!-- Main Content area -->
+    <div class="maincontent-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <p>Under Construction</p>
+            </div>
+        </div>
+    </div>
+    
     <!-- Footer -->
     <jsp:include page="footer.jsp"/>
    
