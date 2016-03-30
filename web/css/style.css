@@ -1124,5 +1124,13 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
 .single-shop-product {margin-bottom: 50px}
 
 .pagination > li > a, .pagination > li > span {
-  color: #5a88ca;
+    color: #5a88ca;
+}
+
+.centered-form{
+    margin-top: 20px;
+}
+
+.centered-form .panel{
+    background: rgba(255, 255, 255, 0.8);
 }

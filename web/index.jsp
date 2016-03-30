@@ -19,7 +19,7 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -52,13 +52,14 @@
                         <li><a href="shop.jsp">Shop page</a></li>
                         <li><a href="cart.jsp">Cart</a></li>
                         <li><a href="checkout.jsp">Checkout</a></li>
-                        <li><a href="#">Comment</a></li>
+                        <li><a href="recycle.jsp">Recycle</a></li>
                     </ul>
                 </div>  
             </div>
         </div>
     </div> <!-- End mainmenu area -->
     
+    <!-- Promo area -->
     <div class="promo-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
@@ -91,6 +92,7 @@
         </div>
     </div> <!-- End promo area -->
     
+    <!-- Main Content area -->
     <div class="maincontent-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
@@ -216,6 +218,6 @@
     
     <!-- Slider -->
     <script type="text/javascript" src="js/bxslider.min.js"></script>
-	<script type="text/javascript" src="js/script.slider.js"></script>
+    <script type="text/javascript" src="js/script.slider.js"></script>
   </body>
 </html>

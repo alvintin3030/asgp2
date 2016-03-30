@@ -1,8 +1,8 @@
 <div class="header-area">
     <div class="row">
-            <div class="note">
-                This web site exists to fulfill the coursework requirement of CS4280. Do not use your real personal data as input.     
-            </div>
+        <div class="note">
+            This web site exists to fulfill the coursework requirement of CS4280. Do not use your real personal data as input.     
+        </div>
     </div>
     
     <div class="container">
@@ -11,9 +11,8 @@
                 <div class="user-menu">
                     <ul>
                         <li><a href="#"><i class="fa fa-user"></i> My Account</a></li>
-                        <li><a href="cart.jsp"><i class="fa fa-user"></i> My Cart</a></li>
-                        <li><a href="checkout.jsp"><i class="fa fa-user"></i> Checkout</a></li>
-                        <li><a href="#"><i class="fa fa-user"></i> Login</a></li>
+                        <li><a href="cart.jsp"><i class="glyphicon glyphicon-shopping-cart"></i> My Cart</a></li>
+                        <li><a href="checkout.jsp"><i class="glyphicon glyphicon-check"></i> Checkout</a></li>
                     </ul>
                 </div>
             </div> 
@@ -21,20 +20,8 @@
             <div class="col-md-4">
                 <div class="header-right">
                     <ul class="list-unstyled list-inline">
-                        <li class="dropdown dropdown-small">
-                            <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">Currency: </span><span class="value">HKD </span><b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">HKD</a></li>
-                                <li><a href="#">USD</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="dropdown dropdown-small">
-                            <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span class="key">Language: </span><span class="value">English </span><b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">English</a></li>                      
-                            </ul>
-                        </li>
+                        <li><a href="login.jsp"><i class="glyphicon glyphicon-log-in"></i> Login</a></li>
+                        <li><a href="signup.jsp"><i class="glyphicon glyphicon-pencil"></i> Sign up</a></li>
                     </ul>
                 </div>
             </div>
@@ -42,6 +29,7 @@
     </div>
 </div> 
 
+<!-- Site Branding Area -->
 <div class="site-branding-area">
     <div class="container">
         <div class="row">

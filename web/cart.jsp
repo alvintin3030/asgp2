@@ -19,7 +19,7 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -52,7 +52,7 @@
                         <li><a href="shop.jsp">Shop page</a></li>
                         <li class="active"><a href="cart.jsp">Cart</a></li>
                         <li><a href="checkout.jsp">Checkout</a></li>
-                        <li><a href="#">Comment</a></li>
+                        <li><a href="recycle.jsp">Recycle</a></li>
                     </ul>
                 </div>  
             </div>
