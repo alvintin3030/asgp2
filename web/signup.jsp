@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
 
+    
+    
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -134,6 +136,23 @@
     <!-- Footer -->
     <jsp:include page="footer.jsp"/>
    
+    <!-- Validate Password -->
+    <script type="text/javascript">
+        var password = document.getElementById("password");
+        var password_confirm = document.getElementById("password_confirm");
+
+        function validatePassword(){
+          if (password.value !== password_confirm.value) {
+            password_confirm.setCustomValidity("Passwords Don't Match");
+          } else {
+            password_confirm.setCustomValidity('');
+          }
+        }
+
+        password.onchange = validatePassword;
+        password_confirm.onkeyup = validatePassword;
+    </script>
+    
     <!-- Latest jQuery form server -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
     

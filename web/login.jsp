@@ -72,11 +72,11 @@
                     <div class="panel-body" >
                         <form role="form" action="" method="post">
                             <div class="form-group">
-                                <input type="text" name="username" placeholder="Username" class="form-control" id="username">
+                                <input type="text" name="username" placeholder="Username" class="form-control" id="username" required>
                             </div>
 
                             <div class="form-group">
-                                <input type="password" name="password" placeholder="Password" class="form-control" id="password">
+                                <input type="password" name="password" placeholder="Password" class="form-control" id="password" required>
                             </div>
                             <input type="submit" value="Login" class="btn btn-info btn-block">
                         </form>
