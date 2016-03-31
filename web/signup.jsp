@@ -71,34 +71,22 @@
             
                     <div class="panel-body">
                         <form role="form" action="" method="post">
-                            <div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        <input type="text" name="firstname" placeholder="First name" class="form-control" id="firstname">
-                                    </div>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        <input type="text" name="lastname" placeholder="Last name" class="form-control" id="lastname">
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <input type="text" name="email" placeholder="Email" class="form-control" id="email" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" name="email" placeholder="Email" class="form-control" id="email">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" name="username" placeholder="Username" class="form-control" id="username">
+                                <input type="text" name="username" placeholder="Username" class="form-control" id="username" required>
                             </div>
 
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
-                                        <input type="password" name="password" placeholder="Password" class="form-control" id="password">
+                                        <input type="password" name="password" placeholder="Password" class="form-control" id="password" required>
                                     </div>
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
-                                        <input type="password" name="password_confirm" placeholder="Confirm password" class="form-control" id="password_confirm">
+                                        <input type="password" name="password_confirm" placeholder="Confirm password" class="form-control" id="password_confirm" required>
                                     </div>
                                 </div>
                                 </div>
