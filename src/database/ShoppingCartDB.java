@@ -25,7 +25,7 @@ public class ShoppingCartDB {
         try {
             cnnct = ConnectionUtil.getConnection();
 
-            String preQueryStatement = "SELECT * FROM \"ShoppingCart\" WHERE \"userId\" = ? AND \"bookId\" = ?";
+            String preQueryStatement = "SELECT * FROM \"ShoppingCart\" WHERE \"username\" = ? AND \"bookId\" = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, username);
             pStmnt.setString(2, toyId);
@@ -60,7 +60,7 @@ public class ShoppingCartDB {
         return isSuccess;
     }
 
-    public ArrayList<ShoppingCartItem> viewAllBookInCart(String userId) {
+    public ArrayList<ShoppingCartItem> viewAllToyInCart(String username) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         ArrayList<ShoppingCartItem> al = new ArrayList<ShoppingCartItem>();
@@ -69,26 +69,26 @@ public class ShoppingCartDB {
         //Vector<UserInfo> vcb = new Vector<UserInfo>();
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "SELECT * FROM \"ShoppingCart\" WHERE \"userId\" = ?";
+            String preQueryStatement = "SELECT * FROM \"ShoppingCart\" WHERE \"username\" = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
-            pStmnt.setString(1, userId);
+            pStmnt.setString(1, username);
             ResultSet rs = pStmnt.executeQuery();
 
             while (rs.next()) {
-                System.out.println("GetCartBook: userId(" + userId + ")");
+                System.out.println("GetCartToy: username(" + username + ")");
                 ShoppingCart s = new ShoppingCart();
                 s.setCartId(rs.getInt("cartId"));
-                s.setUserId(rs.getString("userId"));
-                s.setBookId(rs.getInt("bookId"));
+                s.setusername(rs.getString("username"));
+                s.setBookId(rs.getInt("toyId"));
                 s.setIsBuy(rs.getInt("isBuy"));
 
                 scal.add(s);
             }
 
             if (scal.size() != 0) {
-                BookDB bookDB = new BookDB();
+                ToyInventoryDB toyInventoryDB = new ToyInventoryDB();
                 for (int i = 0; i < scal.size(); i++) {
-                    al.add(new ShoppingCartItem(bookDB.getBookById(scal.get(i).getBookId()), scal.get(i).getCartId(), scal.get(i).getIsBuy()));
+                    al.add(new ShoppingCartItem(toyInventoryDB.getToyById(scal.get(i).getToyId()), scal.get(i).getCartId(), scal.get(i).getIsBuy()));
                 }
             }
 
@@ -99,16 +99,16 @@ public class ShoppingCartDB {
         }
     }
 
-    public boolean deleteCartItem(String userId, int cartId) {
+    public boolean deleteCartItem(String username, int cartId) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isSuccess = false;
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "DELETE FROM \"ShoppingCart\" WHERE \"cartId\" = ? AND \"userId\" = ?";
+            String preQueryStatement = "DELETE FROM \"ShoppingCart\" WHERE \"cartId\" = ? AND \"username\" = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setInt(1, cartId);
-            pStmnt.setString(2, userId);
+            pStmnt.setString(2, username);
             int rowCount = pStmnt.executeUpdate();
 
             if (rowCount >= 3) {
@@ -129,15 +129,15 @@ public class ShoppingCartDB {
         return isSuccess;
     }
 
-    public boolean deleteAllCartItem(String userId) {
+    public boolean deleteAllCartItem(String username) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isSuccess = false;
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "DELETE FROM \"ShoppingCart\" WHERE \"userId\" = ?";
+            String preQueryStatement = "DELETE FROM \"ShoppingCart\" WHERE \"username\" = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
-            pStmnt.setString(1, userId);
+            pStmnt.setString(1, username);
             int rowCount = pStmnt.executeUpdate();
 
             if (rowCount >= 3) {
@@ -174,8 +174,8 @@ public class ShoppingCartDB {
             if (rs.next()) {
                 s = new ShoppingCart();
                 s.setCartId(rs.getInt("cartId"));
-                s.setUserId(rs.getString("userId"));
-                s.setBookId(rs.getInt("bookId"));
+                s.setusername(rs.getString("username"));
+                s.setBookId(rs.getInt("toyId"));
                 s.setIsBuy(rs.getInt("isBuy"));
             }
             return s;
