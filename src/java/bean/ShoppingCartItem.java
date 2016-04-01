@@ -1,58 +1,37 @@
-package ict.bean;
+package bean;
 
 public class ShoppingCartItem {
 
-    private Book book;
+    private Toy toy;
     private int cartId;
     private int isBuy;
 
-    public ShoppingCartItem() {
-    }
-
-    public ShoppingCartItem(Book book, int cartId, int isBuy) {
-        this.book = book;
+    public ShoppingCartItem(Toy toy, int cartId, int isBuy) {
+        this.toy = toy;
         this.cartId = cartId;
         this.isBuy = isBuy;
     }
 
-    /**
-     * @return the book
-     */
-    public Book getBook() {
-        return book;
+    public Toy getToy() {
+        return toy;
     }
 
-    /**
-     * @param book the book to set
-     */
-    public void setBook(Book book) {
-        this.book = book;
+    public void setToy(Toy toy) {
+        this.toy = toy;
     }
 
-    /**
-     * @return the cartId
-     */
     public int getCartId() {
         return cartId;
     }
-
-    /**
-     * @param cartId the cartId to set
-     */
+    
     public void setCartId(int cartId) {
         this.cartId = cartId;
     }
 
-    /**
-     * @return the isBuy
-     */
     public int getIsBuy() {
         return isBuy;
     }
 
-    /**
-     * @param isBuy the isBuy to set
-     */
     public void setIsBuy(int isBuy) {
         this.isBuy = isBuy;
     }

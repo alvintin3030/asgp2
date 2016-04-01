@@ -15,19 +15,19 @@ import java.util.logging.Logger;
 
 public class UserDB {
 
-    public boolean addRecord(String username, String password, String email) {
+    public boolean addRecord(String username, String password, String email, float credit, int userGroupId) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isSuccess = false;
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "INSERT INTO \"Users\" (\"username\",\"password\",\"email\", \"credit\", \"userGroupId\") VALUES(?,?,?,?,?)";
+            String preQueryStatement = "INSERT INTO \"Users\" (\"username\",\"password\",\"email\",\"credit\",\"userGroupId\") VALUES(?,?,?,?,?)";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, username);
             pStmnt.setString(2, password);
             pStmnt.setString(3, email);
-			pStmnt.setInt(4, 0);
-			pStmnt.setInt(5, userGroupId);
+            pStmnt.setFloat(4, credit);
+            pStmnt.setInt(5, userGroupId);
             int rowCount = pStmnt.executeUpdate();
             if (rowCount >= 1) {
                 isSuccess = true;
@@ -55,7 +55,7 @@ public class UserDB {
             cnnct = ConnectionUtil.getConnection();
             String preQueryStatement = "UPDATE \"Users\" SET \"credit\" = ? WHERE \"username\" = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
-            pStmnt.setFloat(1, credit);
+            pStmnt.setFloat(1, newCredit);
             pStmnt.setString(2, username);
             int rowCount = pStmnt.executeUpdate();
             if (rowCount >= 1) {
@@ -82,11 +82,10 @@ public class UserDB {
         boolean isSuccess = false;
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "UPDATE \"Users\" SET \"username\"=?, \"password\"=?, \"email\"=? WHERE \"username\"=? AND \"password\"=?";
+            String preQueryStatement = "UPDATE \"Users\" SET \"password\" = ?, \"email\" = ? WHERE \"username\" = ? AND \"password\" = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
-            pStmnt.setString(1, username);
-            pStmnt.setString(2, password);
-            pStmnt.setString(3, email);
+            pStmnt.setString(1, password);
+            pStmnt.setString(2, email);
             int rowCount = pStmnt.executeUpdate();
             if (rowCount >= 1) {
                 isSuccess = true;
@@ -142,8 +141,8 @@ public class UserDB {
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
-                user.setCredit(rs.getString("credit"));
-				user.setUserGroupId(rs.getInt("userGroupId"));
+                user.setCredit(rs.getFloat("credit"));
+                user.setUserGroupId(rs.getInt("userGroupId"));
 
                 return user;
             } else {
@@ -170,8 +169,8 @@ public class UserDB {
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
-                user.setCredit(rs.getString("credit"));
-				user.setUserGroupId(rs.getInt("userGroupId"));
+                user.setCredit(rs.getFloat("credit"));
+                user.setUserGroupId(rs.getInt("userGroupId"));
 
                 al.add(user);
             }

@@ -1,6 +1,6 @@
 package database;
 
-import ict.bean.RequestStatus;
+//import bean.RequestStatus;
 import bean.ShoppingCart;
 import bean.ShoppingCartItem;
 import bean.User;
@@ -25,7 +25,7 @@ public class ShoppingCartDB {
         try {
             cnnct = ConnectionUtil.getConnection();
 
-            String preQueryStatement = "SELECT * FROM \"ShoppingCart\" WHERE \"username\" = ? AND \"bookId\" = ?";
+            String preQueryStatement = "SELECT * FROM \"ShoppingCart\" WHERE \"username\" = ? AND \"tid\" = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, username);
             pStmnt.setString(2, toyId);
@@ -78,8 +78,8 @@ public class ShoppingCartDB {
                 System.out.println("GetCartToy: username(" + username + ")");
                 ShoppingCart s = new ShoppingCart();
                 s.setCartId(rs.getInt("cartId"));
-                s.setusername(rs.getString("username"));
-                s.setBookId(rs.getInt("toyId"));
+                s.setUsername(rs.getString("username"));
+                s.setToyId(rs.getInt("toyId"));
                 s.setIsBuy(rs.getInt("isBuy"));
 
                 scal.add(s);
@@ -174,8 +174,8 @@ public class ShoppingCartDB {
             if (rs.next()) {
                 s = new ShoppingCart();
                 s.setCartId(rs.getInt("cartId"));
-                s.setusername(rs.getString("username"));
-                s.setBookId(rs.getInt("toyId"));
+                s.setUsername(rs.getString("username"));
+                s.setToyId(rs.getInt("toyId"));
                 s.setIsBuy(rs.getInt("isBuy"));
             }
             return s;
