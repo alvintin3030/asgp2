@@ -1127,10 +1127,14 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
     color: #5a88ca;
 }
 
-.centered-form{
+.centered-form {
     margin-top: 20px;
 }
 
-.centered-form .panel{
+.centered-form .panel {
     background: rgba(255, 255, 255, 0.8);
+}
+
+.noresize {
+    resize: none; 
 }

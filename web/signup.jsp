@@ -65,17 +65,15 @@
     <!-- Sign up -->
     <div class="container">
         <div class="row centered-form">
-            <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 class="panel-title">Sign up now</h2>
+                        <small>Please fill in all the field</small>
                     </div>
             
                     <div class="panel-body">
                         <form role="form" action="" method="post">
-                            <div class="form-group">
-                                <input type="text" name="email" placeholder="Email" class="form-control" id="email" required>
-                            </div>
                             <div class="form-group">
                                 <input type="text" name="username" placeholder="Username" class="form-control" id="username" required>
                             </div>
@@ -91,7 +89,20 @@
                                         <input type="password" name="password_confirm" placeholder="Confirm password" class="form-control" id="password_confirm" required>
                                     </div>
                                 </div>
-                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="text" name="email" placeholder="Email" class="form-control" id="email" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="text" name="phone" placeholder="Phone" class="form-control" id="phone" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <textarea name="address" placeholder="Address" class="form-control noresize" id="address" required></textarea>
+                            </div>
+                            
                             <input type="submit" value="Register" class="btn btn-info btn-block">
                         </form>
                     </div>
