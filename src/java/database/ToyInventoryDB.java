@@ -29,12 +29,12 @@ public class ToyInventoryDB {
             if (rs.next()) {
                 t = new Toy();
                 t.setTid(rs.getInt("tid"));
-                t.setToyName(rs.getString("toyName"));
-                t.setToyDescription(rs.getString("toyDescription"));
-                t.setToyCategory(rs.getString("toyCategory"));
-                t.setToyImage(rs.getString("toyImage"));
-                t.setPrice(rs.getFloat("price"));
-                t.setIsRecycle(rs.getBoolean("isRecycle"));
+                t.setName(rs.getString("Name"));
+                t.setDescription(rs.getString("Description"));
+                t.setCategory(rs.getString("Category"));
+                t.setImage(rs.getString("Image"));
+                t.setPrice(rs.getFloat("Price"));
+                t.setQuantity(rs.getInt("Quantity"));
             }
             return t;
         } catch (Exception ex) {
@@ -50,15 +50,15 @@ public class ToyInventoryDB {
         boolean isSuccess = false;
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "INSERT INTO \"Toys\" (\"tid\", \"toyName\", \"toyDescription\", \"toyCategory\", \"toyImage\", \"price\", \"isRecycle\") VALUES(?, ?, ?, ?, ?, ?, ?)";
+            String preQueryStatement = "INSERT INTO \"Toys\" (\"tid\", \"Name\", \"Description\", \"Category\", \"Image\", \"price\", \"Quantity\") VALUES(?, ?, ?, ?, ?, ?, ?)";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setInt(1, t.getTid());
-            pStmnt.setString(2, t.getToyName());
-            pStmnt.setString(3, t.getToyDescription());
-            pStmnt.setString(4, t.getToyCategory());
-            pStmnt.setString(5, t.getToyImage());
+            pStmnt.setString(2, t.getName());
+            pStmnt.setString(3, t.getDescription());
+            pStmnt.setString(4, t.getCategory());
+            pStmnt.setString(5, t.getImage());
             pStmnt.setFloat(6, t.getPrice());
-            pStmnt.setBoolean(7, t.isIsRecycle());
+            pStmnt.setInt(7, t.getQuantity());
             int rowCount = pStmnt.executeUpdate();
 
             if (rowCount >= 1) {
@@ -86,15 +86,15 @@ public class ToyInventoryDB {
         boolean isSuccess = false;
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "UPDATE \"Toys\" SET \"toyName\"=?, \"toyDescription\"=?, \"toyCategory\"=?, \"toyImage\"=?, \"price\"=?, \"isRecycle\"=? WHERE \"tid\"=?";
+            String preQueryStatement = "UPDATE \"Toys\" SET \"Name\"=?, \"Description\"=?, \"Category\"=?, \"Image\"=?, \"price\"=?, \"Quantity\"=? WHERE \"tid\"=?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setInt(1, t.getTid());
-            pStmnt.setString(2, t.getToyName());
-            pStmnt.setString(3, t.getToyDescription());
-            pStmnt.setString(4, t.getToyCategory());
-            pStmnt.setString(5, t.getToyImage());
+            pStmnt.setString(2, t.getName());
+            pStmnt.setString(3, t.getDescription());
+            pStmnt.setString(4, t.getCategory());
+            pStmnt.setString(5, t.getImage());
             pStmnt.setFloat(6, t.getPrice());
-            pStmnt.setBoolean(7, t.isIsRecycle());
+            pStmnt.setInt(7, t.getQuantity());
             int rowCount = pStmnt.executeUpdate();
 
             if (rowCount >= 1) {
@@ -174,12 +174,12 @@ public class ToyInventoryDB {
             while (rs.next() && i < 10) {
                 Toy t = new Toy();
                 t.setTid(rs.getInt("tid"));
-                t.setToyName(rs.getString("toyName"));
-                t.setToyDescription(rs.getString("toyDescription"));
-                t.setToyCategory(rs.getString("toyCategory"));
-                t.setToyImage(rs.getString("toyImage"));
-                t.setPrice(rs.getFloat("price"));
-                t.setIsRecycle(rs.getBoolean("isRecycle"));
+                t.setName(rs.getString("Name"));
+                t.setDescription(rs.getString("Description"));
+                t.setCategory(rs.getString("Category"));
+                t.setImage(rs.getString("Image"));
+                t.setPrice(rs.getFloat("Price"));
+                t.setQuantity(rs.getInt("Quantity"));
 				
                 al.add(t);
                 i++;
@@ -205,12 +205,12 @@ public class ToyInventoryDB {
             while (rs.next()) {
                 Toy t = new Toy();
                 t.setTid(rs.getInt("tid"));
-                t.setToyName(rs.getString("toyName"));
-                t.setToyDescription(rs.getString("toyDescription"));
-                t.setToyCategory(rs.getString("toyCategory"));
-                t.setToyImage(rs.getString("toyImage"));
-                t.setPrice(rs.getFloat("price"));
-                t.setIsRecycle(rs.getBoolean("isRecycle"));
+                t.setName(rs.getString("Name"));
+                t.setDescription(rs.getString("Description"));
+                t.setCategory(rs.getString("Category"));
+                t.setImage(rs.getString("Image"));
+                t.setPrice(rs.getFloat("Price"));
+                t.setQuantity(rs.getInt("Quantity"));
 				
                 al.add(t);
             }
@@ -230,7 +230,7 @@ public class ToyInventoryDB {
 
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "SELECT * FROM \"Toys\" WHERE LOWER(\"toyName\") LIKE ? OR LOWER(\"toyDescription\") LIKE ?";
+            String preQueryStatement = "SELECT * FROM \"Toys\" WHERE LOWER(\"Name\") LIKE ? OR LOWER(\"Description\") LIKE ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, searchString);
             pStmnt.setString(2, searchString);
@@ -239,12 +239,12 @@ public class ToyInventoryDB {
             while (rs.next()) {
                 Toy t = new Toy();
                 t.setTid(rs.getInt("tid"));
-                t.setToyName(rs.getString("toyName"));
-                t.setToyDescription(rs.getString("toyDescription"));
-                t.setToyCategory(rs.getString("toyCategory"));
-                t.setToyImage(rs.getString("toyImage"));
-                t.setPrice(rs.getFloat("price"));
-                t.setIsRecycle(rs.getBoolean("isRecycle"));
+                t.setName(rs.getString("Name"));
+                t.setDescription(rs.getString("Description"));
+                t.setCategory(rs.getString("Category"));
+                t.setImage(rs.getString("Image"));
+                t.setPrice(rs.getFloat("Price"));
+                t.setQuantity(rs.getInt("Quantity"));
 				
                 al.add(t);
             }

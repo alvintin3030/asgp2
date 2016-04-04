@@ -1,6 +1,6 @@
 package database;
 
-//import bean.RequestStatus;
+import ict.bean.RequestStatus;
 import bean.ShoppingCart;
 import bean.ShoppingCartItem;
 import bean.User;
@@ -25,7 +25,7 @@ public class ShoppingCartDB {
         try {
             cnnct = ConnectionUtil.getConnection();
 
-            String preQueryStatement = "SELECT * FROM \"ShoppingCart\" WHERE \"username\" = ? AND \"tid\" = ?";
+            String preQueryStatement = "SELECT * FROM \"ShoppingCart\" WHERE \"username\" = ? AND \"toyId\" = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, username);
             pStmnt.setString(2, toyId);
@@ -60,13 +60,12 @@ public class ShoppingCartDB {
         return isSuccess;
     }
 
-    public ArrayList<ShoppingCartItem> viewAllToyInCart(String username) {
+    public ArrayList<ShoppingCartItem> viewAllBookInCart(String username) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         ArrayList<ShoppingCartItem> al = new ArrayList<ShoppingCartItem>();
         ArrayList<ShoppingCart> scal = new ArrayList<ShoppingCart>();
 
-        //Vector<UserInfo> vcb = new Vector<UserInfo>();
         try {
             cnnct = ConnectionUtil.getConnection();
             String preQueryStatement = "SELECT * FROM \"ShoppingCart\" WHERE \"username\" = ?";
@@ -75,20 +74,20 @@ public class ShoppingCartDB {
             ResultSet rs = pStmnt.executeQuery();
 
             while (rs.next()) {
-                System.out.println("GetCartToy: username(" + username + ")");
+                System.out.println("GetCartBook: username(" + username + ")");
                 ShoppingCart s = new ShoppingCart();
                 s.setCartId(rs.getInt("cartId"));
-                s.setUsername(rs.getString("username"));
-                s.setToyId(rs.getInt("toyId"));
+                s.setusername(rs.getString("username"));
+                s.settoyId(rs.getInt("toyId"));
                 s.setIsBuy(rs.getInt("isBuy"));
 
                 scal.add(s);
             }
 
             if (scal.size() != 0) {
-                ToyInventoryDB toyInventoryDB = new ToyInventoryDB();
+                ToyInventoryDB toyDB = new ToyInventoryDB();
                 for (int i = 0; i < scal.size(); i++) {
-                    al.add(new ShoppingCartItem(toyInventoryDB.getToyById(scal.get(i).getToyId()), scal.get(i).getCartId(), scal.get(i).getIsBuy()));
+                    al.add(new ShoppingCartItem(toyDB.getBookById(scal.get(i).gettoyId()), scal.get(i).getCartId(), scal.get(i).getIsBuy()));
                 }
             }
 
@@ -163,7 +162,6 @@ public class ShoppingCartDB {
         PreparedStatement pStmnt = null;
         ShoppingCart s = null;
 
-        //Vector<UserInfo> vcb = new Vector<UserInfo>();
         try {
             cnnct = ConnectionUtil.getConnection();
             String preQueryStatement = "SELECT * FROM \"ShoppingCart\" WHERE \"cartId\" = ?";
@@ -174,8 +172,8 @@ public class ShoppingCartDB {
             if (rs.next()) {
                 s = new ShoppingCart();
                 s.setCartId(rs.getInt("cartId"));
-                s.setUsername(rs.getString("username"));
-                s.setToyId(rs.getInt("toyId"));
+                s.setusername(rs.getString("username"));
+                s.settoyId(rs.getInt("toyId"));
                 s.setIsBuy(rs.getInt("isBuy"));
             }
             return s;
