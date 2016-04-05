@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 public class UserDB {
 
-    public boolean addRecord(String username, String password, String email) {
+    public boolean addRecord(String username, String password, String email, int userGroupId, String phone, String address) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isSuccess = false;
@@ -26,10 +26,10 @@ public class UserDB {
             pStmnt.setString(1, username);
             pStmnt.setString(2, password);
             pStmnt.setString(3, email);
-			pStmnt.setInt(4, 0);
-			pStmnt.setInt(5, userGroupId);
-			pStmnt.setString(6, phone);
-			pStmnt.setString(7,address);
+            pStmnt.setInt(4, 0);
+            pStmnt.setInt(5, userGroupId);
+            pStmnt.setString(6, phone);
+            pStmnt.setString(7,address);
             int rowCount = pStmnt.executeUpdate();
             if (rowCount >= 1) {
                 isSuccess = true;
@@ -57,7 +57,7 @@ public class UserDB {
             cnnct = ConnectionUtil.getConnection();
             String preQueryStatement = "UPDATE \"Users\" SET \"credit\" = ? WHERE \"username\" = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
-            pStmnt.setFloat(1, credit);
+            pStmnt.setFloat(1, newCredit);
             pStmnt.setString(2, username);
             int rowCount = pStmnt.executeUpdate();
             if (rowCount >= 1) {
@@ -146,10 +146,10 @@ public class UserDB {
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
-                user.setCredit(rs.getString("credit"));
-				user.setUserGroupId(rs.getInt("userGroupId"));
-				user.setPhone(rs.getString("phone"));
-				user.setAddress(rs.getString("address"));
+                user.setCredit(rs.getFloat("credit"));
+		user.setUserGroupId(rs.getInt("userGroupId"));
+		user.setPhone(rs.getString("phone"));
+		user.setAddress(rs.getString("address"));
 
                 return user;
             } else {
@@ -176,10 +176,10 @@ public class UserDB {
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
-                user.setCredit(rs.getString("credit"));
-				user.setUserGroupId(rs.getInt("userGroupId"));
-				user.setPhone(rs.getString("phone"));
-				user.setAddress(rs.getString("address"));
+                user.setCredit(rs.getFloat("credit"));
+		user.setUserGroupId(rs.getInt("userGroupId"));
+		user.setPhone(rs.getString("phone"));
+		user.setAddress(rs.getString("address"));
 
                 al.add(user);
             }
