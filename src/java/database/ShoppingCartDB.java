@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 public class ShoppingCartDB {
 
-    public int addRecord(String username, String toyId, int isBuy) { //return errorCode: 0=success, 1=fail(book exist in cart), 2=fail(error)
+    public int addRecord(String username, int toyId, boolean isBuy) { //return errorCode: 0=success, 1=fail(book exist in cart), 2=fail(error)
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         int isSuccess = -1;
@@ -27,14 +27,14 @@ public class ShoppingCartDB {
             String preQueryStatement = "SELECT * FROM \"ShoppingCart\" WHERE \"username\" = ? AND \"toyId\" = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, username);
-            pStmnt.setString(2, toyId);
+            pStmnt.setInt(2, toyId);
             ResultSet rs = pStmnt.executeQuery();
             if (!rs.next()) {
                 preQueryStatement = "INSERT INTO \"ShoppingCart\" (\"username\", \"toyId\", \"isBuy\") VALUES (?,?,?)";
                 pStmnt = cnnct.prepareStatement(preQueryStatement);
                 pStmnt.setString(1, username);
-                pStmnt.setString(2, toyId);
-                pStmnt.setInt(3, isBuy);
+                pStmnt.setInt(2, toyId);
+                pStmnt.setBoolean(3, isBuy);
                 int rowCount = pStmnt.executeUpdate();
                 if (rowCount >= 1) {
                     isSuccess = 0;
@@ -73,12 +73,12 @@ public class ShoppingCartDB {
             ResultSet rs = pStmnt.executeQuery();
 
             while (rs.next()) {
-                System.out.println("GetCartBook: username(" + username + ")");
+                System.out.println("GetCartToy: username(" + username + ")");
                 ShoppingCart s = new ShoppingCart();
                 s.setCartId(rs.getInt("cartId"));
-                s.setusername(rs.getString("username"));
-                s.settoyId(rs.getInt("toyId"));
-                s.setIsBuy(rs.getInt("isBuy"));
+                s.setUsername(rs.getString("username"));
+                s.setToyId(rs.getInt("toyId"));
+                s.setIsBuy(rs.getBoolean("isBuy"));
 
                 scal.add(s);
             }
@@ -86,7 +86,7 @@ public class ShoppingCartDB {
             if (scal.size() != 0) {
                 ToyInventoryDB toyDB = new ToyInventoryDB();
                 for (int i = 0; i < scal.size(); i++) {
-                    al.add(new ShoppingCartItem(toyDB.getBookById(scal.get(i).gettoyId()), scal.get(i).getCartId(), scal.get(i).getIsBuy()));
+                    al.add(new ShoppingCartItem(toyDB.getToyById(scal.get(i).getToyId()), scal.get(i).getCartId(), scal.get(i).getIsBuy()));
                 }
             }
 
@@ -171,9 +171,9 @@ public class ShoppingCartDB {
             if (rs.next()) {
                 s = new ShoppingCart();
                 s.setCartId(rs.getInt("cartId"));
-                s.setusername(rs.getString("username"));
-                s.settoyId(rs.getInt("toyId"));
-                s.setIsBuy(rs.getInt("isBuy"));
+                s.setUsername(rs.getString("username"));
+                s.setToyId(rs.getInt("toyId"));
+                s.setIsBuy(rs.getBoolean("isBuy"));
             }
             return s;
         } catch (Exception ex) {
