@@ -5,7 +5,7 @@ public class ShoppingCart {
     private int cartId;
     private String username;
     private int toyId;
-    private int isBuy;
+    private boolean isBuy;
 
     public int getCartId() {
         return cartId;
@@ -31,11 +31,11 @@ public class ShoppingCart {
         this.toyId = toyId;
     }
 
-    public int getIsBuy() {
+    public boolean getIsBuy() {
         return isBuy;
     }
 
-    public void setIsBuy(int isBuy) {
+    public void setIsBuy(boolean isBuy) {
         this.isBuy = isBuy;
     }
 

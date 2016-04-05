@@ -4,9 +4,9 @@ public class ShoppingCartItem {
 
     private Toy toy;
     private int cartId;
-    private int isBuy;
+    private boolean isBuy;
 
-    public ShoppingCartItem(Toy toy, int cartId, int isBuy) {
+    public ShoppingCartItem(Toy toy, int cartId, boolean isBuy) {
         this.toy = toy;
         this.cartId = cartId;
         this.isBuy = isBuy;
@@ -28,11 +28,11 @@ public class ShoppingCartItem {
         this.cartId = cartId;
     }
 
-    public int getIsBuy() {
+    public boolean getIsBuy() {
         return isBuy;
     }
 
-    public void setIsBuy(int isBuy) {
+    public void setIsBuy(boolean isBuy) {
         this.isBuy = isBuy;
     }
 
