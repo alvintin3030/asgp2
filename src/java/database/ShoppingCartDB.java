@@ -1,6 +1,5 @@
 package database;
 
-import ict.bean.RequestStatus;
 import bean.ShoppingCart;
 import bean.ShoppingCartItem;
 import bean.User;
