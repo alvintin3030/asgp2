@@ -78,7 +78,6 @@ public class ShoppingCartDB {
                 s.setCartId(rs.getInt("cartId"));
                 s.setUsername(rs.getString("username"));
                 s.setToyId(rs.getInt("toyId"));
-                s.setIsBuy(rs.getBoolean("isBuy"));
 
                 scal.add(s);
             }
@@ -86,7 +85,7 @@ public class ShoppingCartDB {
             if (scal.size() != 0) {
                 ToyInventoryDB toyDB = new ToyInventoryDB();
                 for (int i = 0; i < scal.size(); i++) {
-                    al.add(new ShoppingCartItem(toyDB.getToyById(scal.get(i).getToyId()), scal.get(i).getCartId(), scal.get(i).getIsBuy()));
+                    al.add(new ShoppingCartItem(toyDB.getToyById(scal.get(i).getToyId()), scal.get(i).getCartId()));
                 }
             }
 
@@ -173,7 +172,6 @@ public class ShoppingCartDB {
                 s.setCartId(rs.getInt("cartId"));
                 s.setUsername(rs.getString("username"));
                 s.setToyId(rs.getInt("toyId"));
-                s.setIsBuy(rs.getBoolean("isBuy"));
             }
             return s;
         } catch (Exception ex) {

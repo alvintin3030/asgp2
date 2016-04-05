@@ -230,7 +230,7 @@ public class ToyInventoryDB {
 
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "SELECT * FROM \"Toys\" WHERE LOWER(\"Name\") LIKE ? OR LOWER(\"Description\") LIKE ?";
+            String preQueryStatement = "SELECT * FROM \"Toys\" WHERE LOWER(\"Name\") LIKE ? OR LOWER(\"Description\") LIKE ? OR LOWER(\"Category\") LIKE ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, searchString);
             pStmnt.setString(2, searchString);
