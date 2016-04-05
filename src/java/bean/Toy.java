@@ -3,12 +3,12 @@ package bean;
 public class Toy {
 
     private int tid;
-    private String toyName;
-    private String toyDescription;
-    private String toyCategory;
-    private String toyImage;
+    private String name;
+    private String description;
+    private String category;
+    private String image;
     private float price;
-    private boolean isRecycle;
+    private int quantity;
 
     public int getTid() {
         return tid;
@@ -18,36 +18,36 @@ public class Toy {
         this.tid = tid;
     }
 
-    public String getToyName() {
-        return toyName;
+    public String getName() {
+        return name;
     }
 
-    public void setToyName(String toyName) {
-        this.toyName = toyName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getToyDescription() {
-        return toyDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setToyDescription(String toyDescription) {
-        this.toyDescription = toyDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getToyCategory() {
-        return toyCategory;
+    public String getCategory() {
+        return category;
     }
 
-    public void setToyCategory(String toyCategory) {
-        this.toyCategory = toyCategory;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public String getToyImage() {
-        return toyImage;
+    public String getImage() {
+        return image;
     }
 
-    public void setToyImage(String toyImage) {
-        this.toyImage = toyImage;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public float getPrice() {
@@ -58,12 +58,12 @@ public class Toy {
         this.price = price;
     }
 
-    public boolean isIsRecycle() {
-        return isRecycle;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setIsRecycle(boolean isRecycle) {
-        this.isRecycle = isRecycle;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
     
 }

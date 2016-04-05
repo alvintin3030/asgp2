@@ -7,6 +7,8 @@ public class User {
     private String email;
     private float credit;
     private int userGroupId; 
+    private String phone;
+    private String address;
 
     public int getUid() {
         return uid;
@@ -54,6 +56,22 @@ public class User {
 
     public void setUserGroupId(int userGroupId) {
         this.userGroupId = userGroupId;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 }
