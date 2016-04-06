@@ -76,7 +76,7 @@ public class OrderRecordDB {
                 OrderRecord record = new OrderRecord();
                 record.setUserId(rs.getInt("userId"));
                 record.setCartId(rs.getInt("cartId"));
-                record.setOrderDatetime(rs.getDate("orderDatetime"));
+                record.setOrderDateTime(rs.getDate("orderDatetime"));
                 record.setOrderStatus(rs.getString("orderStatus"));
 
                 al.add(record);

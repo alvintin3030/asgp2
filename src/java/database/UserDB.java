@@ -9,27 +9,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class UserDB {
 
-    public boolean addRecord(String username, String password, String email, int userGroupId, String phone, String address) {
+    public boolean addRecord(String username, String password, String email, String phone, String address) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isSuccess = false;
+        
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "INSERT INTO \"Users\" (\"username\",\"password\",\"email\", \"credit\", \"userGroupId\", \"phone\", \"address\") VALUES(?,?,?,?,?,?,?)";
+            String preQueryStatement = "INSERT INTO \"Users\" (\"username\",\"password\",\"email\",\"phone\",\"address\",\"credit\") VALUES(?,?,?,?,?,?)";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, username);
             pStmnt.setString(2, password);
             pStmnt.setString(3, email);
-            pStmnt.setInt(4, 0);
-            pStmnt.setInt(5, userGroupId);
+            pStmnt.setString(4, phone);
+            pStmnt.setString(5, address);
             pStmnt.setString(6, phone);
-            pStmnt.setString(7,address);
+            pStmnt.setFloat(7, 0);
             int rowCount = pStmnt.executeUpdate();
             if (rowCount >= 1) {
                 isSuccess = true;
@@ -46,6 +46,7 @@ public class UserDB {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return isSuccess;
     }
 
@@ -53,9 +54,10 @@ public class UserDB {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isSuccess = false;
+        
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "UPDATE \"Users\" SET \"credit\" = ? WHERE \"username\" = ?";
+            String preQueryStatement = "UPDATE \"Users\" SET \"credit\"=? WHERE \"username\"=?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setFloat(1, newCredit);
             pStmnt.setString(2, username);
@@ -75,6 +77,7 @@ public class UserDB {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return isSuccess;
     }
 
@@ -82,15 +85,16 @@ public class UserDB {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isSuccess = false;
+        
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "UPDATE \"Users\" SET \"username\"=?, \"password\"=?, \"email\"=?, \"phone\"=?, \"address\"=? WHERE \"username\"=? AND \"password\"=?";
+            String preQueryStatement = "UPDATE \"Users\" SET \"password\"=?, \"email\"=?, \"phone\"=?, \"address\"=? WHERE \"username\"=?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, username);
             pStmnt.setString(2, password);
             pStmnt.setString(3, email);
-			pStmnt.setString(4, phone);
-			pStmnt.setString(5, address);
+            pStmnt.setString(4, phone);
+            pStmnt.setString(5, address);
             int rowCount = pStmnt.executeUpdate();
             if (rowCount >= 1) {
                 isSuccess = true;
@@ -107,6 +111,7 @@ public class UserDB {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return isSuccess;
     }
 
@@ -116,7 +121,7 @@ public class UserDB {
 
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "SELECT * FROM \"Users\" WHERE \"username\" = ? AND \"password\" = ?";
+            String preQueryStatement = "SELECT * FROM \"Users\" WHERE \"username\"=? AND \"password\"=?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, username);
             pStmnt.setString(2, password);
@@ -137,7 +142,7 @@ public class UserDB {
 
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "SELECT * FROM \"Users\" WHERE \"username\" = ?";
+            String preQueryStatement = "SELECT * FROM \"Users\" WHERE \"username\"=?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, username);
             ResultSet rs = pStmnt.executeQuery();
@@ -146,10 +151,9 @@ public class UserDB {
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
-                user.setCredit(rs.getFloat("credit"));
-		user.setUserGroupId(rs.getInt("userGroupId"));
 		user.setPhone(rs.getString("phone"));
 		user.setAddress(rs.getString("address"));
+                user.setCredit(rs.getFloat("credit"));
 
                 return user;
             } else {
@@ -176,11 +180,10 @@ public class UserDB {
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
-                user.setCredit(rs.getFloat("credit"));
-		user.setUserGroupId(rs.getInt("userGroupId"));
 		user.setPhone(rs.getString("phone"));
 		user.setAddress(rs.getString("address"));
-
+                user.setCredit(rs.getFloat("credit"));
+                
                 al.add(user);
             }
             return al;

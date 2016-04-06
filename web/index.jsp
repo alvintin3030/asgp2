@@ -127,15 +127,15 @@
                                    Toy product=productItems.get(i);
                                    out.println("<div class=\"single-product\">"
                                        + "<div class=\"product-f-image\">");
-                                   out.println("<img src=\"img/"+product.getToyImage()+"\">");
+                                   out.println("<img src=\"img/"+product.getImage()+"\">");
                                    out.println(" <div class=\"product-hover\">");
                                    out.println("<a href=\"shopping?action=add&cb=true&id="+product.getTid()+"\" class=\"add-to-cart-link\"><i class=\"fa fa-shopping-cart\"></i> Add to cart</a>");
                                    out.println("<a href=\"viewProduct?type=\""+product.getTid()+"&page=detail class=\"view-details-link\"><i class=\"fa fa-link\"></i> See details</a>");                             
                                    out.println("</div>"
                                            + "</div>");
-                                   out.println("<h2><a href=\"viewProduct?type=\""+product.getTid()+"&page=\"detail\" >"+product.getToyName()+"</a></h2>");
+                                   out.println("<h2><a href=\"viewProduct?type=\""+product.getTid()+"&page=\"detail\" >"+product.getName()+"</a></h2>");
                                    out.println("<div class=\"product-carousel-price\">");
-                                   out.println("<ins>"+product.getPrice()+"</ins>");
+                                   out.println("<ins> $"+product.getPrice()+"</ins>");
                                    out.println("</div>"
                                            + "</div>");
                                }

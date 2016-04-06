@@ -7,7 +7,7 @@ public class RecycleToy {
     private String category;
     private String image;
     private float price;
-    private String donatedby;
+    private String donatedBy;
 
     public int getTid() {
         return tid;
@@ -57,12 +57,12 @@ public class RecycleToy {
         this.price = price;
     }
 
-    public String getDonatedby() {
-        return donatedby;
+    public String getDonatedBy() {
+        return donatedBy;
     }
 
-    public void setDonatedby(String donatedby) {
-        this.donatedby = donatedby;
+    public void setDonatedBy(String donatedBy) {
+        this.donatedBy = donatedBy;
     }
     
 }

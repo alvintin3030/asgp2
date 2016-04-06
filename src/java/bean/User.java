@@ -5,10 +5,9 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private float credit;
-    private int userGroupId; 
     private String phone;
     private String address;
+    private float credit;
 
     public int getUid() {
         return uid;
@@ -42,22 +41,6 @@ public class User {
         this.email = email;
     }
 
-    public float getCredit() {
-        return credit;
-    }
-
-    public void setCredit(float credit) {
-        this.credit = credit;
-    }
-
-    public int getUserGroupId() {
-        return userGroupId;
-    }
-
-    public void setUserGroupId(int userGroupId) {
-        this.userGroupId = userGroupId;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -74,4 +57,12 @@ public class User {
         this.address = address;
     }
 
+    public float getCredit() {
+        return credit;
+    }
+
+    public void setCredit(float credit) {
+        this.credit = credit;
+    }
+    
 }

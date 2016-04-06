@@ -1,4 +1,4 @@
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -66,11 +66,27 @@
             <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h2 class="panel-title">Login now</h2>
+                        <h2 class="panel-title">
+                            Login now
+                            <%
+                                Boolean flag = (Boolean) request.getAttribute("loginError");
+                                if (flag != null) {
+                                    if (flag == true) {
+                                        out.println("<span class=\"label label-danger\">");
+                                        out.println("Login Failed");
+                                        out.println("</span>");
+                                    } else {
+                                        out.println("<br />");
+                                    }
+                                } else {
+                                    out.println("<br />");
+                                }
+                            %>
+                        </h2>
                     </div>
 
                     <div class="panel-body" >
-                        <form role="form" action="" method="post">
+                        <form role="form" action="login" method="post">
                             <div class="form-group">
                                 <input type="text" name="username" placeholder="Username" class="form-control" id="username" required>
                             </div>
@@ -78,13 +94,17 @@
                             <div class="form-group">
                                 <input type="password" name="password" placeholder="Password" class="form-control" id="password" required>
                             </div>
+                            
                             <input type="submit" value="Login" class="btn btn-info btn-block">
+                            <input type="hidden" name="action" value="authenticate" />
+                            
                         </form>
-                    </div>
-
+                    </div>    
                 </div>
             </div>
         </div>
+        
+        
     </div>
 
     <!-- Promo area -->

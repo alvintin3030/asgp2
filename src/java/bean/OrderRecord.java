@@ -6,7 +6,7 @@ public class OrderRecord {
     private int orderId;
     private int userId;
     private int cartId;
-    private Date orderDatetime;
+    private Date orderDateTime;
     private String orderStatus;
 
     public int getOrderId() {
@@ -25,23 +25,23 @@ public class OrderRecord {
         this.userId = userId;
     }
 	
-	public int getCartId() {
+    public int getCartId() {
         return cartId;
     }
 
-    public void setCartId(int cartIdId) {
+    public void setCartId(int cartId) {
         this.cartId = cartId;
     }
     
-    public Date getOrderDatetime() {
-        return orderDatetime;
+    public Date getOrderDateTime() {
+        return orderDateTime;
     }
 
-    public void setOrderDatetime(Date orderDatetime) {
-        this.orderDatetime = orderDatetime;
+    public void setOrderDateTime(Date orderDateTime) {
+        this.orderDateTime = orderDateTime;
     }
 	
-	 public String getOrderStatus() {
+    public String getOrderStatus() {
         return orderStatus;
     }
 
