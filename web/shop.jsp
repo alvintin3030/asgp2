@@ -14,7 +14,6 @@
       }
      %>
       
-      
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -102,21 +101,23 @@
                                Toy product=productItems.get(i);
 
                                out.println("<div class=\"col-md-3 col-sm-6\">");
-                               out.println("<div class=\"single-product\">"
-                                   + "<div class=\"product-upper\">");
-                               out.println("<img src=\"img/"+product.getToyImage()+"\">");
+                               out.println("<div class=\"single-shop-product\">"
+                                   + "<div class=\"product-f-image\">");
+                               out.println("<img class=\"product-img\" src=\"img/"+product.getImage()+"\">");
                                out.println("</div>");
 //                               out.println(" <div class=\"product-hover\">");
 //                               out.println("<a href=\"shopping?action=add&cb=true&id="+product.getTid()+"\" class=\"add-to-cart-link\"><i class=\"fa fa-shopping-cart\"></i> Add to cart</a>");
 //                               out.println("<a href=\"viewProduct?type=\""+product.getTid()+"&page=detail class=\"view-details-link\"><i class=\"fa fa-link\"></i> See details</a>");                             
 //                               out.println("</div>"
 //                                       + "</div>");
-                               out.println("<h2><a href=\"viewProduct?type=\""+product.getTid()+"&page=detail >"+product.getToyName()+"</a></h2>");
+                               out.println("<h2><a href=\"viewProduct?type="+product.getTid()+"&page=detail\" >"+product.getName()+"</a></h2>");
                                out.println("<div class=\"product-carousel-price\">");
-                               out.println("<ins>"+product.getPrice()+"</ins>");
+                               out.println("<ins> $"+product.getPrice()+"</ins>");
                                out.println("</div>");
                                out.println("<div class=\"product-option-shop\">");
                                out.println("<a class=\"add_to_cart_button\" data-quantity=\"1\" data-product_sku=\"\" data-product_id=\"70\" rel=\"nofollow\" a href=\"shopping?action=add&cb=true&id="+product.getTid()+"\">Add to cart</a>");
+                               out.println("</div>");
+                               out.println("</div>");
                                out.println("</div>");
 
                                       

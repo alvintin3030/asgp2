@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -48,7 +49,7 @@
                 </div> 
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.jsp">Home</a></li>
+                        <li><a href="index.jsp">Home</a></li>
                         <li><a href="shop.jsp">Shop page</a></li>
                         <li><a href="cart.jsp">Cart</a></li>
                         <li><a href="checkout.jsp">Checkout</a></li>
@@ -70,30 +71,31 @@
                     </div>
             
                     <div class="panel-body">
-                        <form role="form" action="" method="post">
+                        <form role="form" action="login" method="post">
                             <div class="form-group">
-                                <input type="text" name="username" placeholder="Username" class="form-control" id="username" required>
+                                <input type="text" name="username" placeholder="Username" class="form-control" id="username" required />
+                                
                             </div>
 
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
-                                        <input type="password" name="password" placeholder="Password" class="form-control" id="password" required>
+                                        <input type="password" name="password" placeholder="Password" class="form-control" id="password" required />
                                     </div>
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
-                                        <input type="password" name="password_confirm" placeholder="Confirm password" class="form-control" id="password_confirm" required>
+                                        <input type="password" name="password_confirm" placeholder="Confirm password" class="form-control" id="password_confirm" required />
                                     </div>
                                 </div>
                             </div>
                             
                             <div class="form-group">
-                                <input type="text" name="email" placeholder="Email" class="form-control" id="email" required>
+                                <input type="text" name="email" placeholder="Email" class="form-control" id="email" required />
                             </div>
                             
                             <div class="form-group">
-                                <input type="text" name="phone" placeholder="Phone" class="form-control" id="phone" required>
+                                <input type="text" name="phone" placeholder="Phone" class="form-control" id="phone" required />
                             </div>
                             
                             <div class="form-group">
@@ -101,45 +103,31 @@
                             </div>
                             
                             <input type="submit" value="Register" class="btn btn-info btn-block">
+                            <input type="hidden" name="action" value="register" />
                         </form>
                     </div>
+                    
+                    <%
+                        Boolean flag = (Boolean) request.getAttribute("registerError");
+                        if (flag != null) {
+                            if (flag == true) {
+                                out.println("<div class=\"error\">");
+                                out.println("Register failed - username already in use");
+                                out.println("</div>");
+                            } else {
+                                out.println("<br />");
+                            }
+                        } else {
+                            out.println("<br />");
+                        }
+                    %>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Promo area -->
-    <div class="promo-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-promo promo1">
-                        <i class="fa fa-refresh"></i>
-                        <p>30 Days return</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-promo promo2">
-                        <i class="fa fa-truck"></i>
-                        <p>Free shipping</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-promo promo3">
-                        <i class="fa fa-lock"></i>
-                        <p>Secure payments</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-promo promo4">
-                        <i class="fa fa-gift"></i>
-                        <p>New products</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <!-- End promo area -->
+    <jsp:include page="promo.jsp"/>
     
     <!-- Footer -->
     <jsp:include page="footer.jsp"/>

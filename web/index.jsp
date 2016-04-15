@@ -75,37 +75,7 @@
     </div> <!-- End mainmenu area -->
     
     <!-- Promo area -->
-    <div class="promo-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-promo promo1">
-                        <i class="fa fa-refresh"></i>
-                        <p>30 Days return</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-promo promo2">
-                        <i class="fa fa-truck"></i>
-                        <p>Free shipping</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-promo promo3">
-                        <i class="fa fa-lock"></i>
-                        <p>Secure payments</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-promo promo4">
-                        <i class="fa fa-gift"></i>
-                        <p>New products</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <!-- End promo area -->
+    <jsp:include page="promo.jsp"/>
     
     
     <% ArrayList<Toy> productItems=(ArrayList<Toy>) request.getAttribute("productItems");%>
@@ -127,8 +97,8 @@
                                    Toy product=productItems.get(i);
                                    out.println("<div class=\"single-product\">"
                                        + "<div class=\"product-f-image\">");
-                                   out.println("<img src=\"img/"+product.getImage()+"\">");
-                                   out.println(" <div class=\"product-hover\">");
+                                   out.println("<img class=\"product-img\" src=\"img/"+product.getImage()+"\">");
+                                   out.println("<div class=\"product-hover\">");
                                    out.println("<a href=\"shopping?action=add&cb=true&id="+product.getTid()+"\" class=\"add-to-cart-link\"><i class=\"fa fa-shopping-cart\"></i> Add to cart</a>");
                                    out.println("<a href=\"viewProduct?type=\""+product.getTid()+"&page=detail class=\"view-details-link\"><i class=\"fa fa-link\"></i> See details</a>");                             
                                    out.println("</div>"

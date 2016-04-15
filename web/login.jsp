@@ -49,7 +49,7 @@
                 </div> 
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.jsp">Home</a></li>
+                        <li><a href="index.jsp">Home</a></li>
                         <li><a href="shop.jsp">Shop page</a></li>
                         <li><a href="cart.jsp">Cart</a></li>
                         <li><a href="checkout.jsp">Checkout</a></li>
@@ -68,77 +68,45 @@
                     <div class="panel-heading">
                         <h2 class="panel-title">
                             Login now
-                            <%
-                                Boolean flag = (Boolean) request.getAttribute("loginError");
-                                if (flag != null) {
-                                    if (flag == true) {
-                                        out.println("<span class=\"label label-danger\">");
-                                        out.println("Login Failed");
-                                        out.println("</span>");
-                                    } else {
-                                        out.println("<br />");
-                                    }
-                                } else {
-                                    out.println("<br />");
-                                }
-                            %>
                         </h2>
                     </div>
 
                     <div class="panel-body" >
                         <form role="form" action="login" method="post">
                             <div class="form-group">
-                                <input type="text" name="username" placeholder="Username" class="form-control" id="username" required>
+                                <input type="text" name="username" placeholder="Username" class="form-control" id="username" required />
                             </div>
 
                             <div class="form-group">
-                                <input type="password" name="password" placeholder="Password" class="form-control" id="password" required>
+                                <input type="password" name="password" placeholder="Password" class="form-control" id="password" required />
                             </div>
                             
-                            <input type="submit" value="Login" class="btn btn-info btn-block">
+                            <input type="submit" value="Login" class="btn btn-info btn-block" />
                             <input type="hidden" name="action" value="authenticate" />
-                            
                         </form>
-                    </div>    
+                    </div>
+                    
+                    <%
+                        Boolean flag = (Boolean) request.getAttribute("loginError");
+                        if (flag != null) {
+                            if (flag == true) {
+                                out.println("<div class=\"error\">");
+                                out.println("Invalid username or password");
+                                out.println("</div>");
+                            } else {
+                                out.println("<br />");
+                            }
+                        } else {
+                            out.println("<br />");
+                        }
+                    %>
                 </div>
             </div>
         </div>
-        
-        
     </div>
 
     <!-- Promo area -->
-    <div class="promo-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-promo promo1">
-                        <i class="fa fa-refresh"></i>
-                        <p>30 Days return</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-promo promo2">
-                        <i class="fa fa-truck"></i>
-                        <p>Free shipping</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-promo promo3">
-                        <i class="fa fa-lock"></i>
-                        <p>Secure payments</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="single-promo promo4">
-                        <i class="fa fa-gift"></i>
-                        <p>New products</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> <!-- End promo area -->
+    <jsp:include page="promo.jsp"/>
     
     <!-- Footer -->
     <jsp:include page="footer.jsp"/>

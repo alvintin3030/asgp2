@@ -105,15 +105,19 @@ public class LoginController extends HttpServlet {
         String targetURL = null;
 
         UserDB userdb = new UserDB();
-        userdb.addRecord(username, password, email, phone, address);
+        Boolean isDuplicateUser = userdb.isDuplicateUser(username);
 
         HttpSession session = request.getSession(true);
 
-        User user = userdb.getUserInfo(username);
-
-        session.setAttribute("userInfo", user);
-
-        targetURL = "/home";
+        if (!isDuplicateUser) {
+            userdb.addRecord(username, password, email, phone, address);
+            User user = userdb.getUserInfo(username);
+            session.setAttribute("userInfo", user);
+            targetURL = "/index.jsp";
+        } else {
+            request.setAttribute("registerError", true);
+            targetURL = "/signup.jsp";
+        }
 
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);

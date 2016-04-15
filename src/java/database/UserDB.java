@@ -28,8 +28,7 @@ public class UserDB {
             pStmnt.setString(3, email);
             pStmnt.setString(4, phone);
             pStmnt.setString(5, address);
-            pStmnt.setString(6, phone);
-            pStmnt.setFloat(7, 0);
+            pStmnt.setFloat(6, 0);
             int rowCount = pStmnt.executeUpdate();
             if (rowCount >= 1) {
                 isSuccess = true;
@@ -125,6 +124,26 @@ public class UserDB {
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, username);
             pStmnt.setString(2, password);
+            ResultSet rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+    
+    public boolean isDuplicateUser(String username) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+
+        try {
+            cnnct = ConnectionUtil.getConnection();
+            String preQueryStatement = "SELECT * FROM \"Users\" WHERE \"username\"=?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, username);
             ResultSet rs = pStmnt.executeQuery();
             if (rs.next()) {
                 return true;
