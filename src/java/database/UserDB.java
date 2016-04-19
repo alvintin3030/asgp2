@@ -14,14 +14,14 @@ import java.util.logging.Logger;
 
 public class UserDB {
 
-    public boolean addRecord(String username, String password, String email, String phone, String address) {
+    public boolean addRecord(String username, String password, String email, String phone, String address, int groupId) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isSuccess = false;
         
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "INSERT INTO \"Users\" (\"username\",\"password\",\"email\",\"phone\",\"address\",\"credit\") VALUES(?,?,?,?,?,?)";
+            String preQueryStatement = "INSERT INTO \"Users\" (\"username\",\"password\",\"email\",\"phone\",\"address\",\"credit\",\"groupid\") VALUES(?,?,?,?,?,?,?)";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, username);
             pStmnt.setString(2, password);
@@ -29,6 +29,7 @@ public class UserDB {
             pStmnt.setString(4, phone);
             pStmnt.setString(5, address);
             pStmnt.setFloat(6, 0);
+            pStmnt.setInt(7, groupId);
             int rowCount = pStmnt.executeUpdate();
             if (rowCount >= 1) {
                 isSuccess = true;
@@ -173,6 +174,7 @@ public class UserDB {
 		user.setPhone(rs.getString("phone"));
 		user.setAddress(rs.getString("address"));
                 user.setCredit(rs.getFloat("credit"));
+                user.setGroupId(rs.getInt("groupId"));
 
                 return user;
             } else {
@@ -202,6 +204,7 @@ public class UserDB {
 		user.setPhone(rs.getString("phone"));
 		user.setAddress(rs.getString("address"));
                 user.setCredit(rs.getFloat("credit"));
+                user.setGroupId(rs.getInt("groupId"));
                 
                 al.add(user);
             }

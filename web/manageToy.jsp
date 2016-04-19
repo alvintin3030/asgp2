@@ -1,8 +1,8 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="util.Getter"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <%@page import="java.util.ArrayList"%>
+    <%@page import="bean.Toy"%>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,8 +33,8 @@
   </head>
   <body>
     <%
-        Boolean loginError = Getter.getBoolean(request.getAttribute("loginError"));
-    %>
+        ArrayList<Toy> toys = request.getAttribute("toys") != null ?  (ArrayList<Toy>) request.getAttribute("toys") : new ArrayList<Toy>();        
+    %>  
       
     <!-- Header -->
     <jsp:include page="header.jsp"/>
@@ -64,45 +64,34 @@
         </div>
     </div> <!-- End mainmenu area -->
     
-    <!-- Login -->
-    <div class="container">
-        <div class="row centered-form">
-            <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h2 class="panel-title">
-                            Login now
-                        </h2>
-                    </div>
-
-                    <div class="panel-body" >
-                        <form role="form" action="login" method="post">
-                            <div class="form-group">
-                                <input type="text" name="username" placeholder="Username" class="form-control" id="username" required />
-                            </div>
-
-                            <div class="form-group">
-                                <input type="password" name="password" placeholder="Password" class="form-control" id="password" required />
-                            </div>
-                            
-                            <input type="submit" value="Login" class="btn btn-info btn-block" />
-                            <input type="hidden" name="action" value="authenticate" />
-                        </form>
-                            
-                        <a href="signup.jsp">Create your account?</a>
-                    </div>
-                    
-                    <% if (loginError) { %>           
-                        <div class="error">Invalid username or password</div>
-                    <% } %>
-  
-                </div>
-            </div>
+    <!-- Main Content area -->
+    <div class="maincontent-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <table class="table">
+                <tr>
+                    <th>Toy ID</th>
+                    <th>Name</th>
+                    <th>Image</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                <% for (Toy t : toys) { %>
+                <tr>
+                    <td><%=t.getTid() %></td>
+                    <td><%=t.getName() %></td>
+                    <td><img src="img/<%=t.getImage() %>" width="50px" height="50px" /></td>
+                    <td>$<%=t.getPrice() %></td>
+                    <td><%=t.getQuantity() %></td>
+                    <td><a href=""><span class="glyphicon glyphicon-pencil"></span></a></td>
+                    <td><a href=""><span class="glyphicon glyphicon-remove"></span></a></td>
+                </tr>
+                <% } %>
+            </table>
         </div>
     </div>
-
-    <!-- Promo area -->
-    <jsp:include page="promo.jsp"/>
     
     <!-- Footer -->
     <jsp:include page="footer.jsp"/>

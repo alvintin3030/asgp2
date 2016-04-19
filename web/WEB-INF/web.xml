@@ -16,6 +16,22 @@
         <servlet-name>HomeController</servlet-name>
         <servlet-class>servlet.HomeController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditToyController</servlet-name>
+        <servlet-class>servlet.EditToyController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageToyController</servlet-name>
+        <servlet-class>servlet.ManageToyController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListManagementController</servlet-name>
+        <servlet-class>servlet.ManageToyController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SignupController</servlet-name>
+        <servlet-class>servlet.SignupController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>shopping</servlet-name>
         <url-pattern>/shopping</url-pattern>
@@ -31,6 +47,18 @@
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/index</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditToyController</servlet-name>
+        <url-pattern>/editToy</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageToyController</servlet-name>
+        <url-pattern>/manageToy</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SignupController</servlet-name>
+        <url-pattern>/signup</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

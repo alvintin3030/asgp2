@@ -43,7 +43,7 @@ public class ToyInventoryDB {
         }
     }
 
-	//Add record to toy inventory
+    //Add record to toy inventory
     public boolean addRecord(Toy t) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -79,7 +79,7 @@ public class ToyInventoryDB {
         return isSuccess;
     }
 
-	//Edit record in toy inventory
+    //Edit record in toy inventory
     public boolean editRecord(Toy t) { 
         Connection cnnct = null;
         PreparedStatement pStmnt = null;

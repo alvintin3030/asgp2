@@ -58,6 +58,26 @@ body { font-family:Arial, Helvetica, sans-serif; }
 .user-menu li a i.fa {
     margin-right: 5px;
 }
+
+.header-left ul.list-inline {
+    margin: 0;
+    text-align: left;
+}
+.header-left ul.list-inline li a {
+    display: block;
+    padding: 9px;
+}
+.header-left ul.list-inline li ul a {
+    padding: 5px 15px;
+}
+.header-left ul.list-inline li ul {
+    border: medium none;
+    border-radius: 0;
+    margin-left: -50px;
+    min-width: 100px;
+    text-align: center;
+}
+
 .header-right ul.list-inline {
     margin: 0;
     text-align: right;
@@ -383,9 +403,7 @@ z-index: 999;}
     position: relative;
     max-width: 195px;
     max-height: 243px;
-    width: auto;
-    height: auto;
-    display: table-cell; 
+    display: block; 
     vertical-align: middle
 }
 .product-img {
@@ -1161,4 +1179,8 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
     line-height: 20px;
     height: 20px;
     margin-bottom: 10px;
+}
+
+.textalignleft {
+  text-align: left;
 }

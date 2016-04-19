@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="util.Getter"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -31,7 +32,10 @@
     <![endif]-->
   </head>
   <body>
-   
+    <%
+        Boolean registerError = Getter.getBoolean(request.getAttribute("registerError"));
+    %>
+      
     <!-- Header -->
     <jsp:include page="header.jsp"/>
     
@@ -71,10 +75,9 @@
                     </div>
             
                     <div class="panel-body">
-                        <form role="form" action="login" method="post">
+                        <form role="form" action="signup" method="post">
                             <div class="form-group">
-                                <input type="text" name="username" placeholder="Username" class="form-control" id="username" required />
-                                
+                                <input type="text" name="username" placeholder="Username" class="form-control" id="username" required />  
                             </div>
 
                             <div class="row">
@@ -107,20 +110,9 @@
                         </form>
                     </div>
                     
-                    <%
-                        Boolean flag = (Boolean) request.getAttribute("registerError");
-                        if (flag != null) {
-                            if (flag == true) {
-                                out.println("<div class=\"error\">");
-                                out.println("Register failed - username already in use");
-                                out.println("</div>");
-                            } else {
-                                out.println("<br />");
-                            }
-                        } else {
-                            out.println("<br />");
-                        }
-                    %>
+                    <% if (registerError) { %>           
+                        <div class="error">Register failed - username already in use</div>
+                    <% } %>
                 </div>
             </div>
         </div>
@@ -148,25 +140,5 @@
         password.onchange = validatePassword;
         password_confirm.onkeyup = validatePassword;
     </script>
-    
-    <!-- Latest jQuery form server -->
-    <script src="https://code.jquery.com/jquery.min.js"></script>
-    
-    <!-- Bootstrap JS form CDN -->
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    
-    <!-- jQuery sticky menu -->
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.sticky.js"></script>
-    
-    <!-- jQuery easing -->
-    <script src="js/jquery.easing.1.3.min.js"></script>
-    
-    <!-- Main Script -->
-    <script src="js/main.js"></script>
-    
-    <!-- Slider -->
-    <script type="text/javascript" src="js/bxslider.min.js"></script>
-    <script type="text/javascript" src="js/script.slider.js"></script>
   </body>
 </html>

@@ -3,7 +3,6 @@ package servlet;
 import bean.User;
 import database.UserDB;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -37,8 +36,6 @@ public class LoginController extends HttpServlet {
 
         if ("authenticate".equals(action)) {
             doAuthenticate(request, response);
-        } else if ("register".equals(action)) {
-            doRegister(request, response);
         } else if ("logout".equals(action)) {
             doLogout(request, response);
         } else if (!isAuthenticated(request)) {
@@ -55,15 +52,15 @@ public class LoginController extends HttpServlet {
         
         String targetURL = null;
 
-        UserDB userdb = new UserDB();
-        Boolean isValidUser = userdb.isValidUser(username, password);
+        UserDB userDB = new UserDB();
+        Boolean isValidUser = userDB.isValidUser(username, password);
 
         HttpSession session = request.getSession(true);
 
         if (isValidUser) {
-            User user = userdb.getUserInfo(username);
+            User user = userDB.getUserInfo(username);
             session.setAttribute("userInfo", user);
-            targetURL = "/index";
+            targetURL = "/index.jsp";
         } else {
             request.setAttribute("loginError", true);
             targetURL = "/login.jsp";
@@ -93,40 +90,6 @@ public class LoginController extends HttpServlet {
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         rd.forward(request, response);
-    }
-
-    private void doRegister(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
-       
-        String targetURL = null;
-
-        UserDB userdb = new UserDB();
-        Boolean isDuplicateUser = userdb.isDuplicateUser(username);
-
-        HttpSession session = request.getSession(true);
-
-        if (!isDuplicateUser) {
-            userdb.addRecord(username, password, email, phone, address);
-            User user = userdb.getUserInfo(username);
-            session.setAttribute("userInfo", user);
-            targetURL = "/index.jsp";
-        } else {
-            request.setAttribute("registerError", true);
-            targetURL = "/signup.jsp";
-        }
-
-        RequestDispatcher rd;
-        rd = getServletContext().getRequestDispatcher("/" + targetURL);
-        try {
-            rd.forward(request, response);
-        } catch (ServletException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 
     private void doLogout(HttpServletRequest request, HttpServletResponse response) 

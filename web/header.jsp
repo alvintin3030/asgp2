@@ -2,10 +2,13 @@
 
 <% 
     boolean isLogin = false;
+    boolean isAdmin = false;
     User user = null;
     if (session.getAttribute("userInfo") != null) {
         isLogin = true;
         user = (User) session.getAttribute("userInfo");
+        if (user.getGroupId() == 0)
+            isAdmin = true;
     }
 %>
 
@@ -31,8 +34,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <div class="user-menu">
-                    <ul>
+                <div class="header-left">
+                    <ul class="list-unstyled list-inline">
                         <li><a href="#"><i class="fa fa-user"></i> My Account</a></li>
                         <li><a href="cart.jsp"><i class="glyphicon glyphicon-shopping-cart"></i> My Cart</a></li>
                         <li><a href="checkout.jsp"><i class="glyphicon glyphicon-check"></i> Checkout</a></li>
@@ -43,15 +46,18 @@
             <div class="col-md-4">
                 <div class="header-right">
                     <ul class="list-unstyled list-inline">
-                        <%
-                            if (isLogin == true) {
-                                out.println("<li><i class='glyphicon glyphicon-user'></i> Hi " + user.getUsername() + "</li>");
-                                out.println("<li><a href='#logout' onclick=\"onClickDirectPage('login?action=logout');\"><i class='glyphicon glyphicon-log-in'></i> Logout</a></li>");
-                            } else {
-                                out.println("<li><a href='signup.jsp'><i class='glyphicon glyphicon-pencil'></i> Sign up</a></li>");
-                                out.println("<li><a href='login.jsp'><i class='glyphicon glyphicon-log-in'></i> Login</a></li>");
-                            }
-                        %>
+                        <% if (isLogin && isAdmin) { %>
+                            <li><i class='glyphicon glyphicon-user'></i> Hi <%=user.getUsername()%> </li>    
+                            <li><a href="manageToy"><i class="glyphicon glyphicon-pencil"></i> Manage</a></li>         
+                            <li><a href="#logout" onclick="onClickDirectPage('login?action=logout');"><i class="glyphicon glyphicon-log-in"></i> Logout</a></li>
+                        <% } else if (isLogin && !isAdmin) { %>
+                            <li><i class="glyphicon glyphicon-user"></i> Hi " + user.getUsername() + "</li>");
+                            <li><a href="#logout" onclick="onClickDirectPage('login?action=logout');"><i class="glyphicon glyphicon-log-in"></i> Logout</a></li>
+                        <% } else { %>
+                            <li><a href="signup.jsp"><i class="glyphicon glyphicon-pencil"></i> Sign up</a></li>
+                            <li><a href="login.jsp"><i class="glyphicon glyphicon-log-in"></i> Login</a></li>
+                        <% } %>
+                        
                     </ul>
                 </div>
             </div>

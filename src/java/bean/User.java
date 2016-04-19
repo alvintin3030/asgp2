@@ -8,6 +8,7 @@ public class User {
     private String phone;
     private String address;
     private float credit;
+    private int groupId;
 
     public int getUid() {
         return uid;
@@ -64,5 +65,12 @@ public class User {
     public void setCredit(float credit) {
         this.credit = credit;
     }
-    
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
+    }
 }
