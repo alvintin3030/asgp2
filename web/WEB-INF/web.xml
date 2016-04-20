@@ -25,10 +25,6 @@
         <servlet-class>servlet.ManageToyController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ListManagementController</servlet-name>
-        <servlet-class>servlet.ManageToyController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>SignupController</servlet-name>
         <servlet-class>servlet.SignupController</servlet-class>
     </servlet>
