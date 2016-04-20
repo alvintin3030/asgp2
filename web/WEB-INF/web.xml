@@ -28,6 +28,10 @@
         <servlet-name>SignupController</servlet-name>
         <servlet-class>servlet.SignupController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManageSingleToyController</servlet-name>
+        <servlet-class>servlet.ManageSingleToyController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>shopping</servlet-name>
         <url-pattern>/shopping</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>SignupController</servlet-name>
         <url-pattern>/signup</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageSingleToyController</servlet-name>
+        <url-pattern>/manageSingle</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

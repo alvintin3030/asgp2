@@ -47,11 +47,7 @@
                 <div class="header-right">
                     <ul class="list-unstyled list-inline">
                         <% if (isLogin && isAdmin) { %>
-                            <li><i class='glyphicon glyphicon-user'></i> Hi <%=user.getUsername()%> </li>    
-                            <li><a href="manageToy"><i class="glyphicon glyphicon-pencil"></i> Manage</a></li>         
-                            <li><a href="#logout" onclick="onClickDirectPage('login?action=logout');"><i class="glyphicon glyphicon-log-in"></i> Logout</a></li>
-                        <% } else if (isLogin && !isAdmin) { %>
-                            <li><i class="glyphicon glyphicon-user"></i> Hi " + user.getUsername() + "</li>");
+                            <li><i class='glyphicon glyphicon-user'></i> Hi <%=user.getUsername()%> </li>           
                             <li><a href="#logout" onclick="onClickDirectPage('login?action=logout');"><i class="glyphicon glyphicon-log-in"></i> Logout</a></li>
                         <% } else { %>
                             <li><a href="signup.jsp"><i class="glyphicon glyphicon-pencil"></i> Sign up</a></li>
@@ -77,7 +73,7 @@
 
             <div class="col-sm-6">
                 <div class="shopping-item">
-                    <a href="cart.jsp">Cart - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                    <a href="cart.jsp"><span class="fa fa-shopping-cart"> Cart</span></a>
                 </div>
             </div>
         </div>

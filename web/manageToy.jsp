@@ -4,8 +4,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%@page import="java.util.ArrayList"%>
-    <%@page import="bean.Toy"%>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,6 +51,7 @@
                 <tr>
                     <th>Toy ID</th>
                     <th>Name</th>
+                    <th>Category</th>
                     <th>Image</th>
                     <th>Price</th>
                     <th>Quantity</th>
@@ -63,11 +62,12 @@
                 <tr>
                     <td><%=t.getTid() %></td>
                     <td><%=t.getName() %></td>
+                    <td><%=t.getCategory() %></td>
                     <td><img src="img/<%=t.getImage() %>" width="50px" height="50px" /></td>
                     <td>$<%=t.getPrice() %></td>
                     <td><%=t.getQuantity() %></td>
-                    <td><a href=""><span class="glyphicon glyphicon-pencil"></span></a></td>
-                    <td><a href=""><span class="glyphicon glyphicon-remove"></span></a></td>
+                    <td><a href="manageSingle?tid=<%=t.getTid() %>"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                    <td><a href="deleteToy?tid=<%=t.getTid() %>"><span class="glyphicon glyphicon-remove"></span></a></td>
                 </tr>
                 <% } %>
             </table>

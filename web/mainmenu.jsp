@@ -28,9 +28,10 @@
             <div class="navbar-collapse collapse">
                 <% if (isAdmin) { %>
                     <ul class="nav navbar-nav">
-                        <li class="<%=pageName.equals("manageToy") ? "active" : "" %>"><a href="manageToy.jsp">Manage</a></li>
-                        <li class="<%=pageName.equals("approveRecycle") ? "active" : "" %>"><a href="approveRecycle.jsp">Approve</a></li>
-                        <li class="<%=pageName.equals("replyComment") ? "active" : "" %>"><a href="approveRecycle.jsp">Comment</a></li>
+                        <li class="<%=pageName.equals("index") ? "active" : "" %>"><a href="index.jsp">Home</a></li>
+                        <li class="<%=pageName.equals("manageToy") ? "active" : "" %>"><a href="manageToy">Manage</a></li>
+                        <li class="<%=pageName.equals("approveRecycle") ? "active" : "" %>"><a href="#">Approve</a></li>
+                        <li class="<%=pageName.equals("replyComment") ? "active" : "" %>"><a href="#">Comment</a></li>
                     </ul>         
                 <% } else { %>
                     <ul class="nav navbar-nav">

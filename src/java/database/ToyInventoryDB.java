@@ -50,15 +50,14 @@ public class ToyInventoryDB {
         boolean isSuccess = false;
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "INSERT INTO \"Toys\" (\"tid\", \"Name\", \"Description\", \"Category\", \"Image\", \"price\", \"Quantity\") VALUES(?, ?, ?, ?, ?, ?, ?)";
+            String preQueryStatement = "INSERT INTO \"Toys\" (\"Name\", \"Description\", \"Category\", \"Image\", \"Price\", \"Quantity\") VALUES(?, ?, ?, ?, ?, ?)";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
-            pStmnt.setInt(1, t.getTid());
-            pStmnt.setString(2, t.getName());
-            pStmnt.setString(3, t.getDescription());
-            pStmnt.setString(4, t.getCategory());
-            pStmnt.setString(5, t.getImage());
-            pStmnt.setFloat(6, t.getPrice());
-            pStmnt.setInt(7, t.getQuantity());
+            pStmnt.setString(1, t.getName());
+            pStmnt.setString(2, t.getDescription());
+            pStmnt.setString(3, t.getCategory());
+            pStmnt.setString(4, t.getImage());
+            pStmnt.setFloat(5, t.getPrice());
+            pStmnt.setInt(6, t.getQuantity());
             int rowCount = pStmnt.executeUpdate();
 
             if (rowCount >= 1) {
@@ -86,15 +85,15 @@ public class ToyInventoryDB {
         boolean isSuccess = false;
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "UPDATE \"Toys\" SET \"Name\"=?, \"Description\"=?, \"Category\"=?, \"Image\"=?, \"price\"=?, \"Quantity\"=? WHERE \"tid\"=?";
+            String preQueryStatement = "UPDATE \"Toys\" SET \"Name\"=?, \"Description\"=?, \"Category\"=?, \"Image\"=?, \"Price\"=?, \"Quantity\"=? WHERE \"tid\"=?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
-            pStmnt.setInt(1, t.getTid());
-            pStmnt.setString(2, t.getName());
-            pStmnt.setString(3, t.getDescription());
-            pStmnt.setString(4, t.getCategory());
-            pStmnt.setString(5, t.getImage());
-            pStmnt.setFloat(6, t.getPrice());
-            pStmnt.setInt(7, t.getQuantity());
+            pStmnt.setString(1, t.getName());
+            pStmnt.setString(2, t.getDescription());
+            pStmnt.setString(3, t.getCategory());
+            pStmnt.setString(4, t.getImage());
+            pStmnt.setFloat(5, t.getPrice());
+            pStmnt.setInt(6, t.getQuantity());
+            pStmnt.setInt(7, t.getTid());
             int rowCount = pStmnt.executeUpdate();
 
             if (rowCount >= 1) {

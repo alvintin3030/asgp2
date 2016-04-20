@@ -1,21 +1,14 @@
 package servlet;
 
 import bean.Toy;
-
 import database.ToyInventoryDB;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class EditToyController extends HttpServlet {
 
@@ -29,9 +22,6 @@ public class EditToyController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    public final String RESULT_OK = "OK";
-    public final String RESULT_FAIL = "FAIL";
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -40,26 +30,34 @@ public class EditToyController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int tid = Integer.parseInt(request.getParameter("tid"));
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        String category = request.getParameter("category");
+        String image = request.getParameter("image");
+        float price = Float.parseFloat(request.getParameter("price"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
 
         ToyInventoryDB toyDB = new ToyInventoryDB();
         Toy t = new Toy();
-        t.setTid(Integer.parseInt(request.getParameter("tid")));
-        t.setName(request.getParameter("toyName"));
-        t.setDescription(request.getParameter("toyDescription"));
-        t.setCategory(request.getParameter("toyCategory"));
-        t.setImage(request.getParameter("toyImage"));
-        t.setPrice(Float.parseFloat(request.getParameter("toyPrice")));
-        t.setQuantity(Integer.parseInt(request.getParameter("toyQuantity")));
+        t.setTid(tid);
+        t.setName(name);
+        t.setDescription(description);
+        t.setCategory(category);
+        t.setImage(image);
+        t.setPrice(price);
+        t.setQuantity(quantity);
 
+        String targetURL = null;
         if (!toyDB.editRecord(t)) {
-            request.setAttribute("result", RESULT_FAIL);
+            request.setAttribute("updateFail", true);
+            Toy toy = toyDB.getToyById(tid); 
+            request.setAttribute("toy", toy);
+            targetURL = "manageSingle?tid=" + tid;
+        } else {
+            targetURL = "manageToy";
         }
-        else {
-            request.setAttribute("result", RESULT_OK);
-        }
-        String targetURL = "editToy.jsp";
-        request.setAttribute("result", RESULT_OK);
-        request.setAttribute("content", request.getParameter("tid"));
+        
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         rd.forward(request, response);
