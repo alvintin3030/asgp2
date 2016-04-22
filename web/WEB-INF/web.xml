@@ -32,6 +32,14 @@
         <servlet-name>ManageSingleToyController</servlet-name>
         <servlet-class>servlet.ManageSingleToyController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>viewRecycleToy</servlet-name>
+        <servlet-class>servlet.viewRecycleToy</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RecycleToyController</servlet-name>
+        <servlet-class>servlet.RecycleToyController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingCartController</servlet-name>
         <url-pattern>/shopping</url-pattern>
@@ -63,6 +71,14 @@
     <servlet-mapping>
         <servlet-name>ManageSingleToyController</servlet-name>
         <url-pattern>/manageSingle</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>viewRecycleToy</servlet-name>
+        <url-pattern>/viewRecycleToy</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RecycleToyController</servlet-name>
+        <url-pattern>/recycle</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
