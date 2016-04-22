@@ -253,4 +253,65 @@ public class ToyInventoryDB {
             return al;
         }
     }
+    
+        public static ArrayList<Toy> getToyByCategory(String category) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<Toy> al = new ArrayList<Toy>();
+
+        try {
+            cnnct = ConnectionUtil.getConnection();
+            String preQueryStatement = "SELECT * FROM \"Toys\" WHERE \"Category\" = ? ORDER BY \"tid\" DESC";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, category);
+            ResultSet rs = pStmnt.executeQuery();
+
+            while (rs.next()) {
+                Toy t = new Toy();
+                t.setTid(rs.getInt("tid"));
+                t.setName(rs.getString("Name"));
+                t.setDescription(rs.getString("Description"));
+                t.setCategory(rs.getString("Category"));
+                t.setImage(rs.getString("Image"));
+                t.setPrice(rs.getFloat("Price"));
+                t.setQuantity(rs.getInt("Quantity"));
+				
+                al.add(t);
+            }
+            return al;
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            return al;
+        }
+    }
+        
+        public ArrayList<Toy> getAllCategory() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<Toy> al = new ArrayList<Toy>();
+
+        try {
+            cnnct = ConnectionUtil.getConnection();
+            String preQueryStatement = "SELECT Category FROM \"Toys\"";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+
+            if (rs.next()) {
+                Toy t = new Toy();
+                t.setTid(rs.getInt("tid"));
+                t.setName(rs.getString("Name"));
+                t.setDescription(rs.getString("Description"));
+                t.setCategory(rs.getString("Category"));
+                t.setImage(rs.getString("Image"));
+                t.setPrice(rs.getFloat("Price"));
+                t.setQuantity(rs.getInt("Quantity"));
+                
+                al.add(t);
+            }
+            return al;
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            return al;
+        }
+    }
 }
