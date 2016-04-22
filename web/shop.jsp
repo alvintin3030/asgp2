@@ -119,7 +119,7 @@
                               </a>
                             </li>
                             <%
-                             int totalPage=productItems.size()%itemPerPage==0?productItems.size()%itemPerPage:productItems.size()%itemPerPage+1;
+                             int totalPage=productItems.size()%itemPerPage==0?productItems.size()/itemPerPage:productItems.size()/itemPerPage+1;
                              for (int i=1;i<totalPage+1;i++)
                                  out.println("<li><a href=\"viewProduct?type=all&page=all&pageNo="+i+"\">"+i+"</a></li>");  
                             %>

@@ -38,7 +38,6 @@
                     <ul class="list-unstyled list-inline">
                         <li><a href="#"><i class="fa fa-user"></i> My Account</a></li>
                         <li><a href="cart.jsp"><i class="glyphicon glyphicon-shopping-cart"></i> My Cart</a></li>
-                        <li><a href="checkout.jsp"><i class="glyphicon glyphicon-check"></i> Checkout</a></li>
                     </ul>
                 </div>
             </div> 

@@ -38,7 +38,6 @@
                         <li class="<%=pageName.equals("index") ? "active" : "" %>"><a href="index.jsp">Home</a></li>
                         <li class="<%=pageName.equals("shop") ? "active" : "" %>"><a href="shop.jsp">Shop</a></li>
                         <li class="<%=pageName.equals("cart") ? "active" : "" %>"><a href="cart.jsp">Cart</a></li>
-                        <li class="<%=pageName.equals("checkout") ? "active" : "" %>"><a href="checkout.jsp">Checkout</a></li>
                         <li class="<%=pageName.equals("recycle") ? "active" : "" %>"><a href="recycle.jsp">Recycle</a></li>
                     </ul>
                 <% } %>

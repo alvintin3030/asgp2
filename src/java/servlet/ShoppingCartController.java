@@ -5,18 +5,20 @@
  */
 package servlet;
 
+import bean.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author tkwong94
  */
-public class shopping extends HttpServlet {
+public class ShoppingCartController extends HttpServlet {
 
     /**
      * This servlet handle request that is related to shopping cart, 
@@ -36,20 +38,23 @@ public class shopping extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet shopping</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet shopping at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
+        
+        String action = request.getParameter("action");
+       // boolean cb=request.getParameter("cb").equals("true")?true:false;
+        int toyId=Integer.parseInt(request.getParameter("id"));
+        
+        HttpSession session = request.getSession(true);
+        User userInfo = (User) session.getAttribute("userInfo");
+        
+        if (userInfo!=null){
+            if (action.equals("add")){
+                
+            }
         }
+        
+        
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
