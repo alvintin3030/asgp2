@@ -285,33 +285,26 @@ public class ToyInventoryDB {
         }
     }
         
-        public ArrayList<Toy> getAllCategory() {
+        public ArrayList<String> getAllCategory() {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
-        ArrayList<Toy> al = new ArrayList<Toy>();
+        ArrayList<String> s=new ArrayList<String>();
 
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "SELECT Category FROM \"Toys\"";
+            String preQueryStatement = "SELECT DISTINCT Category FROM \"Toys\"";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             ResultSet rs = pStmnt.executeQuery();
-
+            
             if (rs.next()) {
-                Toy t = new Toy();
-                t.setTid(rs.getInt("tid"));
-                t.setName(rs.getString("Name"));
-                t.setDescription(rs.getString("Description"));
-                t.setCategory(rs.getString("Category"));
-                t.setImage(rs.getString("Image"));
-                t.setPrice(rs.getFloat("Price"));
-                t.setQuantity(rs.getInt("Quantity"));
                 
-                al.add(t);
+                s.add(rs.getString("Category"));
+                
             }
-            return al;
+            return s;
         } catch (Exception ex) {
             System.out.println(ex.toString());
-            return al;
+            return s;
         }
     }
 }
