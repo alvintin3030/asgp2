@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 public class CommentDB {
     
-    public int addComment(int toyID, int subComment, String username, String content, Date datetime, int isMainComment) { //return errorCode: 0=success, 1=fail(book exist in cart), 2=fail(error)
+    public int addComment(int toyID, int subComment, String username, String content, Date datetime, int isSubComment) { //return errorCode: 0=success, 1=fail(book exist in cart), 2=fail(error)
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         int isSuccess = -1;
@@ -29,14 +29,14 @@ public class CommentDB {
             pStmnt.setInt(2, toyID);
             ResultSet rs = pStmnt.executeQuery();
             if (!rs.next()) {
-                preQueryStatement = "INSERT INTO \"Comment\" (\"toyId\", \"subComment\", \"username\",  \"content\", \"datetime\", \"isMainComment\") VALUES (?,?,?,?,?,?)";
+                preQueryStatement = "INSERT INTO \"Comment\" (\"toyId\", \"subComment\", \"username\",  \"content\", \"datetime\", \"isSubComment\") VALUES (?,?,?,?,?,?)";
                 pStmnt = cnnct.prepareStatement(preQueryStatement);
                 pStmnt.setInt(1, toyID);
                 pStmnt.setInt(2, subComment);
                 pStmnt.setString(3, username);
                 pStmnt.setString(4, content);
                 pStmnt.setDate(5, datetime);
-                pStmnt.setInt(6, isMainComment);
+                pStmnt.setInt(6, isSubComment);
                 int rowCount = pStmnt.executeUpdate();
                 if (rowCount >= 1) {
                     isSuccess = 0;
@@ -79,7 +79,7 @@ public class CommentDB {
                 s.setUsername(rs.getString("username"));
                 s.setContent(rs.getString("content"));
                 s.setDatetime(rs.getDate("datetime"));
-                s.setIsMainComment(rs.getInt("isMainComment"));	
+                s.setIsSubComment(rs.getInt("isSubComment"));	
                 al.add(s);
             }
             return al;
@@ -118,15 +118,16 @@ public class CommentDB {
         return isSuccess;
     }
     
-    public ArrayList<Comment> getSubComment() {
+    public ArrayList<Comment> getSubComment(int replyOnCommentID) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         ArrayList<Comment> al = new ArrayList<Comment>();
 
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "SELECT * FROM \"Comment\" WHERE \"IsMainComment\" = '0'";
+            String preQueryStatement = "SELECT * FROM \"Comment\" WHERE \"IsSubComment\" = '1' AND \"ReplyOnCommentID\" = ? ";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setInt(1, replyOnCommentID);
             ResultSet rs = pStmnt.executeQuery();
 
             while (rs.next()) {
@@ -136,8 +137,8 @@ public class CommentDB {
                 s.setUsername(rs.getString("username"));
                 s.setContent(rs.getString("content"));
                 s.setDatetime(rs.getDate("datetime"));
-                s.setIsMainComment(rs.getInt("isMainComment"));	
-                al.add(s);
+                s.setIsSubComment(rs.getInt("isSubComment"));	
+                al.add(s); 
             }
             return al;
         } catch (Exception ex) {
