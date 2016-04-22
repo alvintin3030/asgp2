@@ -68,12 +68,13 @@ public class CommentDB {
 
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "SELECT * FROM \"Comment\" WHERE \"IsSubComment\" = '1' ORDER BY \"Datetime\"";
+            String preQueryStatement = "SELECT * FROM \"Comment\" WHERE \"IsSubComment\" is null ORDER BY \"Datetime\"";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             ResultSet rs = pStmnt.executeQuery();
 
             while (rs.next()) {
                 Comment s = new Comment();
+                s.setCommentID(rs.getInt("commentID"));
                 s.setToyID(rs.getInt("toyID"));
                 s.setSubComment(rs.getInt("subComment"));
                 s.setUsername(rs.getString("username"));
@@ -132,6 +133,7 @@ public class CommentDB {
 
             while (rs.next()) {
                 Comment c = new Comment();
+                c.setCommentID(rs.getInt("commentID"));
                 c.setToyID(rs.getInt("toyID"));
                 c.setSubComment(rs.getInt("subComment"));
                 c.setUsername(rs.getString("username"));
