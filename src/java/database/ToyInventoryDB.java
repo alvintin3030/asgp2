@@ -296,7 +296,7 @@ public class ToyInventoryDB {
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             ResultSet rs = pStmnt.executeQuery();
             
-            if (rs.next()) {
+            while (rs.next()) {
                 
                 s.add(rs.getString("Category"));
                 
