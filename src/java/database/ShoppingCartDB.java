@@ -1,7 +1,7 @@
 package database;
 
 import bean.ShoppingCart;
-import bean.ShoppingCartItem;
+import bean.Toy;
 import bean.User;
 import java.io.IOException;
 import java.sql.Connection;
@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 public class ShoppingCartDB {
 
-    public int addRecord(String username, int toyId, boolean isBuy) { //return errorCode: 0=success, 1=fail(book exist in cart), 2=fail(error)
+    public int addRecord(String username, int toyId, int quantity) { //return errorCode: 0=success, 1=fail(book exist in cart), 2=fail(error)
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         int isSuccess = -1;
@@ -30,11 +30,11 @@ public class ShoppingCartDB {
             pStmnt.setInt(2, toyId);
             ResultSet rs = pStmnt.executeQuery();
             if (!rs.next()) {
-                preQueryStatement = "INSERT INTO \"ShoppingCart\" (\"username\", \"toyId\", \"isBuy\") VALUES (?,?,?)";
+                preQueryStatement = "INSERT INTO \"ShoppingCart\" (\"username\", \"toyId\", \"quantity\") VALUES (?,?,?)";
                 pStmnt = cnnct.prepareStatement(preQueryStatement);
                 pStmnt.setString(1, username);
                 pStmnt.setInt(2, toyId);
-                pStmnt.setBoolean(3, isBuy);
+                pStmnt.setInt(3, quantity);
                 int rowCount = pStmnt.executeUpdate();
                 if (rowCount >= 1) {
                     isSuccess = 0;
@@ -58,37 +58,26 @@ public class ShoppingCartDB {
         }
         return isSuccess;
     }
-
-    public ArrayList<ShoppingCartItem> viewAllBookInCart(String username) {
+    
+    public ArrayList<ShoppingCart> getShoppingCart(String username) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
-        ArrayList<ShoppingCartItem> al = new ArrayList<ShoppingCartItem>();
-        ArrayList<ShoppingCart> scal = new ArrayList<ShoppingCart>();
+        ArrayList<ShoppingCart> al = new ArrayList<ShoppingCart>();
 
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "SELECT * FROM \"ShoppingCart\" WHERE \"username\" = ?";
+            String preQueryStatement = "SELECT * FROM \"ShoppingCart\" WHERE \"USERNAME\" = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
-            pStmnt.setString(1, username);
             ResultSet rs = pStmnt.executeQuery();
 
             while (rs.next()) {
-                System.out.println("GetCartToy: username(" + username + ")");
                 ShoppingCart s = new ShoppingCart();
                 s.setCartId(rs.getInt("cartId"));
                 s.setUsername(rs.getString("username"));
                 s.setToyId(rs.getInt("toyId"));
-
-                scal.add(s);
+                s.setQuantity(rs.getInt("quantity"));	
+                al.add(s);
             }
-
-            if (scal.size() != 0) {
-                ToyInventoryDB toyDB = new ToyInventoryDB();
-                for (int i = 0; i < scal.size(); i++) {
-                    al.add(new ShoppingCartItem(toyDB.getToyById(scal.get(i).getToyId()), scal.get(i).getCartId()));
-                }
-            }
-
             return al;
         } catch (Exception ex) {
             System.out.println(ex.toString());
@@ -96,15 +85,15 @@ public class ShoppingCartDB {
         }
     }
 
-    public boolean deleteCartItem(String username, int cartId) {
+    public boolean deleteCartItem(String username, int toyId) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isSuccess = false;
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "DELETE FROM \"ShoppingCart\" WHERE \"cartId\" = ? AND \"username\" = ?";
+            String preQueryStatement = "DELETE FROM \"ShoppingCart\" WHERE \"toyId\" = ? AND \"username\" = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
-            pStmnt.setInt(1, cartId);
+            pStmnt.setInt(1, toyId);
             pStmnt.setString(2, username);
             int rowCount = pStmnt.executeUpdate();
 
@@ -125,6 +114,39 @@ public class ShoppingCartDB {
         }
         return isSuccess;
     }
+    
+    public boolean modifyQuantity(String username, int toyId, int newQuantity) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = ConnectionUtil.getConnection();
+            String preQueryStatement = "UPDATE FROM \"ShoppingCart\" SET \"Quantity\" = ? WHERE \"toyId\" = ? AND \"username\" = ?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setInt(1, newQuantity);
+            pStmnt.setInt(2, toyId);
+            pStmnt.setString(3, username);
+            int rowCount = pStmnt.executeUpdate();
+
+            if (rowCount >= 3) {
+                isSuccess = true;
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            while (ex != null) {
+                ex.printStackTrace();
+                ex = ex.getNextException();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ShoppingCartDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return isSuccess;
+    }
+    
+    
 
     public boolean deleteAllCartItem(String username) {
         Connection cnnct = null;
@@ -153,30 +175,5 @@ public class ShoppingCartDB {
             Logger.getLogger(ShoppingCartDB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return isSuccess;
-    }
-
-    public ShoppingCart getShoppingCartByCartId(int cartId) {
-        Connection cnnct = null;
-        PreparedStatement pStmnt = null;
-        ShoppingCart s = null;
-
-        try {
-            cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "SELECT * FROM \"ShoppingCart\" WHERE \"cartId\" = ?";
-            pStmnt = cnnct.prepareStatement(preQueryStatement);
-            pStmnt.setInt(1, cartId);
-            ResultSet rs = pStmnt.executeQuery();
-
-            if (rs.next()) {
-                s = new ShoppingCart();
-                s.setCartId(rs.getInt("cartId"));
-                s.setUsername(rs.getString("username"));
-                s.setToyId(rs.getInt("toyId"));
-            }
-            return s;
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
-            return null;
-        }
     }
 }
