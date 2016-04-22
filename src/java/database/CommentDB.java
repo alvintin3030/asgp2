@@ -118,7 +118,7 @@ public class CommentDB {
         return isSuccess;
     }
     
-    public ArrayList<Comment> getSubComment(int replyOnCommentID) {
+    public ArrayList<Comment> getSubComment(int subComment) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         ArrayList<Comment> al = new ArrayList<Comment>();
@@ -127,7 +127,7 @@ public class CommentDB {
             cnnct = ConnectionUtil.getConnection();
             String preQueryStatement = "SELECT * FROM \"Comment\" WHERE \"IsSubComment\" = '1' AND \"SubComment\" = ? ";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
-            pStmnt.setInt(1, replyOnCommentID);
+            pStmnt.setInt(1, subComment);
             ResultSet rs = pStmnt.executeQuery();
 
             while (rs.next()) {
