@@ -68,7 +68,7 @@ public class CommentDB {
 
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "SELECT * FROM \"Comment\" WHERE \"IsMainComment\" = '1'";
+            String preQueryStatement = "SELECT * FROM \"Comment\" WHERE \"IsSubComment\" = '1'";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             ResultSet rs = pStmnt.executeQuery();
 
