@@ -8,6 +8,7 @@ public class RecycleToy {
     private String image;
     private float price;
     private String donatedBy;
+    private int isApproved;
 
     public int getTid() {
         return tid;
@@ -64,5 +65,13 @@ public class RecycleToy {
     public void setDonatedBy(String donatedBy) {
         this.donatedBy = donatedBy;
     }
-    
+
+    public int getIsApproved() {
+        return isApproved;
+    }
+
+    public void setIsApproved(int isApproved) {
+        this.isApproved = isApproved;
+    }
+
 }
