@@ -14,7 +14,7 @@ public class Comment {
     private String username;
     private String content;
     private Date datetime;
-    private int isMainComment;
+    private int isSubComment;
 
     public int getCommentID() {
         return commentID;
@@ -64,12 +64,12 @@ public class Comment {
         this.datetime = datetime;
     }
 
-    public int getIsMainComment() {
-        return isMainComment;
+    public int getIsSubComment() {
+        return isSubComment;
     }
 
-    public void setIsMainComment(int isMainComment) {
-        this.isMainComment = isMainComment;
+    public void setIsSubComment(int isSubComment) {
+        this.isSubComment = isSubComment;
     }
     
 }
