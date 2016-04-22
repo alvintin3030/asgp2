@@ -1,5 +1,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="bean.Toy"%>
+<%@page import="database.ToyInventoryDB"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -66,10 +67,28 @@
     <div class="single-product-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
-            <div class="row">
+            
+            <div class="col-md-3">
+                <h2>Category</h2>
+                
+                <ul>
+                    <li><a href="viewProduct?type=all&page=all&pageNo=1">All Category</a></li>
+                    <%
+                       ToyInventoryDB toydb=new ToyInventoryDB();
+                       for (String s: toydb.getAllCategory()) 
+                           out.println("<li><a href=\"viewProduct?type="+s+"&page=all&pageNo=1\">"+s.replaceAll("_"," ")+"</a></li>");
+                    %>
+                </ul>
+                
+                
+            </div>
+            
+            <div class="col-md-8">
+                <div class="">
+                    <div class="row">
                 
                   <% 
-    
+                       
                         int pageNo=Integer.parseInt(String.valueOf(request.getAttribute("pageNo"))); //current Page no, start from 1
 
                         int itemPerPage=16;
@@ -78,7 +97,7 @@
                         for (int i=firstItem;i<(Math.min(productItems.size(),lastItem));i++){
                                Toy product=productItems.get(i);
 
-                               out.println("<div class=\"col-md-3 col-sm-6\">");
+                               out.println("<div class=\"col-md-4 col-sm-6\">");
                                out.println("<div class=\"single-shop-product\">"
                                    + "<div class=\"product-f-image\">");
                                out.println("<img class=\"product-img\" src=\"img/"+product.getImage()+"\">");
@@ -107,6 +126,12 @@
         
                 
             </div>
+                    
+                </div>
+                
+            </div>
+            
+            
             
             <div class="row">
                 <div class="col-md-12">

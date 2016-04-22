@@ -254,7 +254,7 @@ public class ToyInventoryDB {
         }
     }
     
-        public static ArrayList<Toy> getToyByCategory(String category) {
+        public  ArrayList<Toy> getToyByCategory(String category) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         ArrayList<Toy> al = new ArrayList<Toy>();
@@ -285,7 +285,7 @@ public class ToyInventoryDB {
         }
     }
         
-        public ArrayList<String> getAllCategory() {
+        public  ArrayList<String> getAllCategory() {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         ArrayList<String> s=new ArrayList<String>();
@@ -296,11 +296,18 @@ public class ToyInventoryDB {
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             ResultSet rs = pStmnt.executeQuery();
             
+<<<<<<< HEAD
+            while (rs.next()) {      
+                s.add(rs.getString("Category"));    
+=======
             while (rs.next()) {
                 
                 s.add(rs.getString("Category"));
                 
+>>>>>>> fb6ed82767f96aed77cf72d70dc061a6ddba3702
             }
+            
+            System.out.println("S: "+s);
             return s;
         } catch (Exception ex) {
             System.out.println(ex.toString());
