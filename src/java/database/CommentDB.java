@@ -131,14 +131,14 @@ public class CommentDB {
             ResultSet rs = pStmnt.executeQuery();
 
             while (rs.next()) {
-                Comment s = new Comment();
-                s.setToyID(rs.getInt("toyID"));
-                s.setSubComment(rs.getInt("subComment"));
-                s.setUsername(rs.getString("username"));
-                s.setContent(rs.getString("content"));
-                s.setDatetime(rs.getDate("datetime"));
-                s.setIsSubComment(rs.getInt("isSubComment"));	
-                al.add(s); 
+                Comment c = new Comment();
+                c.setToyID(rs.getInt("toyID"));
+                c.setSubComment(rs.getInt("subComment"));
+                c.setUsername(rs.getString("username"));
+                c.setContent(rs.getString("content"));
+                c.setDatetime(rs.getDate("datetime"));
+                c.setIsSubComment(rs.getInt("isSubComment"));	
+                al.add(c); 
             }
             return al;
         } catch (Exception ex) {
