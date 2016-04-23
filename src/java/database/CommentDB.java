@@ -58,7 +58,7 @@ public class CommentDB {
 
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "SELECT * FROM \"Comment\" WHERE \"IsSubComment\" = '0' ORDER BY \"Datetime\"";
+            String preQueryStatement = "SELECT * FROM \"Comment\" WHERE \"IsSubComment\" = '0' ORDER BY \"Datetime\" DESC";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             ResultSet rs = pStmnt.executeQuery();
 
@@ -87,7 +87,7 @@ public class CommentDB {
         boolean isSuccess = false;
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "DELETE FROM \"Comment\" WHERE \"commnetID\" = ?";
+            String preQueryStatement = "DELETE FROM \"Comment\" WHERE \"commentID\" = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setInt(1, commentID);
             int rowCount = pStmnt.executeUpdate();
@@ -117,7 +117,7 @@ public class CommentDB {
 
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "SELECT * FROM \"Comment\" WHERE \"IsSubComment\" = '1' AND \"SubComment\" = ? ORDER BY \"Datetime\"";
+            String preQueryStatement = "SELECT * FROM \"Comment\" WHERE \"IsSubComment\" = '1' AND \"SubComment\" = ? ORDER BY \"Datetime\" DESC";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setInt(1, subComment);
             ResultSet rs = pStmnt.executeQuery();
