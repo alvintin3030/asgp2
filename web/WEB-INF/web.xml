@@ -2,7 +2,7 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <servlet>
         <servlet-name>ShoppingCartController</servlet-name>
-        <servlet-class>ShoppingCartController</servlet-class>
+        <servlet-class>servlet.ShoppingCartController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>viewProduct</servlet-name>
@@ -39,6 +39,10 @@
     <servlet>
         <servlet-name>RecycleToyController</servlet-name>
         <servlet-class>servlet.RecycleToyController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CommentHandler</servlet-name>
+        <servlet-class>servlet.CommentHandler</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingCartController</servlet-name>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>RecycleToyController</servlet-name>
         <url-pattern>/recycle</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CommentHandler</servlet-name>
+        <url-pattern>/CommentController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

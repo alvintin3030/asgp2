@@ -112,7 +112,7 @@
                                out.println("<ins> $"+product.getPrice()+"</ins>");
                                out.println("</div>");
                                out.println("<div class=\"product-option-shop\">");
-                               out.println("<a class=\"add_to_cart_button\" data-quantity=\"1\" data-product_sku=\"\" data-product_id=\"70\" rel=\"nofollow\" a href=\"shopping?action=add&cb=true&id="+product.getTid()+"\">Add to cart</a>");
+                               out.println("<a class=\"add_to_cart_button\" data-quantity=\"1\" data-product_sku=\"\" data-product_id=\"70\" rel=\"nofollow\" a href=\"shopping?quantity=1&action=add&cb=true&id="+product.getTid()+"\">Add to cart</a>");
                                out.println("</div>");
                                out.println("</div>");
                                out.println("</div>");

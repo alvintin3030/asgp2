@@ -9,6 +9,7 @@ package servlet;
 import database.ToyInventoryDB;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -78,20 +79,25 @@ public class viewProduct extends HttpServlet {
          if (!(type.equals("")||page.equals(""))){
              
             ToyInventoryDB toyDB=new ToyInventoryDB();
-            System.out.println("type="+type);
+            //.out.println("type="+type);
+            ArrayList<String> category=toyDB.getAllCategory();
             
+            boolean found=false;
+            for (String c:category){
+                if (type.equals(c)){
+                    request.setAttribute("productItems",toyDB.getToyByCategory(c.replaceAll("_"," ")));
+                    found=true;
+                }
+            }
+            if (found==false){
             if (type.equals("latest"))
                 request.setAttribute("productItems",toyDB.getLatestToys());
             else if (type.equals("all"))
                 request.setAttribute("productItems",toyDB.getToys());
-            else if (type.equals("Toy_Figures"))
-                 request.setAttribute("productItems",toyDB.getToyByCategory("Toy_Figures"));
-            else if (type.equals("Card_Games"))
-                 request.setAttribute("productItems",toyDB.getToyByCategory("Card_Games"));
-            else if (type.equals("Vehicle")) 
-                 request.setAttribute("productItems",toyDB.getToyByCategory("Vehicle"));
             else 
                 request.setAttribute("productItems",toyDB.getToyById(Integer.parseInt(type)));
+            }
+
 
             //determine view page
             if(page.equals("detail"))

@@ -10,12 +10,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CommentDB {
     
-    public int addComment(int toyID, int subComment, String username, String content, Date datetime, int isMainComment) { //return errorCode: 0=success, 1=fail(book exist in cart), 2=fail(error)
+    public int addComment(int toyID, int subComment, String username, String content, int isSubComment) { //return errorCode: 0=success, 1=fail(book exist in cart), 2=fail(error)
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         int isSuccess = -1;
@@ -29,14 +30,16 @@ public class CommentDB {
             pStmnt.setInt(2, toyID);
             ResultSet rs = pStmnt.executeQuery();
             if (!rs.next()) {
-                preQueryStatement = "INSERT INTO \"Comment\" (\"toyId\", \"subComment\", \"username\",  \"content\", \"datetime\", \"isMainComment\") VALUES (?,?,?,?,?,?)";
+                preQueryStatement = "INSERT INTO \"Comment\" (\"toyId\", \"subComment\", \"username\",  \"content\", \"datetime\", \"isSubComment\") VALUES (?,?,?,?,?,?)";
                 pStmnt = cnnct.prepareStatement(preQueryStatement);
+                Calendar cal = Calendar.getInstance();  
+                java.sql.Timestamp datetime = new java.sql.Timestamp(cal.getTimeInMillis());
                 pStmnt.setInt(1, toyID);
                 pStmnt.setInt(2, subComment);
                 pStmnt.setString(3, username);
                 pStmnt.setString(4, content);
-                pStmnt.setDate(5, datetime);
-                pStmnt.setInt(6, isMainComment);
+                pStmnt.setTimestamp(5, datetime);
+                pStmnt.setInt(6, isSubComment);
                 int rowCount = pStmnt.executeUpdate();
                 if (rowCount >= 1) {
                     isSuccess = 0;
@@ -68,18 +71,19 @@ public class CommentDB {
 
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "SELECT * FROM \"Comment\" WHERE \"IsMainComment\" = '1'";
+            String preQueryStatement = "SELECT * FROM \"Comment\" WHERE \"IsSubComment\" is null ORDER BY \"Datetime\"";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             ResultSet rs = pStmnt.executeQuery();
 
             while (rs.next()) {
                 Comment s = new Comment();
+                s.setCommentID(rs.getInt("commentID"));
                 s.setToyID(rs.getInt("toyID"));
                 s.setSubComment(rs.getInt("subComment"));
                 s.setUsername(rs.getString("username"));
                 s.setContent(rs.getString("content"));
-                s.setDatetime(rs.getDate("datetime"));
-                s.setIsMainComment(rs.getInt("isMainComment"));	
+                s.setDatetime(rs.getTimestamp("datetime"));
+                s.setIsSubComment(rs.getInt("isSubComment"));	
                 al.add(s);
             }
             return al;
@@ -118,26 +122,28 @@ public class CommentDB {
         return isSuccess;
     }
     
-    public ArrayList<Comment> getSubComment() {
+    public ArrayList<Comment> getSubComment(int subComment) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         ArrayList<Comment> al = new ArrayList<Comment>();
 
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "SELECT * FROM \"Comment\" WHERE \"IsMainComment\" = '0'";
+            String preQueryStatement = "SELECT * FROM \"Comment\" WHERE \"IsSubComment\" = '1' AND \"SubComment\" = ? ORDER BY \"Datetime\"";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setInt(1, subComment);
             ResultSet rs = pStmnt.executeQuery();
 
             while (rs.next()) {
-                Comment s = new Comment();
-                s.setToyID(rs.getInt("toyID"));
-                s.setSubComment(rs.getInt("subComment"));
-                s.setUsername(rs.getString("username"));
-                s.setContent(rs.getString("content"));
-                s.setDatetime(rs.getDate("datetime"));
-                s.setIsMainComment(rs.getInt("isMainComment"));	
-                al.add(s);
+                Comment c = new Comment();
+                c.setCommentID(rs.getInt("commentID"));
+                c.setToyID(rs.getInt("toyID"));
+                c.setSubComment(rs.getInt("subComment"));
+                c.setUsername(rs.getString("username"));
+                c.setContent(rs.getString("content"));
+                c.setDatetime(rs.getTimestamp("datetime"));
+                c.setIsSubComment(rs.getInt("isSubComment"));	
+                al.add(c); 
             }
             return al;
         } catch (Exception ex) {

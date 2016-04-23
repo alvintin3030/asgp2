@@ -6,6 +6,7 @@
 package bean;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Comment {
     private int commentID;
@@ -13,8 +14,8 @@ public class Comment {
     private int subComment; 
     private String username;
     private String content;
-    private Date datetime;
-    private int isMainComment;
+    private Timestamp datetime;
+    private int isSubComment;
 
     public int getCommentID() {
         return commentID;
@@ -56,20 +57,20 @@ public class Comment {
         this.content = content;
     }
     
-    public Date getDatetime(){
+    public Timestamp getDatetime(){
         return datetime;
     }
     
-    public void setDatetime(Date datetime){
+    public void setDatetime(Timestamp datetime){
         this.datetime = datetime;
     }
 
-    public int getIsMainComment() {
-        return isMainComment;
+    public int getIsSubComment() {
+        return isSubComment;
     }
 
-    public void setIsMainComment(int isMainComment) {
-        this.isMainComment = isMainComment;
+    public void setIsSubComment(int isSubComment) {
+        this.isSubComment = isSubComment;
     }
     
 }

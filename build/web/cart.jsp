@@ -61,7 +61,6 @@
                                 <table cellspacing="0" class="shop_table cart">
                                     <thead>
                                         <tr>
-                                            <th class="product-remove">&nbsp;</th>
                                             <th class="product-thumbnail">&nbsp;</th>
                                             <th class="product-name">Product</th>
                                             <th class="product-price">Price</th>
@@ -71,9 +70,7 @@
                                     </thead>
                                     <tbody>
                                         <tr class="cart_item">
-                                            <td class="product-remove">
-                                                <a title="Remove this item" class="remove" href="#">×</a> 
-                                            </td>
+                                           
 
                                             <td class="product-thumbnail">
                                                 <a href="single-product.html"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="img/product-thumb-2.jpg"></a>

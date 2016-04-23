@@ -1,5 +1,8 @@
 <%@page import="java.util.ArrayList"%>
-<%@page import="bean.Toy"%>
+<%@page import="bean.*"%>
+<%@page import="database.CommentDB"%>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -30,6 +33,13 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+   <script type="text/javascript" language="JavaScript">
+    function reply(commentID){
+        console.log("onclick");
+        document.getElementById(commentID).style.display = 'block';
+    }
+    </script>
+    
   </head>
   <body>
    
@@ -84,9 +94,11 @@
                                         <ins>$<%=productItems.getPrice()%></ins>
                                     </div>    
                                     
-                                    <form action="" class="cart">
+                                    <form action="shopping" class="cart">
                                         <div class="quantity">
                                             <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
+                                            <input type="text" style="display:none" name="id" value="<%=productItems.getTid()%>">
+                                            <input type="text" style="display:none" name="action" value="add">
                                         </div>
                                         <button class="add_to_cart_button" type="submit">Add to cart</button>
                                     </form>   
@@ -115,18 +127,64 @@
                                             <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Comment</a></li>
                                          
                                         </ul>
+                                        
+                                        <%
+                                            String username;
+                                                        User user=(User) session.getAttribute("UserInfo");
+                                                        if (user!=null)
+                                                           username=user.getUsername();
+                                                        else
+                                                            username="Anonymous";
+                                        %>
+                                        
                                         <div class="tab-content">
                                             <div role="tabpanel" class="tab-pane fade in active" id="home">
-                                                <form action="CommentController?action=add">
+                                                <form action="CommentController" method="get">
                                                     <div class="form-group">
                                                         <label for="commetArea">Having Comment?</label>
-                                                        <textarea class="form-control" rows="5" id="commentArea"></textarea>                                             
+                                                        <textarea class="form-control" rows="5" id="commentArea" name="commentArea"></textarea> 
+                                                        <input type="text" style="display:none" name="tid" value="<%=productItems.getTid()%>" />
+                                                        <input type="text" style="display:none" name="action" value="add" />
+                                                       <input type="text" style="display:none" name="username" value="<%=username%>" />
                                                     </div>
                                                     <div class="form-group">
                                                          <button type="submit" class="btn btn-default">Submit</button>
                                                     </div>
                                                 </form>
                                                     
+                                                
+                                                <div>
+                                                    <%
+                                                        CommentDB cdb=new CommentDB();
+                                                        for (Comment c:cdb.getMainComment()){
+                                                            
+                                                            if (c.getToyID()==productItems.getTid()){
+                                                                out.println("<table class=\"table table-bordered\"><td>");
+                                                                out.println("<p>Username: "+c.getUsername()+"<br/>Reply date: "+c.getDatetime()+"</p>");
+                                                                out.println("<p>"+c.getContent()+"</p>");
+                                                                
+                                                                out.println("<p><a href=\"javascript:reply("+c.getCommentID()+")\"> Reply this comment</a></p>");
+                                                                out.println("<form style=\"display:none\" id="+c.getCommentID()+" action=\"CommentController\" method=\"get\">"
+                                                                        + "<div class=\"form-group\"><input type=\"text\" style=\"display:none\" name=\"action\" value=\"reply\"></input>"
+                                                                        +"<input type=\"text\" style=\"display:none\" id=\"tid\" name=\"tid\" value=\""+productItems.getTid()+"\"></input>"
+                                                                        +"<input type=\"text\" style=\"display:none\" id=\"id\" name=\"id\" value=\""+c.getCommentID()+"\"></input>"
+                                                                        +"<input type=\"text\" style=\"display:none\" id=\"username\"  name=\"username\" value=\""+username+"\"></input>"
+                                                                        + "<textarea class=\"form-control\" rows=\"5\" id=\"commentArea\" name=\"commentArea\"></textarea>"
+                                                                        + "</div><div class=\"form-group\">"
+                                                                        + "<button type=\"submit\" class=\"btn btn-default\">Submit</button>"
+                                                                        + "</div></form>");
+                                                                for (Comment sc:cdb.getSubComment(c.getCommentID())){
+                                                                    
+                                                                    out.println("<table class=\"table table-bordered\"><td>");
+                                                                    out.println("<p>Username: "+sc.getUsername()+"<br/>Reply date: "+sc.getDatetime()+"</p>");
+                                                                    out.println("<p>"+sc.getContent()+"</p>");
+                                                                    out.println("</td></table>");
+                                                                }
+                                                                out.println("</td></table>");
+                                                            }
+                                                        }
+                                                        
+                                                    %>
                                             </div>
                                             
                                         </div>

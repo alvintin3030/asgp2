@@ -77,7 +77,7 @@
                                        + "<div class=\"product-f-image\">");
                                    out.println("<img class=\"product-img\" src=\"img/"+product.getImage()+"\">");
                                    out.println("<div class=\"product-hover\">");
-                                   out.println("<a href=\"shopping?action=add&cb=true&id="+product.getTid()+"\" class=\"add-to-cart-link\"><i class=\"fa fa-shopping-cart\"></i> Add to cart</a>");
+                                   out.println("<a href=\"shopping?quantity=1&action=add&cb=true&id="+product.getTid()+"\" class=\"add-to-cart-link\"><i class=\"fa fa-shopping-cart\"></i> Add to cart</a>");
                                    out.println("<a href=\"viewProduct?type="+product.getTid()+"&page=detail\" class=\"view-details-link\"><i class=\"fa fa-link\"></i> See details</a>");                             
                                    out.println("</div>"
                                            + "</div>");
