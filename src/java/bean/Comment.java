@@ -14,7 +14,7 @@ public class Comment {
     private int subComment; 
     private String username;
     private String content;
-    private Timestamp datetime;
+    private String datetime;
     private int isSubComment;
 
     public int getCommentID() {
@@ -57,11 +57,11 @@ public class Comment {
         this.content = content;
     }
     
-    public Timestamp getDatetime(){
+    public String getDatetime(){
         return datetime;
     }
     
-    public void setDatetime(Timestamp datetime){
+    public void setDatetime(String datetime){
         this.datetime = datetime;
     }
 
