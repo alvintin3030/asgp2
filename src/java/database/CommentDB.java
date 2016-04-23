@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
@@ -16,38 +17,24 @@ import java.util.logging.Logger;
 
 public class CommentDB {
     
-    public int addComment(int toyID, int subComment, String username, String content, int isSubComment) { //return errorCode: 0=success, 1=fail(book exist in cart), 2=fail(error)
+    public boolean addComment(Comment c) { //return errorCode: 0=success, 1=fail(book exist in cart), 2=fail(error)
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
-        int isSuccess = -1;
+        boolean isSuccess = false;
 
         try {
             cnnct = ConnectionUtil.getConnection();
-
-            String preQueryStatement = "SELECT * FROM \"Comment\" WHERE \"username\" = ? AND \"toyID\" = ?";
+            String preQueryStatement = "INSERT INTO \"Comment\" (\"ToyID\", \"SubComment\", \"Username\", \"Content\", \"IsSubComment\") VALUES(?, ?, ?, ?, ?)";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
-            pStmnt.setString(1, username);
-            pStmnt.setInt(2, toyID);
-            ResultSet rs = pStmnt.executeQuery();
-            if (!rs.next()) {
-                preQueryStatement = "INSERT INTO \"Comment\" (\"toyId\", \"subComment\", \"username\",  \"content\", \"datetime\", \"isSubComment\") VALUES (?,?,?,?,?,?)";
-                pStmnt = cnnct.prepareStatement(preQueryStatement);
-                Calendar cal = Calendar.getInstance();  
-                java.sql.Timestamp datetime = new java.sql.Timestamp(cal.getTimeInMillis());
-                pStmnt.setInt(1, toyID);
-                pStmnt.setInt(2, subComment);
-                pStmnt.setString(3, username);
-                pStmnt.setString(4, content);
-                pStmnt.setTimestamp(5, datetime);
-                pStmnt.setInt(6, isSubComment);
-                int rowCount = pStmnt.executeUpdate();
-                if (rowCount >= 1) {
-                    isSuccess = 0;
-                } else {
-                    isSuccess = 2;
-                }
-            } else {
-                isSuccess = 1;
+            pStmnt.setInt(1, c.getToyID());
+            pStmnt.setInt(2, c.getSubComment());
+            pStmnt.setString(3, c.getUsername());
+            pStmnt.setString(4, c.getContent());
+            pStmnt.setInt(5, c.getIsSubComment());
+            int rowCount = pStmnt.executeUpdate();
+
+            if (rowCount >= 1) {
+                isSuccess = true;
             }
             pStmnt.close();
             cnnct.close();
@@ -59,7 +46,7 @@ public class CommentDB {
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ShoppingCartDB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ToyInventoryDB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return isSuccess;
     }
@@ -76,13 +63,14 @@ public class CommentDB {
             ResultSet rs = pStmnt.executeQuery();
 
             while (rs.next()) {
+                
                 Comment s = new Comment();
                 s.setCommentID(rs.getInt("commentID"));
                 s.setToyID(rs.getInt("toyID"));
                 s.setSubComment(rs.getInt("subComment"));
                 s.setUsername(rs.getString("username"));
                 s.setContent(rs.getString("content"));
-                s.setDatetime(rs.getTimestamp("datetime"));
+                s.setDatetime(rs.getString("datetime"));
                 s.setIsSubComment(rs.getInt("isSubComment"));	
                 al.add(s);
             }
@@ -141,7 +129,7 @@ public class CommentDB {
                 c.setSubComment(rs.getInt("subComment"));
                 c.setUsername(rs.getString("username"));
                 c.setContent(rs.getString("content"));
-                c.setDatetime(rs.getTimestamp("datetime"));
+                c.setDatetime(rs.getString("datetime"));
                 c.setIsSubComment(rs.getInt("isSubComment"));	
                 al.add(c); 
             }
