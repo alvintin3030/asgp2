@@ -2,7 +2,6 @@ package database;
 
 import bean.OrderRecord;
 import bean.OrderRecordItem;
-import bean.ShoppingCartItem;
 import bean.User;
 import java.io.IOException;
 import java.sql.Connection;

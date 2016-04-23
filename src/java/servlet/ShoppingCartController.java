@@ -6,7 +6,6 @@
 package servlet;
 
 import bean.ShoppingCart;
-import bean.ShoppingCartItem;
 import bean.User;
 import database.ShoppingCartDB;
 import java.io.IOException;

@@ -44,6 +44,22 @@
         <servlet-name>CommentHandler</servlet-name>
         <servlet-class>servlet.CommentHandler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ApproveRecycleController</servlet-name>
+        <servlet-class>servlet.ApproveRecycleController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageSingleRecycleToyController</servlet-name>
+        <servlet-class>servlet.ManageSingleRecycleToyController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageRecycleToyController</servlet-name>
+        <servlet-class>servlet.ManageRecycleToyController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditRecycleToyController</servlet-name>
+        <servlet-class>servlet.EditRecycleToyController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingCartController</servlet-name>
         <url-pattern>/shopping</url-pattern>
@@ -74,7 +90,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ManageSingleToyController</servlet-name>
-        <url-pattern>/manageSingle</url-pattern>
+        <url-pattern>/manageSingleToy</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>viewRecycleToy</servlet-name>
@@ -87,6 +103,22 @@
     <servlet-mapping>
         <servlet-name>CommentHandler</servlet-name>
         <url-pattern>/CommentController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ApproveRecycleController</servlet-name>
+        <url-pattern>/approveRecycle</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageSingleRecycleToyController</servlet-name>
+        <url-pattern>/manageSingleRToy</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageRecycleToyController</servlet-name>
+        <url-pattern>/manageRecycle</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditRecycleToyController</servlet-name>
+        <url-pattern>/editRecycleToy</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

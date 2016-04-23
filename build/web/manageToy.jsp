@@ -65,7 +65,7 @@
                     <td><img src="img/<%=t.getImage() %>" width="50px" height="50px" /></td>
                     <td>$<%=t.getPrice() %></td>
                     <td><%=t.getQuantity() %></td>
-                    <td><a href="manageSingle?tid=<%=t.getTid() %>"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                    <td><a href="manageSingleToy?tid=<%=t.getTid() %>"><span class="glyphicon glyphicon-pencil"></span></a></td>
                 </tr>
                 <% } %>
             </table>

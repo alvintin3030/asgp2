@@ -84,7 +84,7 @@ public class RecycleToyDB {
         boolean isSuccess = false;
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "UPDATE \"RecycleToy\" SET \"Name\"=?, \"Description\"=?, \"Category\"=?, \"Image\"=?, \"price\"=?, \"DonatedBy\"=?, \"IsApproved\" WHERE \"tid\"=?";
+            String preQueryStatement = "UPDATE \"RecycleToy\" SET \"Name\"=?, \"Description\"=?, \"Category\"=?, \"Image\"=?, \"price\"=?, \"DonatedBy\"=?, \"IsApproved\"=? WHERE \"tid\"=?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, rt.getName());
             pStmnt.setString(2, rt.getDescription());
@@ -93,6 +93,7 @@ public class RecycleToyDB {
             pStmnt.setFloat(5, rt.getPrice());
             pStmnt.setString(6, rt.getDonatedBy());
             pStmnt.setInt(7, rt.getIsApproved());
+            pStmnt.setInt(8, rt.getTid());
             int rowCount = pStmnt.executeUpdate();
 
             if (rowCount >= 1) {
@@ -163,6 +164,68 @@ public class RecycleToyDB {
         try {
             cnnct = ConnectionUtil.getConnection();
             String preQueryStatement = "SELECT * FROM \"RecycleToy\" ORDER BY \"tid\" DESC";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+
+            while (rs.next()) {
+                RecycleToy rt = new RecycleToy();
+                rt.setTid(rs.getInt("tid"));
+                rt.setName(rs.getString("name"));
+                rt.setDescription(rs.getString("description"));
+                rt.setCategory(rs.getString("category"));
+                rt.setImage(rs.getString("image"));
+                rt.setPrice(rs.getFloat("price"));
+                rt.setDonatedBy(rs.getString("donatedBy"));
+		rt.setIsApproved(rs.getInt("isApproved"));	
+                
+                al.add(rt);
+            }
+            return al;
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            return al;
+        }
+    }
+    
+    public ArrayList<RecycleToy> getApprovedRToys() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<RecycleToy> al = new ArrayList<RecycleToy>();
+
+        try {
+            cnnct = ConnectionUtil.getConnection();
+            String preQueryStatement = "SELECT * FROM \"RecycleToy\" WHERE \"IsApproved\"=1 ORDER BY \"tid\" DESC";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+
+            while (rs.next()) {
+                RecycleToy rt = new RecycleToy();
+                rt.setTid(rs.getInt("tid"));
+                rt.setName(rs.getString("name"));
+                rt.setDescription(rs.getString("description"));
+                rt.setCategory(rs.getString("category"));
+                rt.setImage(rs.getString("image"));
+                rt.setPrice(rs.getFloat("price"));
+                rt.setDonatedBy(rs.getString("donatedBy"));
+		rt.setIsApproved(rs.getInt("isApproved"));	
+                
+                al.add(rt);
+            }
+            return al;
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            return al;
+        }
+    }
+    
+    public ArrayList<RecycleToy> getNotApprovedRToys() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<RecycleToy> al = new ArrayList<RecycleToy>();
+
+        try {
+            cnnct = ConnectionUtil.getConnection();
+            String preQueryStatement = "SELECT * FROM \"RecycleToy\" WHERE \"IsApproved\"=0 ORDER BY \"tid\" DESC";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             ResultSet rs = pStmnt.executeQuery();
 
