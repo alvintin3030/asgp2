@@ -40,36 +40,62 @@ public class ShoppingCartController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("into request");
+        
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
         String action = request.getParameter("action");
        // boolean cb=request.getParameter("cb").equals("true")?true:false;
-        int toyId=Integer.parseInt(request.getParameter("id"));
-        int quantity=Integer.parseInt(request.getParameter("quantity"));
         
         HttpSession session = request.getSession(true);
         User userInfo = (User) session.getAttribute("userInfo");
         ShoppingCartDB sdb=new ShoppingCartDB();
         
         //String targetURL=request.getRequestURI();;
-        System.out.println(request.getRequestURI());
+        
         if (userInfo!=null){
+            
             String username=userInfo.getUsername();
-            if (action.equals("add")){
-                sdb.addRecord(username, toyId, quantity);
-                out.println("Sucessfully add");
-            }
-            if (action.equals("view")){
+            
+            if (action.equals("view")){   
                 ArrayList<ShoppingCart> items=sdb.getShoppingCart(username);
+                //String cartItem="products"+username;
+                request.setAttribute("update","update");
                 request.setAttribute("products",items);
                 RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/cart.jsp");
                 rd.forward(request, response);
             }
+            
+            int toyId=Integer.parseInt(request.getParameter("id"));
+            if (action.equals("add")){ 
+                int quantity=Integer.parseInt(request.getParameter("quantity"));
+                sdb.addRecord(username, toyId, quantity);
+                out.println("Sucessfully add");
+            }
+            
+            if(action.equals("delete")){
+                sdb.deleteCartItem(username, toyId);
+                out.println("Successfully delete");
+            }
+            
+            if(action.equals("edit")){
+                
+               int quantity=Integer.parseInt(request.getParameter("quantity"));
+               System.out.println("edit"+username+toyId+quantity);
+               if (quantity==0){
+                   sdb.deleteCartItem(username, toyId);
+               }else{
+                   sdb.modifyQuantity(username, toyId, quantity);
+               }
+            }
                         
             
         }else{
-            out.println("Please login.");
+            System.out.println("user null");
+            RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/login.jsp");
+            rd.forward(request, response);
+            
         }
         
        // RequestDispatcher rd = this.getServletContext().getRequestDispatcher(targetURL);
