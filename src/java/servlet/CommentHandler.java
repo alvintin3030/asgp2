@@ -43,17 +43,28 @@ public class CommentHandler extends HttpServlet {
            String comment=request.getParameter("commentArea");
            int tid=Integer.parseInt(request.getParameter("tid"));
            int id;
-           Calendar today=Calendar.getInstance();
-         //  Date replyDate=(Date) today.getTime();
-          CommentDB cdb=new CommentDB();
-           
+          
            if (action.equals("reply")){
+                CommentDB cdb=new CommentDB();
+                Comment c = new Comment();
                 id= (Integer.parseInt(request.getParameter("id")));
-                cdb.addComment(tid, id, username,comment,1);
+                c.setToyID(tid);
+                c.setSubComment(id);
+                c.setUsername(username);
+                c.setContent(comment);
+                c.setIsSubComment(1);
+                cdb.addComment(c);
            }
            if (action.equals("add")){
                System.out.println(tid+username+comment);
-               cdb.addComment(tid, 0, username,comment,0);
+               CommentDB cdb=new CommentDB();
+                Comment c = new Comment();
+                c.setToyID(tid);
+                c.setSubComment(0);
+                c.setUsername(username);
+                c.setContent(comment);
+                c.setIsSubComment(0);
+                cdb.addComment(c);
            }
            String targetURL="/viewProduct?type="+tid+"&page=detail";
            RequestDispatcher rd = this.getServletContext().getRequestDispatcher(targetURL);
