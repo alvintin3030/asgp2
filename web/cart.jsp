@@ -64,8 +64,8 @@
             rd = getServletContext().getRequestDispatcher("/shopping?action=view");
             rd.forward(request, response);
         }else{
-            String CartItem="products"+username;
-            products=(ArrayList<ShoppingCart>)request.getAttribute(CartItem);
+           // String CartItem="products"+username;
+            products=(ArrayList<ShoppingCart>)request.getAttribute("products");
             request.setAttribute("update","read");
         }
         
@@ -83,15 +83,42 @@
     function deleteItem(tid)   {
         $.ajax({
             url: "shopping",
-            data: {username:<%=username%>,tid:tid}
+            data: {username:"<%=username%>",id:tid,action:"delete"}
           }).done(function() {
             location.reload();
           });
       }
      
-     function editQuantity(tid,action){
-        
+     function editQuantity(tid,change,unitPrice){
+        var value=$("#"+tid).val();
+        var newValue=parseInt(value)+parseInt(change);
+        if (newValue<0)
+            newValue=0;
+        $("#"+tid).val(newValue);
+        $("#"+tid+"Total").html(newValue*unitPrice);
+        updateTotal();
+            $.ajax({
+               url: "shopping",
+               data: {username:"<%=username%>",id:tid,quantity:newValue,action:"edit"}
+             });
     }
+    
+    function updateTotal(){
+        var sum=0;
+        $(".subTotal").each(function() {
+            var value = $(this).text();
+            // add only if the value is number
+            if(!isNaN(value) && value.length != 0) {
+                sum += parseFloat(value);
+            }
+        });
+        $(".totalAmount").html(sum)
+    }
+    
+    
+    $(document).ready(function(){
+        updateTotal();  
+    });
     </script>	
     
     
@@ -106,6 +133,7 @@
                                 <table cellspacing="0" class="shop_table cart">
                                     <thead>
                                         <tr>
+                                            <th class="product-thumbnail">&nbsp;</th>
                                             <th class="product-thumbnail">&nbsp;</th>
                                             <th class="product-name">Product</th>
                                             <th class="product-price">Price</th>
@@ -123,15 +151,15 @@
                                         %>
 					<tr class="cart_item">
                                            <td class="product-remove">
-                                                <a title="Remove this item" class="remove" onclick="deleteItem(<%=toy.getTid()%>">×</a> 
+                                                <a title="Remove this item" class="remove" onclick="deleteItem(<%=toy.getTid()%>)">Delete</a> 
                                             </td>
 											
                                             <td class="product-thumbnail">
-                                                <a href="/viewProduct?type=<&=toy.getTid()%>&page=detail"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="img/<%=toy.getImage()%>"></a>
+                                                <a href="viewProduct?type=<&=toy.getTid()%>&page=detail"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="img/<%=toy.getImage()%>"></a>
                                             </td>
 
                                             <td class="product-name">
-                                                <a href="/viewProduct?type=<&=toy.getTid()%>&page=detail"><%=toy.getName()%></a> 
+                                                <a href="viewProduct?type=<%=toy.getTid()%>&page=detail"><%=toy.getName()%></a> 
                                             </td>
 
                                             <td class="product-price">
@@ -140,14 +168,14 @@
 
                                             <td class="product-quantity">
                                                 <div class="quantity buttons_added">
-                                                    <input type="button" class="editQuantity minus" onclick="editQuantity(<%=toy.getTid()%>,plus)" value="-">
-                                                    <input type="number" id="<%=toy.getTid()%>" size="4" class="input-text qty text" title="Qty" value="1" min="1" step="1">
-                                                    <input type="button" class="editQuantity plus" onclick="editQuantity(<%=toy.getTid()%>,minus)" value="+">
+                                                    <input type="button" class="editQuantity minus" onclick="editQuantity(<%=toy.getTid()%>,-1,<%=toy.getPrice()%>)" value="-" />
+                                                    <input type="number" id="<%=toy.getTid()%>" size="4" class="input-text qty text" title="Qty" value="<%=cart.getQuantity()%>" min="1" step="1"/>
+                                                    <input type="button" class="editQuantity plus" onclick="editQuantity(<%=toy.getTid()%>,1,<%=toy.getPrice()%>)" value="+"/>
                                                 </div>
                                             </td>
 
                                             <td class="product-subtotal">
-                                                <span class="amount">£15.00</span> 
+                                                <span class="amount subTotal" id="<%=toy.getTid()%>Total" ><%=cart.getQuantity()*toy.getPrice()%></span> 
                                             </td>
                                         </tr>
 										
@@ -155,7 +183,6 @@
                                         <tr>
                                             <td class="actions" colspan="6">
                                                
-                                                <input type="submit" value="Update Cart" name="update_cart" class="button">
                                                 <input type="submit" value="Checkout" name="proceed" class="checkout-button button alt wc-forward">
                                             </td>
                                         </tr>
@@ -176,7 +203,7 @@
                                     <tbody>
                                         <tr class="cart-subtotal">
                                             <th>Cart Subtotal</th>
-                                            <td><span class="amount">£15.00</span></td>
+                                            <td><span class="amount totalAmount"></span></td>
                                         </tr>
 
                                         <tr class="shipping">
@@ -186,7 +213,7 @@
 
                                         <tr class="order-total">
                                             <th>Order Total</th>
-                                            <td><strong><span class="amount">£15.00</span></strong> </td>
+                                            <td><strong><span class="amount totalAmount"></span></strong> </td>
                                         </tr>
                                     </tbody>
                                 </table>
