@@ -1,3 +1,8 @@
+<%@page import="bean.Toy"%>
+<%@page import="database.ToyInventoryDB"%>
+<%@page import="bean.ShoppingCart"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="bean.User"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cart Page</title>
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
@@ -30,7 +35,8 @@
     <![endif]-->
   </head>
   <body>
-   
+     
+    
     <!-- Header -->
     <jsp:include page="header.jsp"/>
     
@@ -48,6 +54,45 @@
             </div>
         </div>
     </div> <!-- End Page title area -->
+    
+     <%
+        User user=(User)session.getAttribute("userInfo");
+        String username="";
+        ArrayList<ShoppingCart> products=null;
+        if (request.getAttribute("update")!="update"){
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/shopping?action=view");
+            rd.forward(request, response);
+        }else{
+            String CartItem="products"+username;
+            products=(ArrayList<ShoppingCart>)request.getAttribute(CartItem);
+            request.setAttribute("update","read");
+        }
+        
+        if (user==null ){
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/shopping?action=view");
+            rd.forward(request, response);
+        }else{
+            username=user.getUsername();
+        }
+	     
+      %>
+   
+    <script type="text/javascript" language="JavaScript">
+    function deleteItem(tid)   {
+        $.ajax({
+            url: "shopping",
+            data: {username:<%=username%>,tid:tid}
+          }).done(function() {
+            location.reload();
+          });
+      }
+     
+     function editQuantity(tid,action){
+        
+    }
+    </script>	
     
     
     <div class="single-product-area">
@@ -69,26 +114,35 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="cart_item">
-                                           
-
+                                        <%  ToyInventoryDB tdb=new ToyInventoryDB();
+                                        
+                                        if (products!=null && products.size()>0){
+                                            
+                                            for (ShoppingCart cart:products){
+                                                Toy toy=tdb.getToyById(cart.getToyId());
+                                        %>
+					<tr class="cart_item">
+                                           <td class="product-remove">
+                                                <a title="Remove this item" class="remove" onclick="deleteItem(<%=toy.getTid()%>">×</a> 
+                                            </td>
+											
                                             <td class="product-thumbnail">
-                                                <a href="single-product.html"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="img/product-thumb-2.jpg"></a>
+                                                <a href="/viewProduct?type=<&=toy.getTid()%>&page=detail"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="img/<%=toy.getImage()%>"></a>
                                             </td>
 
                                             <td class="product-name">
-                                                <a href="single-product.html">Ship Your Idea</a> 
+                                                <a href="/viewProduct?type=<&=toy.getTid()%>&page=detail"><%=toy.getName()%></a> 
                                             </td>
 
                                             <td class="product-price">
-                                                <span class="amount">£15.00</span> 
+                                                <span class="amount">$<%=toy.getPrice()%></span> 
                                             </td>
 
                                             <td class="product-quantity">
                                                 <div class="quantity buttons_added">
-                                                    <input type="button" class="minus" value="-">
-                                                    <input type="number" size="4" class="input-text qty text" title="Qty" value="1" min="0" step="1">
-                                                    <input type="button" class="plus" value="+">
+                                                    <input type="button" class="editQuantity minus" onclick="editQuantity(<%=toy.getTid()%>,plus)" value="-">
+                                                    <input type="number" id="<%=toy.getTid()%>" size="4" class="input-text qty text" title="Qty" value="1" min="1" step="1">
+                                                    <input type="button" class="editQuantity plus" onclick="editQuantity(<%=toy.getTid()%>,minus)" value="+">
                                                 </div>
                                             </td>
 
@@ -96,6 +150,8 @@
                                                 <span class="amount">£15.00</span> 
                                             </td>
                                         </tr>
+										
+					<% };} %>
                                         <tr>
                                             <td class="actions" colspan="6">
                                                

@@ -7,6 +7,7 @@
       
       <!--if no product is stored in the attr, send request to controller to update items (and then reload the page)"-->
      <% 
+         
       if (request.getAttribute("productItems")==null){
         String targetURL="viewProduct?type=all&page=all&pageNo=1";
         RequestDispatcher rd;
