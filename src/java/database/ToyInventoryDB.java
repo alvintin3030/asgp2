@@ -302,7 +302,7 @@ public class ToyInventoryDB {
                 
             }
             
-            System.out.println("S: "+s);
+           
             return s;
         } catch (Exception ex) {
             System.out.println(ex.toString());

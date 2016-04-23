@@ -122,7 +122,7 @@ public class ShoppingCartDB {
         boolean isSuccess = false;
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "UPDATE FROM \"ShoppingCart\" SET \"Quantity\" = ? WHERE \"toyId\" = ? AND \"username\" = ?";
+            String preQueryStatement = "UPDATE \"ShoppingCart\" SET \"Quantity\" = ? WHERE \"toyId\" = ? AND \"username\" = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setInt(1, newQuantity);
             pStmnt.setInt(2, toyId);
