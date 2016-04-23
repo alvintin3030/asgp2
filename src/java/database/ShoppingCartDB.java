@@ -68,6 +68,7 @@ public class ShoppingCartDB {
             cnnct = ConnectionUtil.getConnection();
             String preQueryStatement = "SELECT * FROM \"ShoppingCart\" WHERE \"USERNAME\" = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, username);
             ResultSet rs = pStmnt.executeQuery();
 
             while (rs.next()) {
