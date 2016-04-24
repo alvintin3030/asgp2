@@ -170,9 +170,9 @@
                             <table class="table">
                                 <tr>
                                     <th>Toy Name</th>
-                                    <th>Toy Image</th>
-                                    <th>Toy Price</th>
+                                    <th>Image</th>
                                     <th>Quantity</th>
+                                    <th>Price</th>
                                     <th>Order Date</th>
                                 </tr>
                                 <% if (myOrder.isEmpty()) { %>
@@ -183,10 +183,10 @@
                                     %>
                                     <tr>
                                         <td><%=t.getName() %></td>
-                                        <td><%=t.getCategory() %></td>
                                         <td><img src="img/<%=t.getImage() %>" width="50px" height="50px" /></td>
-                                        <td>$<%=r.getQuantity() %></td>
-                                        <td>$<%=r.getOrderDatetime() %></td>
+                                        <td><%=r.getQuantity() %></td>
+                                        <td>$<%=t.getPrice() %></td>
+                                        <td><%=r.getOrderDatetime() %></td>
                                     </tr>
                                     <% } %>
                                 <% } %>
