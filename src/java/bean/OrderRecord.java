@@ -3,57 +3,42 @@ package bean;
 import java.sql.Date;
 
 public class OrderRecord {
-    private int orderId;
-    private int userId;
-    private int cartId;
-    private Date orderDateTime;
-    private String orderStatus;
-
-    public int getOrderId() {
-        return orderId;
+    private int orderID;
+    private String username;
+    private int toyID;
+    private String orderDatetime;
+    
+    public int getOrderID() {
+        return orderID;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setOrderID(int orderID) {
+        this.orderID = orderID;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-	
-    public int getCartId() {
-        return cartId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setCartId(int cartId) {
-        this.cartId = cartId;
+    public int getToyID() {
+        return toyID;
+    }
+
+    public void setToyID(int toyID) {
+        this.toyID = toyID;
+    }
+
+    public String getOrderDatetime() {
+        return orderDatetime;
+    }
+
+    public void setOrderDatetime(String orderDatetime) {
+        this.orderDatetime = orderDatetime;
     }
     
-    public Date getOrderDateTime() {
-        return orderDateTime;
-    }
-
-    public void setOrderDateTime(Date orderDateTime) {
-        this.orderDateTime = orderDateTime;
-    }
-	
-    public String getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
-    public int getToyId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public boolean getIsBuy() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
+
