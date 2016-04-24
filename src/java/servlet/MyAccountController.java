@@ -1,7 +1,9 @@
 package servlet;
 
+import bean.OrderRecord;
 import bean.RecycleToy;
 import bean.User;
+import database.OrderRecordDB;
 import database.RecycleToyDB;
 import database.UserDB;
 import java.io.IOException;
@@ -42,6 +44,9 @@ public class MyAccountController extends HttpServlet {
             RecycleToyDB toyDB = new RecycleToyDB();
             ArrayList<RecycleToy> myRecycleToys = toyDB.getUserRToys(user.getUsername());
             request.setAttribute("myRecycleToys", myRecycleToys);
+            OrderRecordDB orderDB = new OrderRecordDB();
+            ArrayList<OrderRecord> myOrder = orderDB.getUserOrderHistory(user.getUsername());
+            request.setAttribute("myOrder", myOrder);
             targetURL = "myAccount.jsp";
         } else {
             targetURL = "login.jsp";

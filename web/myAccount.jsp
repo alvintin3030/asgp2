@@ -1,5 +1,8 @@
 <%@page import="bean.User"%>
+<%@page import="bean.Toy"%>
 <%@page import="bean.RecycleToy"%>
+<%@page import="bean.OrderRecord"%>
+<%@page import="database.ToyInventoryDB"%>
 <%@page import="util.Getter"%>
 <%@page import="java.util.ArrayList"%>
 
@@ -48,6 +51,12 @@
         ArrayList<RecycleToy> myRecycleToys = request.getAttribute("myRecycleToys") != null 
                                                 ? (ArrayList<RecycleToy>) request.getAttribute("myRecycleToys") 
                                                 : new ArrayList<RecycleToy>();
+        
+        ArrayList<OrderRecord> myOrder = request.getAttribute("myOrder") != null 
+                                                ? (ArrayList<OrderRecord>) request.getAttribute("myOrder") 
+                                                : new ArrayList<OrderRecord>();
+        
+        ToyInventoryDB toyDB = new ToyInventoryDB();
     %>
       
     <!-- Header -->
@@ -152,7 +161,7 @@
                         <div class="panel-heading">
                             <h2 class="panel-title" style="text-align: center">
                                 <a data-toggle="collapse" href="#orderTable">
-                                    <i class="glyphicon glyphicon-search"></i> My Order History 
+                                    <i class="glyphicon glyphicon-search"></i> My Order History
                                 </a>
                             </h2>
                         </div>
@@ -160,28 +169,24 @@
                         <div id="orderTable" class="panel-collapse collapse">
                             <table class="table">
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Category</th>
-                                    <th>Image</th>
-                                    <th>Price</th>
-                                    <th>Status</th>
+                                    <th>Toy Name</th>
+                                    <th>Toy Image</th>
+                                    <th>Toy Price</th>
+                                    <th>Quantity</th>
+                                    <th>Order Date</th>
                                 </tr>
-                                <% if (myRecycleToys.isEmpty()) { %>
-                                    <tr><td colspan="5">No recycle record</td></tr>
+                                <% if (myOrder.isEmpty()) { %>
+                                    <tr><td colspan="5">No order record</td></tr>
                                 <% } else { %>
-                                    <% for (RecycleToy t : myRecycleToys) { %>
+                                    <% for (OrderRecord r : myOrder) { 
+                                        Toy t = toyDB.getToyById(r.getToyID());
+                                    %>
                                     <tr>
                                         <td><%=t.getName() %></td>
                                         <td><%=t.getCategory() %></td>
                                         <td><img src="img/<%=t.getImage() %>" width="50px" height="50px" /></td>
-                                        <td>$<%=t.getPrice() %></td>
-                                        <% if (t.getIsApproved() == 0) { %>
-                                            <td>Pending</td>
-                                        <% } else if (t.getIsApproved() == 1) { %>
-                                            <td style="color:green">On sale</td>
-                                        <% } else if (t.getIsApproved() == 2) { %>
-                                            <td style="color:red">Rejected</td>
-                                        <% } %>
+                                        <td>$<%=r.getQuantity() %></td>
+                                        <td>$<%=r.getOrderDatetime() %></td>
                                     </tr>
                                     <% } %>
                                 <% } %>
