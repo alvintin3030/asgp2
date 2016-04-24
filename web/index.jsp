@@ -66,18 +66,21 @@
                 <div class="col-md-12">
                     <div class="latest-product">
                         <h2 class="section-title">Latest Products</h2>
+                        <%
+                             if (request.getAttribute("msg")!=null)
+                                   out.println("<div class=row>"+request.getAttribute("msg")+"</div>");
+                        %>
                         <div class="product-carousel">
                             
                             <% 
-                               
-                               
+                              
                                for (int i=0;i<productItems.size();i++){
                                    Toy product=productItems.get(i);
                                    out.println("<div class=\"single-product\">"
                                        + "<div class=\"product-f-image\">");
                                    out.println("<img class=\"product-img\" src=\"img/"+product.getImage()+"\">");
                                    out.println("<div class=\"product-hover\">");
-                                   out.println("<a href=\"shopping?quantity=1&action=add&cb=true&id="+product.getTid()+"\" class=\"add-to-cart-link\"><i class=\"fa fa-shopping-cart\"></i> Add to cart</a>");
+                                   out.println("<a href=\"shopping?quantity=1&action=add&cb=true&page=index&id="+product.getTid()+"\" class=\"add-to-cart-link\"><i class=\"fa fa-shopping-cart\"></i> Add to cart</a>");
                                    out.println("<a href=\"viewProduct?type="+product.getTid()+"&page=detail\" class=\"view-details-link\"><i class=\"fa fa-link\"></i> See details</a>");                             
                                    out.println("</div>"
                                            + "</div>");

@@ -99,8 +99,15 @@
                                             <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
                                             <input type="text" style="display:none" name="id" value="<%=productItems.getTid()%>" />
                                             <input type="text" style="display:none" name="action" value="add" />
+                                            <input type="text" style="display:none" name="page" value="detail" />
+                                            <input type="text" style="display:none" name="type" value="<%=productItems.getTid()%>" />
                                         </div>
                                         <button class="add_to_cart_button" type="submit">Add to cart</button>
+                                        
+                                        <% if (request.getAttribute("msg")!=null)
+                                            out.println(request.getAttribute("msg"));
+                                        %>
+         
                                     </form>   
                                     
                                     <div class="product-inner-category">
