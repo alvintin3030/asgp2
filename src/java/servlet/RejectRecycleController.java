@@ -1,7 +1,6 @@
 package servlet;
 
 import bean.RecycleToy;
-import bean.User;
 import database.RecycleToyDB;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,13 +9,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class ManageRecycleToyController extends HttpServlet {
- 
+public class RejectRecycleController extends HttpServlet {
+
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP
+     * <code>GET</code> and
+     * <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -28,34 +27,28 @@ public class ManageRecycleToyController extends HttpServlet {
             throws ServletException, IOException {
         doPost(request, response);
     }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        HttpSession session = request.getSession(true);
-        
-        boolean isAdmin = false;
-        User user = null;
-        if (session.getAttribute("userInfo") != null) {
-            user = (User) session.getAttribute("userInfo");
-            if (user.getGroupId() == 0)
-                isAdmin = true;
-        }
-        
+        int tid = Integer.parseInt(request.getParameter("tid"));
+
+        RecycleToyDB toyDB = new RecycleToyDB();
+        RecycleToy t = toyDB.getRToyById(tid);
+        t.setIsApproved(2);
+
         String targetURL = null;
-        
-        if (isAdmin) {
-            RecycleToyDB toyDB = new RecycleToyDB();
+        if (!toyDB.editRecord(t)) {
+            request.setAttribute("updateFail", true);
+            targetURL = "manageRecycle";
+        } else {
+            request.setAttribute("updateFail", false);
             ArrayList<RecycleToy> approvedToys = toyDB.getApprovedRToys();
             ArrayList<RecycleToy> notApprovedToys = toyDB.getNotApprovedRToys();
             ArrayList<RecycleToy> rejectedToys = toyDB.getRejectedRToys();
             request.setAttribute("approvedToys", approvedToys);
             request.setAttribute("notApprovedToys", notApprovedToys);
             request.setAttribute("rejectedToys", rejectedToys);
-            targetURL = "manageRecycleToy.jsp";
-        } else {
-            targetURL = "index.jsp";
+            targetURL = "manageRecycle";
         }
         
         RequestDispatcher rd;

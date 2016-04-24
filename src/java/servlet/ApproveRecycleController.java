@@ -39,14 +39,15 @@ public class ApproveRecycleController extends HttpServlet {
         String targetURL = null;
         if (!toyDB.editRecord(t)) {
             request.setAttribute("updateFail", true);
-            RecycleToy toy = toyDB.getRToyById(tid); 
-            request.setAttribute("toy", toy);
-            targetURL = "manageSingleRToy?tid=" + tid;
+            targetURL = "manageRecycle";
         } else {
+            request.setAttribute("updateFail", false);
             ArrayList<RecycleToy> approvedToys = toyDB.getApprovedRToys();
             ArrayList<RecycleToy> notApprovedToys = toyDB.getNotApprovedRToys();
+            ArrayList<RecycleToy> rejectedToys = toyDB.getRejectedRToys();
             request.setAttribute("approvedToys", approvedToys);
             request.setAttribute("notApprovedToys", notApprovedToys);
+            request.setAttribute("rejectedToys", rejectedToys);
             targetURL = "manageRecycle";
         }
         

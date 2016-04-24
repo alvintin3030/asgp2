@@ -97,8 +97,8 @@
                                     <form action="shopping" class="cart">
                                         <div class="quantity">
                                             <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
-                                            <input type="text" style="display:none" name="id" value="<%=productItems.getTid()%>">
-                                            <input type="text" style="display:none" name="action" value="add">
+                                            <input type="text" style="display:none" name="id" value="<%=productItems.getTid()%>" />
+                                            <input type="text" style="display:none" name="action" value="add" />
                                         </div>
                                         <button class="add_to_cart_button" type="submit">Add to cart</button>
                                     </form>   
@@ -130,11 +130,11 @@
                                         
                                         <%
                                             String username;
-                                                        User user=(User) session.getAttribute("UserInfo");
-                                                        if (user!=null)
-                                                           username=user.getUsername();
-                                                        else
-                                                            username="Anonymous";
+                                                User user=(User) session.getAttribute("userInfo");
+                                                if (user!=null)
+                                                   username=user.getUsername();
+                                                else
+                                                    username="Anonymous";
                                         %>
                                         
                                         <div class="tab-content">

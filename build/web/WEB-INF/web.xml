@@ -60,6 +60,10 @@
         <servlet-name>EditRecycleToyController</servlet-name>
         <servlet-class>servlet.EditRecycleToyController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RejectRecycleController</servlet-name>
+        <servlet-class>servlet.RejectRecycleController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingCartController</servlet-name>
         <url-pattern>/shopping</url-pattern>
@@ -119,6 +123,10 @@
     <servlet-mapping>
         <servlet-name>EditRecycleToyController</servlet-name>
         <url-pattern>/editRecycleToy</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RejectRecycleController</servlet-name>
+        <url-pattern>/rejectRecycle</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

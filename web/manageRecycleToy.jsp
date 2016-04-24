@@ -36,6 +36,7 @@
     <%
         ArrayList<RecycleToy> approvedToys = request.getAttribute("approvedToys") != null ?  (ArrayList<RecycleToy>) request.getAttribute("approvedToys") : new ArrayList<RecycleToy>();        
         ArrayList<RecycleToy> notApprovedToys = request.getAttribute("notApprovedToys") != null ?  (ArrayList<RecycleToy>) request.getAttribute("notApprovedToys") : new ArrayList<RecycleToy>();
+        ArrayList<RecycleToy> rejectedToys = request.getAttribute("rejectedToys") != null ?  (ArrayList<RecycleToy>) request.getAttribute("rejectedToys") : new ArrayList<RecycleToy>();
     %>  
       
     <!-- Header -->
@@ -72,7 +73,7 @@
                 <% } %>
             </table>
             
-            <h4>Recycling Requirements</h4>
+            <h4>Pending Recycling Requirements</h4>
             <table class="table">
                 <tr>
                     <th>Toy ID</th>
@@ -91,7 +92,34 @@
                     <td><img src="img/<%=t.getImage() %>" width="50px" height="50px" /></td>
                     <td>$<%=t.getPrice() %></td>
                     <td><%=t.getDonatedBy() %></td>
-                    <td><a href="approveRecycle?tid=<%=t.getTid() %>"><span class="glyphicon glyphicon-ok"></span></a></td>
+                    <td>
+                        <a href="approveRecycle?tid=<%=t.getTid() %>"><span class="glyphicon glyphicon-ok"></span></a>
+                        <a href="rejectRecycle?tid=<%=t.getTid() %>"><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
+                </tr>
+                <% } %>
+            </table>
+            
+            <h4>Rejected Recycling Requirements</h4>
+            <table class="table">
+                <tr>
+                    <th>Toy ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Image</th>
+                    <th>Price</th>
+                    <th>Required by</th>
+                    <th>Status</th>
+                </tr>
+                <% for (RecycleToy t : rejectedToys) { %>
+                <tr>
+                    <td><%=t.getTid() %></td>
+                    <td><%=t.getName() %></td>
+                    <td><%=t.getCategory() %></td>
+                    <td><img src="img/<%=t.getImage() %>" width="50px" height="50px" /></td>
+                    <td>$<%=t.getPrice() %></td>
+                    <td><%=t.getDonatedBy() %></td>
+                    <td>Rejected</td>
                 </tr>
                 <% } %>
             </table>
