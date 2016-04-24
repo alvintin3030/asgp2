@@ -83,13 +83,13 @@
                                         <button type="button" class="btn btn-primary" onclick="changePassword()">Edit</button>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="newPwDiv1" style="display:none">
                                     <label class="control-label col-sm-4" for="username">New Password:</label>
                                     <div class="col-sm-8">
                                         <input name="newPassword" type="password" class="form-control" id="newPassword" value="" disabled />
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="newPwDiv2" style="display:none">
                                     <label class="control-label col-sm-4" for="username">Confirm New Password:</label>
                                     <div class="col-sm-8">
                                         <input name="newPassword_confirm" type="password" class="form-control" id="newPassword_confirm" disabled />
@@ -126,7 +126,7 @@
                         </div>
                         <% if (editFail) { %>           
                             <div class="error">Failed to update, please try again!</div>
-                        <% } else { %>   
+                        <% } else if (editFail == false) { %>   
                             <div class="error">Updated successfully!</div>
                         <% } %>
                     </div>
@@ -157,6 +157,8 @@
         function changePassword(){
             document.getElementById("newPassword").disabled = false;
             document.getElementById("newPassword_confirm").disabled = false;
+            document.getElementById("newPwDiv1").style.display = "block";
+            document.getElementById("newPwDiv2").style.display = "block";
         }
     </script>
   </body>
