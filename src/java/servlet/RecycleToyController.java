@@ -3,7 +3,9 @@ package servlet;
 import bean.User;
 import database.UserDB;
 import bean.RecycleToy;
+import bean.Toy;
 import database.RecycleToyDB;
+import database.ToyInventoryDB;
 import java.io.IOException;
 import static java.lang.Float.*;
 import java.util.logging.Level;
@@ -46,9 +48,12 @@ public class RecycleToyController extends HttpServlet {
 
     private void doDonate(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String name = request.getParameter("name");
-        String description = request.getParameter("description");
         String category = request.getParameter("category");
         String price = request.getParameter("price");
+        String oprice = request.getParameter("oprice");
+        String description = request.getParameter("description");
+        String image = request.getParameter("image");
+
         String targetURL = null;
         
 
@@ -58,10 +63,10 @@ public class RecycleToyController extends HttpServlet {
         RecycleToyDB rtDB = new RecycleToyDB();
         RecycleToy rt = new RecycleToy();
         rt.setName(name);
-        rt.setDescription(description);
+        rt.setDescription(description); 
         rt.setCategory(category);
-        rt.setImage("null");
-        rt.setPrice(parseFloat(price));
+        rt.setImage(image);
+        rt.setPrice(parseFloat(oprice)*parseFloat(price));
         rt.setDonatedBy(userInfo.getUsername());
         rt.setIsApproved(0);
         rtDB.addRecord(rt);
