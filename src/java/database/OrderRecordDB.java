@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 public class OrderRecordDB {
 
-	public int addRecord(int userId, int cartId, Date orderDatetime, String orderStatus) { 
+	public int addRecord(String username, int toyID) { 
 			Connection cnnct = null;
 			PreparedStatement pStmnt = null;
 			int isSuccess = -1;
@@ -25,17 +25,15 @@ public class OrderRecordDB {
 			try {
 				cnnct = ConnectionUtil.getConnection();
 
-				String preQueryStatement = "SELECT * FROM \"OrderRecord\" WHERE \"userId\" = ?";
+				String preQueryStatement = "SELECT * FROM \"OrderRecords\" WHERE \"username\" = ?";
 				pStmnt = cnnct.prepareStatement(preQueryStatement);
-				pStmnt.setInt(1, userId);
+				pStmnt.setString(1, username);
 				ResultSet rs = pStmnt.executeQuery();
 				if (!rs.next()) {
-					preQueryStatement = "INSERT INTO \"OrderRecord\" (\"userId\", \"cartId\", \"orderDatetime\", \"orderStatus\") VALUES (?,?,?,?)";
+					preQueryStatement = "INSERT INTO \"OrderRecords\" (\"username\", \"toyID\") VALUES (?,?)";
 					pStmnt = cnnct.prepareStatement(preQueryStatement);
-					pStmnt.setInt(1, userId);
-					pStmnt.setInt(2, cartId);
-					pStmnt.setDate(3, orderDatetime);
-					pStmnt.setString(4, orderStatus);
+					pStmnt.setString(1, username);
+					pStmnt.setInt(2, toyID);
 					int rowCount = pStmnt.executeUpdate();
 					if (rowCount >= 1) {
 						isSuccess = 0;
@@ -67,16 +65,16 @@ public class OrderRecordDB {
 
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "SELECT * FROM \"OrderRecord\" ORDER BY \"orderDatetime\"ASC";
+            String preQueryStatement = "SELECT * FROM \"OrderRecords\" ORDER BY \"OrderDatetime\"ASC";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             ResultSet rs = pStmnt.executeQuery();
 
             while (rs.next()) {
                 OrderRecord record = new OrderRecord();
-                record.setUserId(rs.getInt("userId"));
-                record.setCartId(rs.getInt("cartId"));
-                record.setOrderDateTime(rs.getDate("orderDatetime"));
-                record.setOrderStatus(rs.getString("orderStatus"));
+                record.setOrderID(rs.getInt("OrderID"));
+                record.setUsername(rs.getString("Username"));
+                record.setToyID(rs.getInt("ToyID"));
+                record.setOrderDatetime(rs.getString("OrderDatetime"));
 
                 al.add(record);
             }
