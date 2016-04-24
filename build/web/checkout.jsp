@@ -79,15 +79,12 @@
         <div class="zigzag-bottom"></div>
         <div class="container">
             <div class="row">
-             
+                <% if (request.getAttribute("msg")==null){%>
                 
                 <div class="col-md-12">
                     <div class="product-content-right">
                         <div class="woocommerce">
                             
-                            
-
-                           
 
 
                             <form  action="checkoutController" class="checkout" method="get" >
@@ -202,6 +199,13 @@
                         </div>                       
                     </div>                    
                 </div>
+                <% }else{ %>
+                
+                <div class="col-md-12">
+                    <%=request.getAttribute("msg")%>
+                </div>
+                                                                     
+                <% }%>                           
             </div>
         </div>
     </div>
