@@ -76,6 +76,14 @@
         <servlet-name>checkoutController</servlet-name>
         <servlet-class>servlet.checkoutController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RecycleCartController</servlet-name>
+        <servlet-class>servlet.RecycleCartController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RecycleCheckoutController</servlet-name>
+        <servlet-class>servlet.RecycleCheckoutController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingCartController</servlet-name>
         <url-pattern>/shopping</url-pattern>
@@ -151,6 +159,14 @@
     <servlet-mapping>
         <servlet-name>checkoutController</servlet-name>
         <url-pattern>/checkoutController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RecycleCartController</servlet-name>
+        <url-pattern>/RecycleCartController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RecycleCheckoutController</servlet-name>
+        <url-pattern>/RecycleCheckoutController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
