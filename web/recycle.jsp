@@ -1,3 +1,5 @@
+<%@page import="bean.Toy"%>
+<%@page import="database.ToyInventoryDB"%>
 <%@page import="database.RecycleToyDB"%>
 <%@page import="bean.RecycleToy"%>
 <%@page import="java.util.ArrayList"%>
@@ -53,8 +55,18 @@
     <jsp:include page="mainmenu.jsp"/>
     </div> <!-- End mainmenu area -->
     
-    <!-- Promo area -->
-    <jsp:include page="promo.jsp"/>
+    <div class="product-big-title-area">
+        <div class="container">
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-bit-title text-center">
+                        <h2>Recycle Toys</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <!-- Browse recycle toy area -->
     
@@ -107,7 +119,7 @@
                                out.println("<ins> $"+product.getPrice()+"</ins>");
                                out.println("</div>");
                                out.println("<div class=\"product-option-shop\">");
-                               out.println("<a class=\"add_to_cart_button\" data-quantity=\"1\" data-product_sku=\"\" data-product_id=\"70\" rel=\"nofollow\" a href=\"shopping?action=add&cb=true&id="+product.getTid()+"\">Add to cart</a>");
+                               out.println("<a class=\"add_to_cart_button\" data-quantity=\"1\" data-product_sku=\"\" data-product_id=\"70\" rel=\"nofollow\" a href=\"RecycleCartController?action=add&page=all&pageNo=1&id="+product.getTid()+"\">Buy</a>");
                                out.println("</div>");
                                out.println("</div>");
                                out.println("</div>");
@@ -157,7 +169,13 @@
         </div>
     </div>
     
-    
+    <script>
+        function getNameOption() {
+            var x = document.getElementById("name").value;
+            document.getElementById("demo").innerHTML = x;
+        }
+        </script>
+                            
     <!-- Add Recycle Area-->
     <div class="container">
         <div class="row centered-form">
@@ -171,24 +189,39 @@
                     <div class="panel-body">
                         <form role="form" action="recycle" method="post">
                             <div class="form-group">
-                                <input type="text" name="name" placeholder="Toy Name" class="form-control" id="name" required />  
+                                <select name="name" class="form-control">
+                                    
+                                    <% ToyInventoryDB toydb=new ToyInventoryDB();
+                                    for(String s: toydb.getAllName()) {
+                                        Toy t = toydb.getToyByName(s);
+                                    %>
+                                    <option value=<%=t.getTid()%>>
+                                        <%=s%>
+                                    </option>
+                                    <input type="description" style="display:none" name="description" value="<%=t.getDescription()%>" />
+                                    <input type="category" style="display:none" name="category" value="<%=t.getCategory()%>" />
+                                    <input type="image" style="display:none" name="image" value="<%=t.getImage()%>" />
+                                    <input type="oprice" style="display:none" name="oprice" value="<%=t.getPrice()%>" />
+                                    <% } %>
+                                </select> 
                             </div>
 
                             <div class="form-group">
-                                <input type="text" name="description" placeholder="Toy Description" class="form-control" id="description" required />  
-                            </div>
-                            
-                            <div class="form-group">
-                                <input type="text" name="category" placeholder="Toy Category" class="form-control" id="category" required />
-                            </div>
-                            
-                            <div class="form-group">
-                                <input type="number" step="0.1" name="price" placeholder="Price" class="form-control" id="price" required />
+                                <select name="price" class="form-control">
+                                <option value="0.2"> 80% off </option>
+                                <option value="0.5"> 50% off </option>
+                                <option value="0.7"> 30% off </option>
+                                <option value="free"> Free of charge </option>
+                                </select>
                             </div>
                             
                             
                             <input type="submit" value="Confirm Donation" class="btn btn-info btn-block">
                             <input type="hidden" name="action" value="donate" />
+                            
+                            <% if (request.getAttribute("msg")!=null)
+                                   out.println(request.getAttribute("msg"));
+                            %>
                         </form>
                     </div>
                 </div>

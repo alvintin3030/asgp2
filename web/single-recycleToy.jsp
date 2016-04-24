@@ -1,5 +1,7 @@
 <%@page import="java.util.ArrayList"%>
-<%@page import="bean.RecycleToy"%>
+<%@page import="bean.*"%>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -30,6 +32,7 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
   </head>
   <body>
    
@@ -44,7 +47,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="product-bit-title text-center">
-                        <h2>Shop</h2>
+                        <h2>Recycle Toys</h2>
                     </div>
                 </div>
             </div>
@@ -62,7 +65,7 @@
                     <div class="product-content-right">
                         <div class="product-breadcroumb">
                             <a href="">Home</a>
-                            <a href="viewProduct?&page=all&type=<%=productItems.getCategory()%>&pageNo=1"><%=productItems.getCategory().replaceAll("_"," ")%></a>
+                            <a href="viewRecycleToy?&page=all&type=<%=productItems.getCategory()%>&pageNo=1"><%=productItems.getCategory().replaceAll("_"," ")%></a>
                             <a href=""><%=productItems.getName()%></a>
                         </div>
                         
@@ -84,19 +87,24 @@
                                         <ins>$<%=productItems.getPrice()%></ins>
                                     </div>    
                                     
-                                    <form action="" class="cart">
+                                    <form action="RecycleCartController" class="cart">
                                         <div class="quantity">
-                                            <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
+                                            <input type="text" style="display:none" name="id" value="<%=productItems.getTid()%>" />
+                                            <input type="text" style="display:none" name="action" value="add" />
+                                            <input type="text" style="display:none" name="page" value="detail" />
+                                            <input type="text" style="display:none" name="type" value="<%=productItems.getTid()%>" />
                                         </div>
                                         <button class="add_to_cart_button" type="submit">Add to cart</button>
+                                        
+                                        <% if (request.getAttribute("msg")!=null)
+                                            out.println(request.getAttribute("msg"));
+                                        %>
+         
                                     </form>   
                                     
                                     <div class="product-inner-category">
                                         <p>Category: <a href="viewProduct?&page=all&type=<%=productItems.getCategory()%>&pageNo=1"><%=productItems.getCategory().replaceAll("_"," ")%></a>  </p>
-                                    </div> 
-                                    
-                                    <div class="product-inner-category">
-                                        <p>Donated By: <a href="viewProduct?&page=all&type=<%=productItems.getDonatedBy()%>&pageNo=1"></a>  </p>
+                                        <p>Donated By: <%=productItems.getDonatedBy()%></p>
                                     </div> 
                                     
                                     <div role="tabpanel">
@@ -112,19 +120,3 @@
                                             
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-                     
-                    </div>                    
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <jsp:include page="footer.jsp"/>
-  </body>
-</html>
