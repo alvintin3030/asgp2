@@ -280,6 +280,38 @@ public class RecycleToyDB {
         }
     }
     
+    public ArrayList<RecycleToy> getUserRToys(String username) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<RecycleToy> al = new ArrayList<RecycleToy>();
+
+        try {
+            cnnct = ConnectionUtil.getConnection();
+            String preQueryStatement = "SELECT * FROM \"RecycleToy\" WHERE \"DonatedBy\"=? ORDER BY \"tid\" DESC";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, username);
+            ResultSet rs = pStmnt.executeQuery();
+
+            while (rs.next()) {
+                RecycleToy rt = new RecycleToy();
+                rt.setTid(rs.getInt("tid"));
+                rt.setName(rs.getString("name"));
+                rt.setDescription(rs.getString("description"));
+                rt.setCategory(rs.getString("category"));
+                rt.setImage(rs.getString("image"));
+                rt.setPrice(rs.getFloat("price"));
+                rt.setDonatedBy(rs.getString("donatedBy"));
+		rt.setIsApproved(rs.getInt("isApproved"));	
+                
+                al.add(rt);
+            }
+            return al;
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            return al;
+        }
+    }
+    
      public ArrayList<RecycleToy> getLatestRToys() {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;

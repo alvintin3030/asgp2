@@ -1,6 +1,8 @@
 package servlet;
 
+import bean.RecycleToy;
 import bean.User;
+import database.RecycleToyDB;
 import database.UserDB;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,6 +39,9 @@ public class MyAccountController extends HttpServlet {
         String targetURL = null;
         if (session.getAttribute("userInfo") != null) {
             user = (User) session.getAttribute("userInfo");
+            RecycleToyDB toyDB = new RecycleToyDB();
+            ArrayList<RecycleToy> myRecycleToys = toyDB.getUserRToys(user.getUsername());
+            request.setAttribute("myRecycleToys", myRecycleToys);
             targetURL = "myAccount.jsp";
         } else {
             targetURL = "login.jsp";
