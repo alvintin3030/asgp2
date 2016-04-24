@@ -3,11 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package servlet;
 
 import bean.ShoppingCart;
 import bean.User;
+import database.OrderRecordDB;
 import database.ShoppingCartDB;
+import database.ToyInventoryDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -22,14 +25,9 @@ import javax.servlet.http.HttpSession;
  *
  * @author tkwong94
  */
-public class ShoppingCartController extends HttpServlet {
+public class checkoutController extends HttpServlet {
 
     /**
-     * This servlet handle request that is related to shopping cart, 
-     * including 1) add to shopping cart , 2)remove from shopping cart and
-     * 3)view items in shopping cart.
-     * 
-     * 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -40,71 +38,57 @@ public class ShoppingCartController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("into request");
-        
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        try {
         
-        String action = request.getParameter("action");
-       // boolean cb=request.getParameter("cb").equals("true")?true:false;
-        
-        HttpSession session = request.getSession(true);
-        User userInfo = (User) session.getAttribute("userInfo");
-        ShoppingCartDB sdb=new ShoppingCartDB();
-        
-        //String targetURL=request.getRequestURI();;
-        
-        if (userInfo!=null){
+           
+            String action=request.getParameter("action");
+             System.out.println("request: "+action);
+            OrderRecordDB odb=new OrderRecordDB();
+                ToyInventoryDB tdb=new ToyInventoryDB();
+                ShoppingCartDB sdb=new ShoppingCartDB();
             
-            String username=userInfo.getUsername();
+            HttpSession session=request.getSession();
+            String username=((User)session.getAttribute("userInfo")).getUsername();
             
-            if (action.equals("view")){   
-                ArrayList<ShoppingCart> items=sdb.getShoppingCart(username);
-                //String cartItem="products"+username;
-                request.setAttribute("update","update");
-                request.setAttribute("products",items);
-                RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/cart.jsp");
+            if (action.equals("newPayment")){ 
+                session.setAttribute("products",sdb.getShoppingCart(username));
+                RequestDispatcher rd;
+                rd = getServletContext().getRequestDispatcher("/checkout.jsp");
                 rd.forward(request, response);
             }
             
-           
-            if (action.equals("add")){ 
-                 int toyId=Integer.parseInt(request.getParameter("id"));
-                int quantity=Integer.parseInt(request.getParameter("quantity"));
-                sdb.addRecord(username, toyId, quantity);
-                out.println("Sucessfully add");
+            if(action.equals("pay")){
+                System.out.println("payMe");
+                ArrayList<ShoppingCart> products=(ArrayList<ShoppingCart>)session.getAttribute("products");
+                System.out.println("products: "+products);
+                String payMethod=request.getParameter("payment_method");
+                if (payMethod==null)
+                    payMethod="no";
+                
+                out.println("<Successful Payment> Payment made by "+payMethod.replace("_"," ")+" is successful.<br><p>");
+                
+                float total=0;
+                for (ShoppingCart p:products){
+                    odb.addRecord(p);
+                    out.println(tdb.getToyById(p.getToyId()).getName()+" X "+p.getQuantity()+"<br>");
+                    total=total+(tdb.getToyById(p.getToyId()).getPrice()*p.getQuantity());
+                }
+                out.println("<p>Total amount:"+total+"<br>");  
+                out.println("Thank you. Hope you enjoy the shopping experience.");
+                
+                System.out.println(username);
+                sdb.deleteAllCartItem(username);
+
             }
             
-            if(action.equals("delete")){
-                 int toyId=Integer.parseInt(request.getParameter("id"));
-                sdb.deleteCartItem(username, toyId);
-                out.println("Successfully delete");
-            }
             
-            if(action.equals("edit")){
-                 int toyId=Integer.parseInt(request.getParameter("id"));
-               int quantity=Integer.parseInt(request.getParameter("quantity"));
-               System.out.println("edit"+username+toyId+quantity);
-               if (quantity==0){
-                   sdb.deleteCartItem(username, toyId);
-               }else{
-                   sdb.modifyQuantity(username, toyId, quantity);
-               }
-            }
-                        
             
-        }else{
-            System.out.println("user null");
-            RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/login.jsp");
-            rd.forward(request, response);
             
+        } finally {
+            out.close();
         }
-        
-       // RequestDispatcher rd = this.getServletContext().getRequestDispatcher(targetURL);
-        //rd.forward(request, response);
-        
-        
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
