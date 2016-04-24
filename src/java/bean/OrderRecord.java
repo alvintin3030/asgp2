@@ -7,6 +7,7 @@ public class OrderRecord {
     private String username;
     private int toyID;
     private String orderDatetime;
+    private int quantity;
     
     public int getOrderID() {
         return orderID;
@@ -38,6 +39,14 @@ public class OrderRecord {
 
     public void setOrderDatetime(String orderDatetime) {
         this.orderDatetime = orderDatetime;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
     
 }
