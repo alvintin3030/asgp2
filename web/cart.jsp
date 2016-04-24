@@ -63,11 +63,9 @@
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/shopping?action=view");
             rd.forward(request, response);
-        }else{
-           // String CartItem="products"+username;
-            products=(ArrayList<ShoppingCart>)request.getAttribute("products");
-            request.setAttribute("update","read");
         }
+        
+        products=(ArrayList<ShoppingCart>)request.getAttribute("products");
         
         if (user==null ){
             RequestDispatcher rd;
@@ -116,9 +114,7 @@
     }
     
     
-    $(document).ready(function(){
-        updateTotal();  
-    });
+   
     </script>	
     
     
@@ -143,11 +139,12 @@
                                     </thead>
                                     <tbody>
                                         <%  ToyInventoryDB tdb=new ToyInventoryDB();
-                                        
+                                        float total=0;
                                         if (products!=null && products.size()>0){
-                                            
+                                           
                                             for (ShoppingCart cart:products){
                                                 Toy toy=tdb.getToyById(cart.getToyId());
+                                                total=total+cart.getQuantity()*toy.getPrice();
                                         %>
 					<tr class="cart_item">
                                            <td class="product-remove">
@@ -175,15 +172,18 @@
                                             </td>
 
                                             <td class="product-subtotal">
-                                                <span class="amount subTotal" id="<%=toy.getTid()%>Total" ><%=cart.getQuantity()*toy.getPrice()%></span> 
+                                                <span class="amount subTotal" id="<%=toy.getTid()%>Total" >$<%=cart.getQuantity()*toy.getPrice()%></span> 
                                             </td>
                                         </tr>
 										
 					<% };} %>
                                         <tr>
                                             <td class="actions" colspan="6">
-                                               
-                                                <input type="submit" value="Checkout" name="proceed" class="checkout-button button alt wc-forward">
+                                                <!--<form action="/checkoutController" method="get">-->
+                                                    <!--<input type="textbox" style="display:none" value="newPayment"/>-->
+                                                   <!--<input type="submit" value="submit" name="proceed" class="checkout-button button alt wc-forward"  />-->
+                                                <!--</form>-->
+                                                <a href="checkoutController?action=newPayment">Checkout</a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -203,7 +203,7 @@
                                     <tbody>
                                         <tr class="cart-subtotal">
                                             <th>Cart Subtotal</th>
-                                            <td><span class="amount totalAmount"></span></td>
+                                            <td><span class="amount totalAmount">$<%=total%></span></td>
                                         </tr>
 
                                         <tr class="shipping">
@@ -213,7 +213,7 @@
 
                                         <tr class="order-total">
                                             <th>Order Total</th>
-                                            <td><strong><span class="amount totalAmount"></span></strong> </td>
+                                            <td><strong><span class="amount totalAmount">$<%=total%></span></strong> </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -234,5 +234,7 @@
 
     <!-- Footer -->
     <jsp:include page="footer.jsp"/>
+    
+   
   </body>
 </html>
