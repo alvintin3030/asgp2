@@ -90,11 +90,11 @@ public class UserDB {
             cnnct = ConnectionUtil.getConnection();
             String preQueryStatement = "UPDATE \"Users\" SET \"password\"=?, \"email\"=?, \"phone\"=?, \"address\"=? WHERE \"username\"=?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
-            pStmnt.setString(1, username);
-            pStmnt.setString(2, password);
-            pStmnt.setString(3, email);
-            pStmnt.setString(4, phone);
-            pStmnt.setString(5, address);
+            pStmnt.setString(1, password);
+            pStmnt.setString(2, email);
+            pStmnt.setString(3, phone);
+            pStmnt.setString(4, address);
+            pStmnt.setString(5, username);
             int rowCount = pStmnt.executeUpdate();
             if (rowCount >= 1) {
                 isSuccess = true;
