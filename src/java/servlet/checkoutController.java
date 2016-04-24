@@ -54,36 +54,38 @@ public class checkoutController extends HttpServlet {
             
             if (action.equals("newPayment")){ 
                 session.setAttribute("products",sdb.getShoppingCart(username));
-                RequestDispatcher rd;
-                rd = getServletContext().getRequestDispatcher("/checkout.jsp");
-                rd.forward(request, response);
+                
             }
             
             if(action.equals("pay")){
-                System.out.println("payMe");
+                
                 ArrayList<ShoppingCart> products=(ArrayList<ShoppingCart>)session.getAttribute("products");
-                System.out.println("products: "+products);
+                
                 String payMethod=request.getParameter("payment_method");
                 if (payMethod==null)
                     payMethod="no";
                 
-                out.println("<Successful Payment> Payment made by "+payMethod.replace("_"," ")+" is successful.<br><p>");
+                String msg="<p><Successful Payment> Payment made by "+payMethod.replace("_"," ")+" is successful.<br></p><p>Order:</br>";
                 
                 float total=0;
                 for (ShoppingCart p:products){
                     odb.addRecord(p);
-                    out.println(tdb.getToyById(p.getToyId()).getName()+" X "+p.getQuantity()+"<br>");
+                    msg=msg+tdb.getToyById(p.getToyId()).getName()+" X "+p.getQuantity()+"<br>";
                     total=total+(tdb.getToyById(p.getToyId()).getPrice()*p.getQuantity());
                 }
-                out.println("<p>Total amount:"+total+"<br>");  
-                out.println("Thank you. Hope you enjoy the shopping experience.");
                 
-                System.out.println(username);
-                sdb.deleteAllCartItem(username);
+                msg=msg+"</p><p>Total amount:"+total+"<br>";  
+                msg=msg+"Thank you. Hope you enjoy the shopping experience.</p>";
+                
+                request.setAttribute("msg", msg);
+               System.out.println(username);
+               sdb.deleteAllCartItem(username);
 
             }
             
-            
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/checkout.jsp");
+            rd.forward(request, response);
             
             
         } finally {
