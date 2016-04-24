@@ -120,7 +120,7 @@ public class RecycleToyDB {
         boolean isSuccess = false;
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "SELECT * FROM \"ShoppingCart\" WHERE \"tid\" = ?";
+            String preQueryStatement = "SELECT * FROM \"RecycleCart\" WHERE \"tid\" = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setInt(1, tid);
             ResultSet rs = pStmnt.executeQuery();
