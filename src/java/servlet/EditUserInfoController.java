@@ -49,16 +49,16 @@ public class EditUserInfoController extends HttpServlet {
             HttpSession session = request.getSession(true);
 
             if (isValidUser) {
-                boolean result = false;
+                boolean result;
                 if (newPassword != null) 
                    result = userDB.editRecord(username, newPassword, email, phone, address);
                 else 
                    result = userDB.editRecord(username, password, email, phone, address);
                
-                if (result) {
+                if (result == true) {
                     User user = userDB.getUserInfo(username);
                     session.setAttribute("userInfo", user);
-                    request.setAttribute("editFail", false);
+                    request.setAttribute("editSuccess", true);
                 } else {
                     request.setAttribute("editFail", true);
                 }

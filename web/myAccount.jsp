@@ -35,15 +35,13 @@
   <body>
     <% 
         boolean isLogin = false;
-        boolean isAdmin = false;
         User user = null;
         if (session.getAttribute("userInfo") != null) {
             isLogin = true;
             user = (User) session.getAttribute("userInfo");
-            if (user.getGroupId() == 0)
-                isAdmin = true;
         } 
         Boolean editFail = Getter.getBoolean(request.getAttribute("editFail"));
+        Boolean editSuccess = Getter.getBoolean(request.getAttribute("editSuccess"));
     %>
       
     <!-- Header -->
@@ -126,9 +124,10 @@
                         </div>
                         <% if (editFail) { %>           
                             <div class="error">Failed to update, please try again!</div>
-                        <% } else if (editFail == false) { %>   
+                        <% } else if (editSuccess) { %>   
                             <div class="error">Updated successfully!</div>
                         <% } %>
+
                     </div>
                 </div>
             </div>
