@@ -54,6 +54,7 @@
     
     <div class="product-big-title-area">
         <div class="container">
+            
             <div class="row">
                 <div class="col-md-12">
                     <div class="product-bit-title text-center">
@@ -64,11 +65,17 @@
         </div>
     </div>
     
-    <% ArrayList<Toy> productItems=(ArrayList<Toy>) request.getAttribute("productItems");%>
+    <% ArrayList<Toy> productItems=(ArrayList<Toy>) request.getAttribute("productItems");
+      
+    %>
+    
     <div class="single-product-area">
+       
         <div class="zigzag-bottom"></div>
         <div class="container">
-            
+             <% if (request.getAttribute("msg")!=null)
+                out.println("<div class=\"row\"><center>"+request.getAttribute("msg")+"</center></div><br>");
+            %>
             <div class="col-md-3">
                 <h2>Category</h2>
                 
@@ -90,8 +97,10 @@
                 
                   <% 
                        
+                       
+                       
                         int pageNo=Integer.parseInt(String.valueOf(request.getAttribute("pageNo"))); //current Page no, start from 1
-
+                            
                         int itemPerPage=16;
                         int firstItem=(pageNo-1)*itemPerPage;
                         int lastItem=firstItem+itemPerPage;
@@ -113,7 +122,7 @@
                                out.println("<ins> $"+product.getPrice()+"</ins>");
                                out.println("</div>");
                                out.println("<div class=\"product-option-shop\">");
-                               out.println("<a class=\"add_to_cart_button\" data-quantity=\"1\" data-product_sku=\"\" data-product_id=\"70\" rel=\"nofollow\" a href=\"shopping?quantity=1&action=add&cb=true&id="+product.getTid()+"\">Add to cart</a>");
+                               out.println("<a class=\"add_to_cart_button\" data-quantity=\"1\" data-product_sku=\"\" data-product_id=\"70\" rel=\"nofollow\" a href=\"shopping?quantity=1&action=add&type="+product.getCategory()+"&page=all&pageNo=1&id="+product.getTid()+"\">Add to cart</a>");
                                out.println("</div>");
                                out.println("</div>");
                                out.println("</div>");

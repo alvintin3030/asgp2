@@ -7,6 +7,7 @@
 package servlet;
 
 import bean.ShoppingCart;
+import bean.Toy;
 import bean.User;
 import database.OrderRecordDB;
 import database.ShoppingCartDB;
@@ -72,7 +73,9 @@ public class checkoutController extends HttpServlet {
                     odb.addRecord(p);
                     msg=msg+tdb.getToyById(p.getToyId()).getName()+" X "+p.getQuantity()+"<br>";
                     total=total+(tdb.getToyById(p.getToyId()).getPrice()*p.getQuantity());
-                    tdb.getToyById(p.getToyId()).setQuantity(tdb.getToyById(p.getToyId()).getQuantity()-1);
+                    Toy t = tdb.getToyById(p.getToyId());
+                    t.setQuantity(t.getQuantity()-p.getQuantity());
+                    tdb.editRecord(t);
                 }
                 
                 msg=msg+"</p><p>Total amount:"+total+"<br>";  
