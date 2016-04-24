@@ -72,6 +72,7 @@ public class checkoutController extends HttpServlet {
                     odb.addRecord(p);
                     msg=msg+tdb.getToyById(p.getToyId()).getName()+" X "+p.getQuantity()+"<br>";
                     total=total+(tdb.getToyById(p.getToyId()).getPrice()*p.getQuantity());
+                    tdb.getToyById(p.getToyId()).setQuantity(tdb.getToyById(p.getToyId()).getQuantity()-1);
                 }
                 
                 msg=msg+"</p><p>Total amount:"+total+"<br>";  

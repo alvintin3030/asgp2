@@ -53,7 +53,7 @@ public class ShoppingCartController extends HttpServlet {
         ShoppingCartDB sdb=new ShoppingCartDB();
         
         //String targetURL=request.getRequestURI();;
-        
+        String targetURL="";
         if (userInfo!=null){
             
             String username=userInfo.getUsername();
@@ -63,28 +63,44 @@ public class ShoppingCartController extends HttpServlet {
                 //String cartItem="products"+username;
                 request.setAttribute("update","update");
                 request.setAttribute("products",items);
-                RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/cart.jsp");
-                rd.forward(request, response);
+                targetURL="/cart.jsp";
+                
             }
             
            
             if (action.equals("add")){ 
-                 int toyId=Integer.parseInt(request.getParameter("id"));
+                int toyId=Integer.parseInt(request.getParameter("id"));
                 int quantity=Integer.parseInt(request.getParameter("quantity"));
                 sdb.addRecord(username, toyId, quantity);
-                out.println("Sucessfully add");
+                
+                System.out.println("url"+request.getRequestURI());
+                String page=request.getParameter("page");
+                if (page.equals("index"))
+                    targetURL="/index.jsp";
+                else{
+                    targetURL="/viewProduct?type=<type>&page=<page>";
+
+                    String type=request.getParameter("type");
+                    targetURL=targetURL.replaceAll("<type>",type);
+                    targetURL=targetURL.replaceAll("<page>",page);
+
+                    if (request.getParameter("pageNo")!=null&&request.getParameter("pageNo").length()>0)
+                        targetURL=targetURL+"&pageNo="+request.getParameter("pageNo");
+                }
+                
+                request.setAttribute("msg", "Successfully Add.");
             }
             
             if(action.equals("delete")){
                  int toyId=Integer.parseInt(request.getParameter("id"));
                 sdb.deleteCartItem(username, toyId);
-                out.println("Successfully delete");
+                
             }
             
             if(action.equals("edit")){
                  int toyId=Integer.parseInt(request.getParameter("id"));
                int quantity=Integer.parseInt(request.getParameter("quantity"));
-               System.out.println("edit"+username+toyId+quantity);
+               
                if (quantity==0){
                    sdb.deleteCartItem(username, toyId);
                }else{
@@ -94,14 +110,13 @@ public class ShoppingCartController extends HttpServlet {
                         
             
         }else{
-            System.out.println("user null");
-            RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/login.jsp");
-            rd.forward(request, response);
+            targetURL="/login.jsp";
             
         }
         
-       // RequestDispatcher rd = this.getServletContext().getRequestDispatcher(targetURL);
-        //rd.forward(request, response);
+        RequestDispatcher rd = this.getServletContext().getRequestDispatcher(targetURL);
+        rd.forward(request, response);
+       
         
         
         
