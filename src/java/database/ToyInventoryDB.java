@@ -309,4 +309,56 @@ public class ToyInventoryDB {
             return s;
         }
     }
+        public  ArrayList<String> getAllName() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<String> s=new ArrayList<String>();
+
+        try {
+            cnnct = ConnectionUtil.getConnection();
+            String preQueryStatement = "SELECT DISTINCT Name FROM \"Toys\"";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+            
+            while (rs.next()) {
+                
+                s.add(rs.getString("Name"));
+                
+            }
+            
+           
+            return s;
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            return s;
+        }
+    }
+        public Toy getToyByName(String name) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        Toy t = null;
+
+        try {
+            cnnct = ConnectionUtil.getConnection();
+            String preQueryStatement = "SELECT * FROM \"Toys\" WHERE \"NAME\" = ?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, name);
+            ResultSet rs = pStmnt.executeQuery();
+
+            if (rs.next()) {
+                t = new Toy();
+                t.setTid(rs.getInt("tid"));
+                t.setName(rs.getString("Name"));
+                t.setDescription(rs.getString("Description"));
+                t.setCategory(rs.getString("Category"));
+                t.setImage(rs.getString("Image"));
+                t.setPrice(rs.getFloat("Price"));
+                t.setQuantity(rs.getInt("Quantity"));
+            }
+            return t;
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            return t;
+        }
+    }
 }
