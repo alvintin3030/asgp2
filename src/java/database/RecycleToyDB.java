@@ -120,26 +120,13 @@ public class RecycleToyDB {
         boolean isSuccess = false;
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "SELECT * FROM \"RecycleCart\" WHERE \"tid\" = ?";
-            pStmnt = cnnct.prepareStatement(preQueryStatement);
-            pStmnt.setInt(1, tid);
-            ResultSet rs = pStmnt.executeQuery();
-            int existedRecord = 0;
-
-            if (rs.next()) {
-                existedRecord += 1;
-            }
-			
-			
-            if (existedRecord == 0) {
-                preQueryStatement = "DELETE FROM \"RecycleToy\" WHERE \"tid\"=?";
+                String preQueryStatement = "DELETE FROM \"RecycleToy\" WHERE \"tid\"=?";
                 pStmnt = cnnct.prepareStatement(preQueryStatement);
                 pStmnt.setInt(1, tid);
                 int rowCount = pStmnt.executeUpdate();
 
                 if (rowCount >= 1) {
                     isSuccess = true;
-                }
             }
             pStmnt.close();
             cnnct.close();
@@ -384,7 +371,7 @@ public class RecycleToyDB {
 
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "SELECT * FROM \"RecycleToy\" WHERE \"Category\" = ? ORDER BY \"tid\" DESC";
+            String preQueryStatement = "SELECT * FROM \"RecycleToy\" WHERE \"Category\" = ? AND \"IsApproved\"=1 ORDER BY \"tid\" DESC";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, category);
             ResultSet rs = pStmnt.executeQuery();
