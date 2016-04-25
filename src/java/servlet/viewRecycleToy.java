@@ -9,6 +9,7 @@ package servlet;
 import database.RecycleToyDB;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -74,20 +75,23 @@ public class viewRecycleToy extends HttpServlet {
          if (!(type.equals("")||page.equals(""))){
              
             RecycleToyDB rtDB=new RecycleToyDB();
-            System.out.println("type="+type);
+            ArrayList<String> category=rtDB.getAllCategory();
             
+            boolean found=false;
+            for (String c:category){
+                if (type.equals(c)){
+                    request.setAttribute("productItems",rtDB.getRToyByCategory(c.replaceAll("_"," ")));
+                    found=true;
+                }
+            }
+            if (found==false){
             if (type.equals("latest"))
                 request.setAttribute("productItems",rtDB.getLatestRToys());
             else if (type.equals("all"))
-                request.setAttribute("productItems",rtDB.getRToys());
-            else if (type.equals("Toy_Figures"))
-                 request.setAttribute("productItems",rtDB.getRToyByCategory("Toy_Figures"));
-            else if (type.equals("Card_Games"))
-                 request.setAttribute("productItems",rtDB.getRToyByCategory("Card_Games"));
-            else if (type.equals("Vehicle")) 
-                 request.setAttribute("productItems",rtDB.getRToyByCategory("Vehicle"));
+                request.setAttribute("productItems",rtDB.getApprovedRToys());
             else 
                 request.setAttribute("productItems",rtDB.getRToyById(Integer.parseInt(type)));
+            }
 
             //determine view page
             if(page.equals("detail"))
