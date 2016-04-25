@@ -48,25 +48,21 @@ public class RecycleToyController extends HttpServlet {
 
     private void doDonate(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String name = request.getParameter("name");
-        String category = request.getParameter("category");
         String price = request.getParameter("price");
-        String oprice = request.getParameter("oprice");
-        String description = request.getParameter("description");
-        String image = request.getParameter("image");
-
         String targetURL = null;
         
-
         HttpSession session = request.getSession(true);
         User userInfo = (User)session.getAttribute("userInfo");
                 
         RecycleToyDB rtDB = new RecycleToyDB();
+        ToyInventoryDB toydb = new ToyInventoryDB();
         RecycleToy rt = new RecycleToy();
+        Toy t = toydb.getToyByName(name);
         rt.setName(name);
-        rt.setDescription(description); 
-        rt.setCategory(category);
-        rt.setImage(image);
-        rt.setPrice(parseFloat(oprice)*parseFloat(price));
+        rt.setDescription(t.getDescription()); 
+        rt.setCategory(t.getCategory());
+        rt.setImage(t.getImage());
+        rt.setPrice(t.getPrice()*parseFloat(price));
         rt.setDonatedBy(userInfo.getUsername());
         rt.setIsApproved(0);
         rtDB.addRecord(rt);
