@@ -175,7 +175,9 @@
             document.getElementById("demo").innerHTML = x;
         }
         </script>
-                            
+    <% if (request.getAttribute("msg")!=null)
+                out.println("<div class=\"row\"><center>"+request.getAttribute("msg")+"</center></div><br>");
+            %>                        
     <!-- Add Recycle Area-->
     <div class="container">
         <div class="row centered-form">

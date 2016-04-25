@@ -99,7 +99,9 @@
                             
                             
 
-                           
+                           <% if (request.getAttribute("msg")!=null)
+                                out.println("<div class=\"row\"><center>"+request.getAttribute("msg")+"</center></div><br>");
+                            %>
 
 
                             <form  action="RecycleCheckoutController" class="checkout" method="get" >
