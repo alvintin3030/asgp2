@@ -76,6 +76,7 @@ public class RecycleCheckoutController extends HttpServlet {
                         User donater = userdb.getUserInfo(rt.getDonatedBy());
                         float newCredit = donater.getCredit() + rt.getPrice();
                         userdb.updateCredit(donater.getUsername(), newCredit);
+                        rtdb.deleteRecord(rt.getTid());
                         rcdb.deleteCartItem(username, p.getToyId());
                     }
 
