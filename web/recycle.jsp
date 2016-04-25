@@ -219,9 +219,7 @@
                             <input type="submit" value="Confirm Donation" class="btn btn-info btn-block">
                             <input type="hidden" name="action" value="donate" />
                             
-                            <% if (request.getAttribute("msg")!=null)
-                                   out.println(request.getAttribute("msg"));
-                            %>
+                           
                         </form>
                     </div>
                 </div>

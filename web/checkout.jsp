@@ -86,8 +86,10 @@
                         <div class="woocommerce">
                             
                             
-
-                           
+                              <% if (request.getAttribute("msg")!=null){ %>
+                              <div><%=request.getAttribute("msg")%></div>
+                              <% }else{ %>
+                              
 
 
                             <form  action="checkoutController" class="checkout" method="get" >
@@ -198,6 +200,7 @@
                                     </div>
                                 </div>
                             </form>
+                                            <%}%>
 
                         </div>                       
                     </div>                    
