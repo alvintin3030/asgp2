@@ -53,22 +53,27 @@ public class RecycleToyController extends HttpServlet {
         
         HttpSession session = request.getSession(true);
         User userInfo = (User)session.getAttribute("userInfo");
-                
-        RecycleToyDB rtDB = new RecycleToyDB();
-        ToyInventoryDB toydb = new ToyInventoryDB();
-        RecycleToy rt = new RecycleToy();
-        Toy t = toydb.getToyByName(name);
-        rt.setName(name);
-        rt.setDescription(t.getDescription()); 
-        rt.setCategory(t.getCategory());
-        rt.setImage(t.getImage());
-        rt.setPrice(t.getPrice()*parseFloat(price));
-        rt.setDonatedBy(userInfo.getUsername());
-        rt.setIsApproved(0);
-        rtDB.addRecord(rt);
         
-        targetURL = "/recycle.jsp";
-        request.setAttribute("msg", "Successfully Recycle. Pending for Approval.");
+        if(userInfo==null)
+            targetURL="/login.jsp";
+        else{  
+            RecycleToyDB rtDB = new RecycleToyDB();
+            ToyInventoryDB toydb = new ToyInventoryDB();
+            RecycleToy rt = new RecycleToy();
+            Toy t = toydb.getToyById(Integer.parseInt(name));
+            rt.setName(name);
+            rt.setDescription(t.getDescription()); 
+            rt.setCategory(t.getCategory());
+            rt.setImage(t.getImage());
+            rt.setPrice(t.getPrice()*parseFloat(price));
+            rt.setDonatedBy(userInfo.getUsername());
+            rt.setIsApproved(0);
+            rtDB.addRecord(rt);
+
+            targetURL = "/recycle.jsp";
+            request.setAttribute("msg", "Successfully Recycle. Pending for Approval.");
+        }
+        
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         try {
