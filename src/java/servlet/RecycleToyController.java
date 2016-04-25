@@ -59,9 +59,13 @@ public class RecycleToyController extends HttpServlet {
         else{  
             RecycleToyDB rtDB = new RecycleToyDB();
             ToyInventoryDB toydb = new ToyInventoryDB();
+            
+            System.out.println(name);
+            
             RecycleToy rt = new RecycleToy();
             Toy t = toydb.getToyById(Integer.parseInt(name));
-            rt.setName(name);
+            rt.setName(t.getName());
+            rt.setTid(Integer.parseInt(name));
             rt.setDescription(t.getDescription()); 
             rt.setCategory(t.getCategory());
             rt.setImage(t.getImage());
