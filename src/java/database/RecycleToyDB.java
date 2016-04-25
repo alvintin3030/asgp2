@@ -49,7 +49,7 @@ public class RecycleToyDB {
         boolean isSuccess = false;
         try {
             cnnct = ConnectionUtil.getConnection();
-            String preQueryStatement = "INSERT INTO \"RecycleToy\" (\"Name\", \"Description\", \"Category\", \"Image\", \"price\", \"DonatedBy\", \"IsApproved\") VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+            String preQueryStatement = "INSERT INTO \"RecycleToy\" (\"Name\", \"Description\", \"Category\", \"Image\", \"price\", \"DonatedBy\", \"IsApproved\") VALUES(?, ?, ?, ?, ?, ?, ?)";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, rt.getName());
             pStmnt.setString(2, rt.getDescription());
