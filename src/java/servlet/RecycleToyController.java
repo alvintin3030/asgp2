@@ -72,7 +72,7 @@ public class RecycleToyController extends HttpServlet {
         rtDB.addRecord(rt);
         
         targetURL = "/recycle.jsp";
-        
+        request.setAttribute("msg", "Successfully Recycle. Pending for Approval.");
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         try {
