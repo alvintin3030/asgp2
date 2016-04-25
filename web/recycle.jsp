@@ -196,14 +196,12 @@
                                     <% ToyInventoryDB toydb=new ToyInventoryDB();
                                     for(String s: toydb.getAllName()) {
                                         Toy t = toydb.getToyByName(s);
+                                        out.println("<option value=");
+                                        out.print(toydb.getToyByName(s).getTid());
+                                        out.print(">");
+                                        out.print(s);
+                                        out.print("</option>");
                                     %>
-                                    <option value=<%=t.getTid()%>>
-                                        <%=s%>
-                                    </option>
-                                    <input type="description" style="display:none" name="description" value="<%=t.getDescription()%>" />
-                                    <input type="category" style="display:none" name="category" value="<%=t.getCategory()%>" />
-                                    <input type="image" style="display:none" name="image" value="<%=t.getImage()%>" />
-                                    <input type="oprice" style="display:none" name="oprice" value="<%=t.getPrice()%>" />
                                     <% } %>
                                 </select> 
                             </div>
