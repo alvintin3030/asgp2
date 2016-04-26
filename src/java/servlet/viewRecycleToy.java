@@ -10,7 +10,6 @@ import database.RecycleToyDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -84,13 +83,14 @@ public class viewRecycleToy extends HttpServlet {
                     found=true;
                 }
             }
+            
             if (found==false){
-            if (type.equals("latest"))
-                request.setAttribute("productItems",rtDB.getLatestRToys());
-            else if (type.equals("all"))
-                request.setAttribute("productItems",rtDB.getApprovedRToys());
-            else 
-                request.setAttribute("productItems",rtDB.getRToyById(Integer.parseInt(type)));
+                if (type.equals("latest"))
+                    request.setAttribute("productItems",rtDB.getLatestRToys());
+                else if (type.equals("all"))
+                    request.setAttribute("productItems",rtDB.getApprovedRToys());
+                else 
+                    request.setAttribute("productItems",rtDB.getRToyById(Integer.parseInt(type)));
             }
 
             //determine view page
@@ -98,13 +98,13 @@ public class viewRecycleToy extends HttpServlet {
                 targetURL="/single-recycleToy.jsp";
             else if(page.equals("index"))
                 targetURL="/index.jsp";
-            else if(page.equals("all")){
+            else if(page.equals("all")) {
                 targetURL="/recycle.jsp";
                 request.setAttribute("pageNo",request.getParameter("pageNo"));
-            }else
+            } else
                 return;
-         }else
-             return;
+         } else
+                return;
          
          RequestDispatcher rd = this.getServletContext().getRequestDispatcher(targetURL);
          rd.forward(request, response);
