@@ -99,8 +99,9 @@
                             
                             
 
-                           <% if (request.getAttribute("msg")!=null)
+                           <% if (request.getAttribute("msg")!=null) {
                                 out.println("<div class=\"row\"><center>"+request.getAttribute("msg")+"</center></div><br>");
+                           } else {
                             %>
 
 
@@ -212,7 +213,7 @@
                                     </div>
                                 </div>
                             </form>
-
+                            <%}%>
                         </div>                       
                     </div>                    
                 </div>
