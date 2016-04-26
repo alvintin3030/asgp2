@@ -185,7 +185,7 @@
                                         <td><%=t.getName() %></td>
                                         <td><img src="img/<%=t.getImage() %>" width="50px" height="50px" /></td>
                                         <td><%=r.getQuantity() %></td>
-                                        <td>$<%=t.getPrice() %></td>
+                                        <td>$<%=t.getPrice() * r.getQuantity()%></td>
                                         <td><%=r.getOrderDatetime() %></td>
                                     </tr>
                                     <% } %>
